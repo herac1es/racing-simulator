@@ -72,169 +72,11 @@ function appendLegacyM2Redline(js) {
   return js.slice(0, end) + entry + js.slice(end);
 }
 
-function addTwoStageIRacingShiftCue(js) {
-  if (js.includes('function c300v111BlinkActive()')) return js;
-
-  const replacements = [
-    [
-      "var C300V111 = globalThis.C300V111 || {\n    signature:'',\n    redlineWas:false,\n    redlineAt:0\n};",
-      "var C300V111 = globalThis.C300V111 || {\n    signature:'',\n    redlineWas:false,\n    redlineAt:0,\n    blinkWas:false,\n    blinkAt:0\n};",
-    ],
-    [
-      '    var start=0,end=0,redline=0;',
-      '    var start=0,end=0,shiftPoint=0,redline=0;',
-    ],
-    [
-      [
-        "        // Blink is the true flash point. Shift RPM is never allowed to override",
-        "        // a valid last-light, blink or hard-limit value.",
-        "        redline=ir.blink || ir.max || ir.last || ir.shift || exactRed;",
-        "        start=ir.first;",
-      ].join('\n'),
-      [
-        "        // Shift RPM starts the solid full-bar cue. Blink RPM starts the",
-        "        // high-frequency pulse; max RPM is only a blink-stage fallback.",
-        "        shiftPoint=ir.shift || ir.last || ir.blink || exactRed || ir.max;",
-        "        redline=ir.blink || ir.max || ir.last || ir.shift || exactRed;",
-        "        start=ir.first;",
-      ].join('\n'),
-    ],
-    [
-      "    if (!(redline>2500&&redline<25000)) redline=exactRed>0?exactRed:9000;\n    if (!(end>1000&&end<=redline*1.03)) end=redline*0.992;",
-      [
-        "    if (!(redline>2500&&redline<25000)) redline=exactRed>0?exactRed:9000;",
-        "    if (game!=='IRacing') shiftPoint=redline;",
-        "    if (!(shiftPoint>start&&shiftPoint<25000)) shiftPoint=redline;",
-        "    if (redline<shiftPoint) redline=shiftPoint;",
-        "    if (!(end>1000&&end<=redline*1.03)) end=redline*0.992;",
-      ].join('\n'),
-    ],
-    [
-      '    return {game:game,start:start,end:end,redline:redline,scores:scores,thresholds:thresholds};',
-      '    return {game:game,start:start,end:end,shift:shiftPoint,blink:redline,redline:redline,scores:scores,thresholds:thresholds};',
-    ],
-  ];
-
-  for (const [before, after] of replacements) {
-    if (!js.includes(before)) throw new Error(`Could not apply two-stage shift cue near: ${before.slice(0, 80)}`);
-    js = js.replace(before, after);
-  }
-
-  const oldAuthority = [
-    'function c300v111RedlineRpm() {',
-    '    return c300v111Window(c300v111ExactProfile(),12).redline;',
-    '}',
-    'function c300v111RedlineActive() {',
-    "    try { if (typeof cp300v290CanShowLiveRedline==='function'&&!cp300v290CanShowLiveRedline()) return false; } catch(e0){}",
-    "    var rpm=Number(c300v111Prop('Rpms',0))||0;",
-    '    var limit=c300v111RedlineRpm();',
-    '    var active=rpm>0&&limit>0&&rpm>=limit;',
-    '    if (!active && !(limit>0)) {',
-    "        var raw=c300v111Prop('RPMRedlineReached',false);",
-    "        active=raw===true||raw===1||String(raw).toLowerCase()==='true';",
-    '    }',
-    '    if (active) {',
-    '        if (!C300V111.redlineWas) C300V111.redlineAt=Date.now();',
-    '        C300V111.redlineWas=true;',
-    '    } else {',
-    '        C300V111.redlineWas=false;',
-    '        C300V111.redlineAt=0;',
-    '    }',
-    '    try {',
-    "        if (typeof CP300V22_STATE==='object') {",
-    '            CP300V22_STATE.redlineWas=active;',
-    '            CP300V22_STATE.redlineAt=active?C300V111.redlineAt:0;',
-    '        }',
-    '    } catch(e1){}',
-    '    return active;',
-    '}',
-  ].join('\n');
-
-  const newAuthority = [
-    'function c300v111ShiftRpm() {',
-    '    return c300v111Window(c300v111ExactProfile(),12).shift;',
-    '}',
-    'function c300v111BlinkRpm() {',
-    '    return c300v111Window(c300v111ExactProfile(),12).blink;',
-    '}',
-    '// Compatibility name: the visible redline layer now begins at ShiftRPM.',
-    'function c300v111RedlineRpm() {',
-    '    return c300v111ShiftRpm();',
-    '}',
-    'function c300v111BlinkActive() {',
-    "    var rpm=Number(c300v111Prop('Rpms',0))||0;",
-    '    var limit=c300v111BlinkRpm();',
-    '    var active=rpm>0&&limit>0&&rpm>=limit;',
-    '    if (active) {',
-    '        if (!C300V111.blinkWas) C300V111.blinkAt=Date.now();',
-    '        C300V111.blinkWas=true;',
-    '    } else {',
-    '        C300V111.blinkWas=false;',
-    '        C300V111.blinkAt=0;',
-    '    }',
-    '    return active;',
-    '}',
-    'function c300v111ShiftCuePulse() {',
-    '    if (!c300v111BlinkActive()) return true;',
-    '    var elapsed=Math.max(0,Date.now()-Number(C300V111.blinkAt||Date.now()));',
-    '    return (Math.floor(elapsed/42)%2)===0;',
-    '}',
-    'function c300v111RedlineActive() {',
-    "    try { if (typeof cp300v290CanShowLiveRedline==='function'&&!cp300v290CanShowLiveRedline()) return false; } catch(e0){}",
-    "    var rpm=Number(c300v111Prop('Rpms',0))||0;",
-    '    var limit=c300v111ShiftRpm();',
-    '    var active=rpm>0&&limit>0&&rpm>=limit;',
-    '    if (!active && !(limit>0)) {',
-    "        var raw=c300v111Prop('RPMRedlineReached',false);",
-    "        active=raw===true||raw===1||String(raw).toLowerCase()==='true';",
-    '    }',
-    '    if (active) {',
-    '        if (!C300V111.redlineWas) C300V111.redlineAt=Date.now();',
-    '        C300V111.redlineWas=true;',
-    '    } else {',
-    '        C300V111.redlineWas=false;',
-    '        C300V111.redlineAt=0;',
-    '        C300V111.blinkWas=false;',
-    '        C300V111.blinkAt=0;',
-    '    }',
-    '    try {',
-    "        if (typeof CP300V22_STATE==='object') {",
-    '            CP300V22_STATE.redlineWas=active;',
-    '            CP300V22_STATE.redlineAt=active?C300V111.redlineAt:0;',
-    '        }',
-    '    } catch(e1){}',
-    '    return active;',
-    '}',
-  ].join('\n');
-
-  if (!js.includes(oldAuthority)) throw new Error('Could not find final V1.11 redline authority');
-  js = js.replace(oldAuthority, newAuthority);
-
-  const oldBindings = [
-    'cp300v22RedlineRpm=function(){return c300v111RedlineRpm();};',
-    'cp300v22StartRpm=function(){return c300v111Window(c300v111ExactProfile(),12).start;};',
-    'cp300v22RedlineActive=function(){return c300v111RedlineActive();};',
-    'cp300v290RedlineRpm=function(){return c300v111RedlineRpm();};',
-    'cp300v290RedlineActive=function(){return c300v111RedlineActive();};',
-  ].join('\n');
-  const newBindings = [
-    'cp300v22RedlineRpm=function(){return c300v111RedlineRpm();};',
-    'cp300v22StartRpm=function(){return c300v111Window(c300v111ExactProfile(),12).start;};',
-    'cp300v22RedlineActive=function(){return c300v111RedlineActive();};',
-    'cp300v290RedlineRpm=function(){return c300v111RedlineRpm();};',
-    'cp300v290RedlineActive=function(){return c300v111RedlineActive();};',
-    'cp300v290RedlinePulse=function(){return c300v111ShiftCuePulse();};',
-  ].join('\n');
-  if (!js.includes(oldBindings)) throw new Error('Could not find final V1.11 bindings');
-  return js.replace(oldBindings, newBindings);
-}
-
 function refactorEmbeddedJavascript(js) {
   if (js.includes('var CP300_RPM_PROFILES =')) {
     const missingComma = " } } //redline = right side rpm leds\n\t{\tname: 'BMW M2 Racing (G87)'";
     const repairedComma = " } }, //redline = right side rpm leds\n\t{\tname: 'BMW M2 Racing (G87)'";
-    if (js.includes(missingComma)) js = js.replace(missingComma, repairedComma);
-    return addTwoStageIRacingShiftCue(js);
+    return js.includes(missingComma) ? js.replace(missingComma, repairedComma) : js;
   }
 
   const v8Pattern = /var CP300V8_EXACT_RPM_PROFILES = (\[.*?\]);\s*\r?\n/s;
@@ -285,7 +127,7 @@ function refactorEmbeddedJavascript(js) {
   if (!localBlock.test(js)) throw new Error('Could not find the local BMW M2 installer block');
   js = js.replace(localBlock, '\n');
 
-  return addTwoStageIRacingShiftCue(js);
+  return js;
 }
 
 const files = fs.readdirSync(profilesDir)
