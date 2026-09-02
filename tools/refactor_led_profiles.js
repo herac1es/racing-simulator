@@ -73,18 +73,7 @@ function appendLegacyM2Redline(js) {
 }
 
 function addTwoStageIRacingShiftCue(js) {
-  const earlyShiftPoint = '        shiftPoint=ir.shift || ir.last || ir.blink || exactRed || ir.max;';
-  const completedBarShiftPoint = [
-    '        shiftPoint=Math.max(ir.shift || 0,ir.last || 0) || ir.blink || exactRed || ir.max;',
-    '        // Some cars report ShiftRPM below LastRPM. Never let the solid-red',
-    '        // overlay hide the final progressive rev lights on those cars.',
-  ].join('\n');
-
-  if (js.includes('function c300v111BlinkActive()')) {
-    if (js.includes(completedBarShiftPoint)) return js;
-    if (!js.includes(earlyShiftPoint)) throw new Error('Could not update the two-stage shift cue ordering');
-    return js.replace(earlyShiftPoint, completedBarShiftPoint);
-  }
+  if (js.includes('function c300v111BlinkActive()')) return js;
 
   const replacements = [
     [
@@ -105,9 +94,7 @@ function addTwoStageIRacingShiftCue(js) {
       [
         "        // Shift RPM starts the solid full-bar cue. Blink RPM starts the",
         "        // high-frequency pulse; max RPM is only a blink-stage fallback.",
-        "        shiftPoint=Math.max(ir.shift || 0,ir.last || 0) || ir.blink || exactRed || ir.max;",
-        "        // Some cars report ShiftRPM below LastRPM. Never let the solid-red",
-        "        // overlay hide the final progressive rev lights on those cars.",
+        "        shiftPoint=ir.shift || ir.last || ir.blink || exactRed || ir.max;",
         "        redline=ir.blink || ir.max || ir.last || ir.shift || exactRed;",
         "        start=ir.first;",
       ].join('\n'),
