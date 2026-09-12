@@ -1,0 +1,68 @@
+[
+  {
+    "kind": "rpm",
+    "detail": "Replaced old 5-game car tables with all original DNR 7.0.3 width-12 trees for 7 games; kept original F1 branch and original generic pattern. Generic/specific/F1 selectors are mutually exclusive."
+  },
+  {
+    "kind": "f1-game-list",
+    "path": "/LedContainers/0/LedContainers/1/LedContainers/0/LedContainers/8"
+  },
+  {
+    "kind": "formula",
+    "path": "/LedContainers/0/LedContainers/1/LedContainers/0/LedContainers/8/LedContainers/1/LedContainers/0/TriggerFormula",
+    "before": "return isnull($prop('GameRawData.PacketSessionData.m_safetyCarStatus'), 0) !== 0 &&\r\n\tisnull($prop('GameRawData.PlayerLapData.m_safetyCarDelta'), 0) >= 0.00;",
+    "after": "return c300_isnull($prop('GameRawData.PacketSessionData.m_safetyCarStatus'), 0) !== 0 &&\r\n\tc300_isnull($prop('GameRawData.PlayerLapData.m_safetyCarDelta'), 0) >= 0.00;"
+  },
+  {
+    "kind": "formula",
+    "path": "/LedContainers/0/LedContainers/1/LedContainers/0/LedContainers/8/LedContainers/1/LedContainers/1/TriggerFormula",
+    "before": "return isnull($prop('GameRawData.PacketSessionData.m_safetyCarStatus'), 0) !== 0 &&\r\n\tisnull($prop('GameRawData.PlayerLapData.m_safetyCarDelta'), 0) < 0.00;",
+    "after": "return c300_isnull($prop('GameRawData.PacketSessionData.m_safetyCarStatus'), 0) !== 0 &&\r\n\tc300_isnull($prop('GameRawData.PlayerLapData.m_safetyCarDelta'), 0) < 0.00;"
+  },
+  {
+    "kind": "formula",
+    "path": "/LedContainers/0/LedContainers/1/LedContainers/0/LedContainers/8/LedContainers/2/LedContainers/0/TriggerFormula",
+    "before": "if (isnull($prop('DNRLEDs.DRSDetectionPoint'))) {\r\n\treturn dnr_DRS_detection();\r\n}\r\nreturn false;",
+    "after": "return c300_drsDetection();"
+  },
+  {
+    "kind": "f1-game-list",
+    "path": "/LedContainers/0/LedContainers/1/LedContainers/1/LedContainers/3"
+  },
+  {
+    "kind": "f1-game-list",
+    "path": "/LedContainers/0/LedContainers/1/LedContainers/3/LedContainers/1"
+  },
+  {
+    "kind": "f1-game-list",
+    "path": "/LedContainers/1/LedContainers/5/LedContainers/3"
+  },
+  {
+    "kind": "f1-game-list",
+    "path": "/LedContainers/1/LedContainers/9/LedContainers/3"
+  },
+  {
+    "kind": "formula",
+    "path": "/LedContainers/2/LedContainers/0/LedContainers/0/LedContainers/2/TriggerFormula",
+    "before": "return ($prop('DataCorePlugin.CurrentGame').startsWith('F120')) ? false : true;",
+    "after": "return (String($prop('DataCorePlugin.CurrentGame') ?? '').startsWith('F120')) ? false : true;"
+  },
+  {
+    "kind": "f1-game-list",
+    "path": "/LedContainers/2/LedContainers/0/LedContainers/1/LedContainers/2/LedContainers/2"
+  },
+  {
+    "kind": "f1-game-list",
+    "path": "/LedContainers/2/LedContainers/0/LedContainers/2/LedContainers/3/LedContainers/2"
+  },
+  {
+    "kind": "f1-game-list",
+    "path": "/LedContainers/2/LedContainers/0/LedContainers/3/LedContainers/3"
+  },
+  {
+    "kind": "formula",
+    "path": "/LedContainers/2/LedContainers/0/LedContainers/4/TriggerFormula",
+    "before": "return (\r\n  $prop('DataCorePlugin.CurrentGame').startsWith('F120') &&\r\n  $prop('GameRawData.PlayerCarStatusData.m_drsActivationDistance') > 0\r\n) ? true : false;",
+    "after": "return (\r\n  String($prop('DataCorePlugin.CurrentGame') ?? '').startsWith('F120') &&\r\n  $prop('GameRawData.PlayerCarStatusData.m_drsActivationDistance') > 0\r\n) ? true : false;"
+  }
+]

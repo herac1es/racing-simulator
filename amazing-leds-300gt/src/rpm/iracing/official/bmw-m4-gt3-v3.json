@@ -1,0 +1,20 @@
+{
+  "source": {
+    "kind": "iracing-manual",
+    "title": "BMW M4 GT3 User Manual V3 - SHIFT LIGHTS",
+    "url": "https://s100.iracing.com/wp-content/uploads/2024/07/BMW-M4-GT3-Manual_V3.pdf",
+    "page": 8,
+    "revision": "BMW-M4-GT3-Manual_V3",
+    "retrievedOn": "2026-09-12",
+    "pdfSha256": "80a3553e0df6030e51bc5077445716f0e1fcf1fd53644af9564b9cea11428128",
+    "gearScope": "single-published-table-reused-for-R-N-1-6",
+    "limitations": "The July 2024 manual predates the 2025 EVO update. It publishes one table, not gear-specific EVO calibration. Current EVO thresholds require game verification. Named colors are represented by standard RGB values; exact RGB and redline flash timing are not specified."
+  },
+  "carName": "BMW M4 GT3",
+  "carId": "bmwm4gt3",
+  "ledNumber": 10,
+  "direction": "left-to-right",
+  "redlineBlinkInterval": 0,
+  "ledColor": ["#FFFF0000", "#FF00FF00", "#FF00FF00", "#FFFFFF00", "#FFFFFF00", "#FFFFFF00", "#FFFFFF00", "#FFFFFF00", "#FFFFFF00", "#FFFFA500", "#FFFFA500"],
+  "sharedRpm": [6800, 4800, 5000, 5200, 5400, 5600, 5800, 6000, 6200, 6400, 6600]
+}

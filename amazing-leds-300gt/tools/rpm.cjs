@@ -1,13 +1,14 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const crypto = require('node:crypto');
+const { applyOverrides } = require('./overrides.cjs');
 const root = path.resolve(__dirname, '..');
 const read = (file) => JSON.parse(fs.readFileSync(path.join(root, file), 'utf8'));
 const color = (value) => typeof value === 'string' && /^#[0-9A-F]{8}$/i.test(value);
 const positive = (value) => Number.isFinite(value) && value > 0;
 function check(valid, message) { if (!valid) throw new Error('RPM configuration: ' + message); }
 
-function loadRpm() {
+function loadRpm(overrides = read('src/rpm/iracing/overrides.json')) {
   const config = read('src/rpm/iracing/config.json');
   check(['auto', 'generic', 'off'].includes(config.mode), 'mode must be auto, generic or off');
   check(config.ledCount === 12, '300 GT requires 12 top LEDs');
@@ -25,26 +26,53 @@ function loadRpm() {
       const normalized = alias.toLowerCase().replace(/[^a-z0-9]/g, '');
       check(normalized && (!aliases.has(normalized) || aliases.get(normalized) === car.id), car.id + ': ambiguous alias'); aliases.set(normalized, car.id);
     }
-    const source = provenance.files.find((entry) => entry.file === car.dataFile);
-    check(source, car.id + ': missing provenance');
-    const bytes = fs.readFileSync(path.join(root, 'vendor/lovely-car-data', source.file));
-    check(crypto.createHash('sha256').update(bytes).digest('hex') === source.sha256, car.id + ': source hash mismatch');
-    const data = JSON.parse(bytes);
+    let source, data;
+    check(car.dataSource === undefined || ['lovely-car-data', 'iracing-manual'].includes(car.dataSource), car.id + ': unknown data source');
+    if (car.dataSource === 'iracing-manual') {
+      const official = read('src/rpm/iracing/official/' + car.dataFile);
+      source = official.source;
+      check(source?.kind === 'iracing-manual' && source.url?.startsWith('https://s100.iracing.com/') &&
+        Number.isInteger(source.page) && source.page > 0 && source.revision && source.gearScope && source.limitations,
+        car.id + ': incomplete official source record');
+      check(Array.isArray(official.sharedRpm), car.id + ': missing published RPM table');
+      const { source: ignored, sharedRpm, ...fields } = official;
+      // The manual has ONE table. Reuse it as a clearly labelled editable
+      // baseline; do not claim eight independent official gear measurements.
+      data = { ...fields, ledRpm: [Object.fromEntries(['R', 'N', '1', '2', '3', '4', '5', '6'].map((gear) => [gear, sharedRpm.slice()]))] };
+    } else {
+      const entry = provenance.files.find((entry) => entry.file === car.dataFile);
+      check(entry, car.id + ': missing provenance');
+      const bytes = fs.readFileSync(path.join(root, 'vendor/lovely-car-data', entry.file));
+      check(crypto.createHash('sha256').update(bytes).digest('hex') === entry.sha256, car.id + ': source hash mismatch');
+      data = JSON.parse(bytes);
+      source = { ...entry, kind: 'lovely-car-data', revision: provenance.revision, license: provenance.license };
+    }
     check(car.carIds.includes(data.carId), car.id + ': unexpected source car');
     check(Number.isInteger(data.ledNumber) && data.ledNumber > 0, car.id + ': invalid LED count');
     check(data.ledColor.length === data.ledNumber + 1 && data.ledColor.every(color), car.id + ': invalid colors');
     check(Number.isFinite(data.redlineBlinkInterval) && data.redlineBlinkInterval >= 0, car.id + ': invalid blink interval');
     check(car.mapping.length === 12 && car.mapping.every((i) => Number.isInteger(i) && i > 0 && i <= data.ledNumber), car.id + ': invalid mapping');
-    check(new Set(car.mapping).size === 12, car.id + ': duplicate mapped lamp');
+    // Repeated sources intentionally expand a smaller lamp group without
+    // inventing RPM stages (BMW repeats its last two activation lamps).
+    if (car.sourceLedOrder) {
+      const order = car.sourceLedOrder;
+      check(order.length === 10 && new Set(order).size === 10 &&
+        order.every((i) => Number.isInteger(i) && i > 0 && i <= data.ledNumber), car.id + ': invalid source lamp order');
+      check(JSON.stringify(car.mapping) === JSON.stringify([...order.slice(0, 8), order[8], order[8], order[9], order[9]]),
+        car.id + ': 10-to-12 mapping must duplicate only the final two lamps');
+    }
     check(data.ledRpm.length === 1, car.id + ': unexpected gear table');
     const gears = data.ledRpm[0];
     for (const gear of ['R', 'N', '1', '2', '3', '4', '5', '6']) {
       const row = gears[gear];
       check(row && row.length === data.ledNumber + 1 && positive(row[0]), car.id + ': invalid gear ' + gear);
       check(row.slice(1).every((rpm) => Number.isFinite(rpm) && rpm >= 0 && rpm <= row[0]), car.id + ': invalid thresholds for ' + gear);
+      if (car.sourceLedOrder) check(car.sourceLedOrder.every((sourceIndex, i, order) =>
+        row[sourceIndex] > 0 && data.ledColor[sourceIndex].slice(1, 3) !== '00' &&
+        (i === 0 || row[sourceIndex] >= row[order[i - 1]])), car.id + ': invalid left-to-right activation order for ' + gear);
     }
-    return { ...car, data, source: { ...source, revision: provenance.revision, license: provenance.license } };
+    return { ...car, data, source };
   });
-  return { ...config, cars };
+  return { ...config, cars: applyOverrides(cars, overrides) };
 }
 module.exports = { loadRpm };

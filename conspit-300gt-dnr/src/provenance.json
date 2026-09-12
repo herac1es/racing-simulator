@@ -1,0 +1,106 @@
+{
+  "sourceThread": "01a0962d-08a7-7390-af58-e108062985c5",
+  "sourceTitle": "评估 DNR 模型器插件逆向",
+  "dnrVersion": "7.0.3",
+  "installerSha256": "5f5b96c116548432042576ec8ccce69ccd4765f75225bff2a2d5c18464470421",
+  "records": [
+    {
+      "file": "vendor/dnr-7.0.3/engine.js",
+      "sha256": "be21d615c81dd4bb276cc35264d12597d39287d1451cb4dc805bb0eca65734e3",
+      "originalFile": "DanielNewmanRacing.Plugin.Services.Rpm.DNR_LEDs_Engine.js",
+      "originalSha256": "be21d615c81dd4bb276cc35264d12597d39287d1451cb4dc805bb0eca65734e3",
+      "adaptation": "Unmodified bytes"
+    },
+    {
+      "file": "vendor/dnr-7.0.3/csharp-redlines.json",
+      "sha256": "409c841bce7da0ef0ec9743f7e26c4ea2688c0a69c156f4238c29b2e202db93b",
+      "originalFile": "DanielNewmanRacing.Plugin.Services.Redline.redlines.json",
+      "originalSha256": "409c841bce7da0ef0ec9743f7e26c4ea2688c0a69c156f4238c29b2e202db93b",
+      "adaptation": "Unmodified bytes"
+    },
+    {
+      "file": "vendor/dnr-7.0.3/cartrees-12.json",
+      "sha256": "ef40215bfc492247ea0ec18b17cdc18f1055400a238e6eac9554f4053fe5df1f",
+      "originalFile": "cartrees.json",
+      "originalSha256": "cb1164f75fd5bcfbd7a5dbfb5350e6aef4335673f17a0fb50e5a093d625b3fde",
+      "adaptation": "Repository paths or selected resources; see integration notes"
+    },
+    {
+      "file": "vendor/conspit/base-v1.6.ledsprofile",
+      "sha256": "2a6274f7be63b20dcc82cd85b11ee828399a0a5dbdcc29825b883251ca15f8d1",
+      "originalFile": "CONSPIT 300GT LED Profile V1.6 - Individual (ungrouped) (2).ledsprofile",
+      "originalSha256": "2a6274f7be63b20dcc82cd85b11ee828399a0a5dbdcc29825b883251ca15f8d1",
+      "adaptation": "Unmodified bytes"
+    },
+    {
+      "file": "vendor/conspit/rpm-template.json",
+      "sha256": "1f66bf105c8fa80ebde21509a6e231e6bdfd028dd183f7d2f6787c5e53a38e8b",
+      "originalFile": "leds-0.json",
+      "originalSha256": "1f66bf105c8fa80ebde21509a6e231e6bdfd028dd183f7d2f6787c5e53a38e8b",
+      "adaptation": "Unmodified bytes"
+    },
+    {
+      "file": "tools/build-rpm.cjs",
+      "sha256": "6cd2b063d03b7a2cb73aba6220d70caccdb006b6d9be214939e0faf78317ce1b",
+      "originalFile": "build-rpm.cjs",
+      "originalSha256": "ed27fb56c041e705870f7d482e0556d9ea3c2ca4038b97f45b533781676e3dfb",
+      "adaptation": "Repository paths or selected resources; see integration notes"
+    },
+    {
+      "file": "tools/build-full.cjs",
+      "sha256": "f73dbc009c308ec44d4163a4587d567414d0ce426960d7b900291fff49f58c8d",
+      "originalFile": "build-full.cjs",
+      "originalSha256": "a21c40156a7d7e238dbd014ef757ccdc4332d22797a57f331dd59ddb35a05f01",
+      "adaptation": "Repository paths or selected resources; see integration notes"
+    },
+    {
+      "file": "tests/full.cjs",
+      "sha256": "61872bc44d202a8fc6fddf1942a19b6c17c9bea921b6addea09b3c2e163c1e5a",
+      "originalFile": "verify-full.cjs",
+      "originalSha256": "848d1ae2b48f51a62a443886da49ff0a43a2795c60851263e975939a01a40fb7",
+      "adaptation": "Repository paths or selected resources; see integration notes"
+    },
+    {
+      "file": "tests/rpm.cjs",
+      "sha256": "eb93cc7eed0379fc916e1ee5fb1860b50efb5ab0da7fcd264bc8e6918dc448f3",
+      "originalFile": "verify-profiles.cjs",
+      "originalSha256": "13edbc223cc1fc436100b1715b38e8d0e5a2511fff75c641df1124d45b8467e2",
+      "adaptation": "Repository paths or selected resources; see integration notes"
+    },
+    {
+      "file": "tools/validate-native.ps1",
+      "sha256": "d3e510c93276eced26b9220a42b31ee9c3997cb26c5a398c89ce2ad617ff9110",
+      "originalFile": "validate-native.ps1",
+      "originalSha256": "57c1bdd55c082cd49c167bb03bc11678d11f52b99d7df4b7c91825dd25abc3de",
+      "adaptation": "Repository paths or selected resources; see integration notes"
+    },
+    {
+      "file": "tools/check-ncalc.ps1",
+      "sha256": "a09d3fe42a56d3727d5daba57528e3275a3a9ffc3e07a534c8e51aee6192c170",
+      "originalFile": "check-ncalc.ps1",
+      "originalSha256": "dcab13ab02b13570378e6ff8e5ba797faefbce495e64e02b2038fd241749b080",
+      "adaptation": "Repository paths or selected resources; see integration notes"
+    },
+    {
+      "file": "docs/usage.md",
+      "sha256": "9fd3df006ca84d5ed657bbb8e89617547c62815134e36a7cfe0fcde28b1bddf5",
+      "originalFile": "使用说明.md",
+      "originalSha256": "9fd3df006ca84d5ed657bbb8e89617547c62815134e36a7cfe0fcde28b1bddf5",
+      "adaptation": "Unmodified bytes"
+    }
+  ],
+  "originalProfiles": [
+    {
+      "file": "CONSPIT_300GT_Standalone_V2.0_DNR703.ledsprofile",
+      "sha256": "4d1c34bbe3b7e557c04f34f7e53f5293271bb75a8a30d29eccf4b3076fa569a9"
+    },
+    {
+      "file": "300GT_DNR703_RPM_FullColour.ledsprofile",
+      "sha256": "6ec2a2478bb7bbf61b946a64ef7f46e83acb3d163e8ccde818e82aa5b6cab569"
+    },
+    {
+      "file": "300GT_DNR703_RPM_TDM.ledsprofile",
+      "sha256": "8a162b73cacbd4d4317248f1872289e3a69aefeba8f9dc45c4b48c1bed36aab9"
+    }
+  ]
+}

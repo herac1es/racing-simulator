@@ -75,25 +75,49 @@ function amazingRpmGeneric() {
 // Pure resolution: diagnostics do not advance or reset animation state.
 function amazingRpmDiagnostics() {
     var car = amazingRpmCar(), gear = amazingRpmGear(), resolved = null;
-    if (AMAZING_RPM.mode === 'auto' && car && car.data.ledRpm[0][gear]) {
+    if (AMAZING_RPM.mode === 'auto' && car && car.override && car.override.gears[gear]) {
+        var custom = car.override.gears[gear];
+        resolved = { source: 'car-override', car: car.id, gear: gear,
+            thresholds: custom.thresholds.slice(), colors: custom.colors.slice(),
+            redline: custom.redline, redlineColor: custom.redlineColor,
+            blinkIntervalMs: custom.blinkIntervalMs,
+            calibrationStatus: car.override.calibrationStatus, notes: car.override.notes,
+            revision: car.source.revision };
+    }
+    if (!resolved && AMAZING_RPM.mode === 'auto' && car && car.data.ledRpm[0][gear]) {
         var row = car.data.ledRpm[0][gear];
         resolved = { source: 'car-data', car: car.id, gear: gear,
             thresholds: car.mapping.map(function (i) { return row[i]; }),
             colors: car.mapping.map(function (i) { return car.data.ledColor[i]; }),
             redline: row[0], redlineColor: car.data.ledColor[0],
             blinkIntervalMs: car.data.redlineBlinkInterval,
-            calibrationStatus: car.calibrationStatus, revision: car.source.revision };
+            calibrationStatus: car.calibrationStatus, notes: car.notes, revision: car.source.revision };
     }
     if (!resolved) resolved = amazingRpmGeneric() || { source: 'unavailable', thresholds: [], colors: [] };
     resolved.matchedCar = car ? car.id : null;
     resolved.gear = gear;
     resolved.mode = AMAZING_RPM.mode;
-    resolved.rpm = amazingRpmNumber(amazingRpmValue(['Rpms', 'RPMS', 'DataCorePlugin.GameData.NewData.Rpms', 'GameRawData.Telemetry.RPM']));
+    resolved.rpm = amazingRpmCurrent();
+    if (car && (resolved.source === 'car-data' || resolved.source === 'car-override')) {
+        resolved.sourceKind = car.source.kind;
+        resolved.referenceUrl = car.source.url;
+        if (car.source.page) resolved.referencePage = car.source.page;
+        if (car.source.gearScope) resolved.gearScope = car.source.gearScope;
+        if (car.source.limitations) resolved.sourceLimitations = car.source.limitations;
+    }
+    if (resolved.source === 'car-data' || resolved.source === 'car-override') {
+        resolved.renderer = 'native-ui';
+        resolved.nativeUiEditsIncluded = false;
+    }
     return resolved;
 }
 
-function amazingRpmFrame() {
-    var empty = new Array(12).fill(null), dark = new Array(12).fill('#FF000000');
+function amazingRpmCurrent() {
+    return amazingRpmNumber(amazingRpmValue(['Rpms', 'RPMS', 'DataCorePlugin.GameData.NewData.Rpms', 'GameRawData.Telemetry.RPM']));
+}
+
+// UI groups share the same session gates as the dynamic fallback renderer.
+function amazingRpmActive() {
     var game = String(amazingRpmValue(['DataCorePlugin.CurrentGame', 'GameName']) || '').toLowerCase();
     var mode = amazingRpmValue(['ConspitLEDs.TelemetryFunction', 'CONSPITLEDS.TelemetryFunction']);
     var running = amazingRpmValue(['DataCorePlugin.GameRunning', 'GameRunning']);
@@ -107,8 +131,27 @@ function amazingRpmFrame() {
         (onTrack != null && onTrack == false && $prop('GameRawData.Telemetry.IsReplayPlaying') != true) ||
         c300v27Paused() || cp300v3PitLimiter() || cp300v3InPitLane()) {
         globalThis.amazingRpmFlash = null;
-        return empty;
+        return false;
     }
+    return true;
+}
+
+function amazingRpmUiCar(id) {
+    var car = amazingRpmCar();
+    return AMAZING_RPM.mode === 'auto' && car !== null && car.id === id && amazingRpmCurrent() > 0;
+}
+
+function amazingRpmUiHasCarData() {
+    var car = amazingRpmCar(), gear = amazingRpmGear();
+    return AMAZING_RPM.mode === 'auto' && car !== null &&
+        (!!(car.override && car.override.gears[gear]) || !!car.data.ledRpm[0][gear]);
+}
+
+// Used by the generic UI branch and as a reference for generated native nodes.
+// Native per-car nodes do not call this renderer or its stored thresholds.
+function amazingRpmFrame() {
+    var empty = new Array(12).fill(null), dark = new Array(12).fill('#FF000000');
+    if (!amazingRpmActive()) return empty;
     var info = amazingRpmDiagnostics();
     if (!(info.rpm > 0) || info.source === 'unavailable') {
         globalThis.amazingRpmFlash = null;

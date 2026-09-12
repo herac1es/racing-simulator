@@ -1,0 +1,13 @@
+{
+  "name": "conspit-300gt-dnr",
+  "version": "2.0.0",
+  "private": true,
+  "description": "CONSPIT V1.6 full-wheel framework with embedded DNR 7.0.3 car data",
+  "scripts": {
+    "build": "node tools/build.cjs",
+    "test": "node tests/rpm.cjs && node tests/full.cjs && node tests/integration.cjs && node tests/update.cjs",
+    "update:inspect": "node tools/inspect-update.cjs",
+    "check": "npm run build && npm test"
+  },
+  "engines": { "node": ">=18" }
+}
