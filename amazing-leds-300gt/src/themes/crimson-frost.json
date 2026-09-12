@@ -1,0 +1,155 @@
+{
+  "name": "Crimson Frost",
+  "slug": "crimson-frost",
+  "profileId": "4a4a0c1f-7e8a-45d0-a349-ae4fb101558c",
+  "runtime": {
+    "CP300V1_PIT_A_1": "#FF00EFFF",
+    "CP300V1_PIT_B_1": "#FFFF6A00",
+    "CP300V3_BTN1_1": "#FFFFFFFF",
+    "CP300V3_BTN2_1": "#FFFF0000",
+    "CP300V3_BTN3_1": "#FFFFFFFF",
+    "CP300V3_BTN4_1": "#FFFF0000",
+    "CP300V3_RING1_1": "#FFFF0000",
+    "CP300V3_RING2_1": "#FFFFFFFF",
+    "CP300V3_RING3_1": "#FFFF0000",
+    "CP300V3_ACCENT_1": "#FFFFFFFF",
+    "CP300V3_PIT_A_1": "#FF00EFFF",
+    "CP300V3_PIT_B_1": "#FFFF6A00",
+    "CP300V3_BTN1_2": "#FFFFFFFF",
+    "CP300V3_BTN2_2": "#FFFF0000",
+    "CP300V3_BTN3_2": "#FFFFFFFF",
+    "CP300V3_BTN4_2": "#FFFF0000",
+    "CP300V3_RING1_2": "#FFFF0000",
+    "CP300V3_RING2_2": "#FFFFFFFF",
+    "CP300V3_RING3_2": "#FFFF0000",
+    "CP300V3_ACCENT_2": "#FFFFFFFF",
+    "CP300V3_PIT_A_2": "#FFFFFFFF",
+    "CP300V3_PIT_B_2": "#FFFF0000",
+    "CP300V3_BTN1_3": "#FFFFFFFF",
+    "CP300V3_BTN2_3": "#FFFF0000",
+    "CP300V3_BTN3_3": "#FFFFFFFF",
+    "CP300V3_BTN4_3": "#FFFF0000",
+    "CP300V3_RING1_3": "#FFFF0000",
+    "CP300V3_RING2_3": "#FFFFFFFF",
+    "CP300V3_RING3_3": "#FFFF0000",
+    "CP300V3_ACCENT_3": "#FFFFFFFF"
+  },
+  "layoutOverrides": [
+    {
+      "path": [
+        "LedContainers",
+        "0",
+        "LedContainers",
+        "0",
+        "Description"
+      ],
+      "value": "Conspit 300 GT Crimson Frost - Brightness & Idle"
+    },
+    {
+      "path": [
+        "LedContainers",
+        "0",
+        "LedContainers",
+        "1",
+        "LedContainers",
+        "0",
+        "Description"
+      ],
+      "value": "Conspit 300 GT Crimson Frost - Top Telemetry"
+    },
+    {
+      "path": [
+        "LedContainers",
+        "0",
+        "LedContainers",
+        "1",
+        "Description"
+      ],
+      "value": "Conspit 300 GT Crimson Frost - Live Session Output"
+    },
+    {
+      "path": [
+        "LedContainers",
+        "0",
+        "Description"
+      ],
+      "value": "Conspit 300 GT Crimson Frost - Top Status Lights"
+    },
+    {
+      "path": [
+        "LedContainers",
+        "1",
+        "LedContainers",
+        "0",
+        "Description"
+      ],
+      "value": "Conspit 300 GT Crimson Frost - Desktop & Menu Output"
+    },
+    {
+      "path": [
+        "LedContainers",
+        "1",
+        "LedContainers",
+        "1",
+        "LedContainers",
+        "0",
+        "Description"
+      ],
+      "value": "Conspit 300 GT Crimson Frost - Buttons, Rings & Telemetry"
+    },
+    {
+      "path": [
+        "LedContainers",
+        "1",
+        "LedContainers",
+        "1",
+        "Description"
+      ],
+      "value": "Conspit 300 GT Crimson Frost - Live Wheel Output"
+    },
+    {
+      "path": [
+        "LedContainers",
+        "1",
+        "Description"
+      ],
+      "value": "Conspit 300 GT Crimson Frost - Buttons, Rings & Race Functions"
+    },
+    {
+      "path": [
+        "LedContainers",
+        "2",
+        "LedContainers",
+        "0",
+        "Description"
+      ],
+      "value": "Conspit 300 GT Crimson Frost - Buttons, Encoders & Multifunction Switches"
+    },
+    {
+      "path": [
+        "LedContainers",
+        "2",
+        "Description"
+      ],
+      "value": "Conspit 300 GT Crimson Frost - Wheel & Input Feedback"
+    },
+    {
+      "path": [
+        "LedContainers",
+        "3",
+        "LedContainers",
+        "0",
+        "Description"
+      ],
+      "value": "Conspit 300 GT Crimson Frost - Dedicated Input Animation Overlay"
+    },
+    {
+      "path": [
+        "LedContainers",
+        "3",
+        "Description"
+      ],
+      "value": "Conspit 300 GT Crimson Frost - Input Animations (Final Priority)"
+    }
+  ]
+}

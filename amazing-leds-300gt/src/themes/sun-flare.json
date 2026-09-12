@@ -1,0 +1,155 @@
+{
+  "name": "Sun Flare",
+  "slug": "sun-flare",
+  "profileId": "68266b10-7d3e-4bec-a36f-da7390963dab",
+  "runtime": {
+    "CP300V1_PIT_A_1": "#FF00EFFF",
+    "CP300V1_PIT_B_1": "#FFFF6A00",
+    "CP300V3_BTN1_1": "#FFFFFF00",
+    "CP300V3_BTN2_1": "#FFFF4500",
+    "CP300V3_BTN3_1": "#FFFF0000",
+    "CP300V3_BTN4_1": "#FFFF4500",
+    "CP300V3_RING1_1": "#FFFF0000",
+    "CP300V3_RING2_1": "#FFFFFF00",
+    "CP300V3_RING3_1": "#FFFF0000",
+    "CP300V3_ACCENT_1": "#FFFFD700",
+    "CP300V3_PIT_A_1": "#FF00EFFF",
+    "CP300V3_PIT_B_1": "#FFFF6A00",
+    "CP300V3_BTN1_2": "#FFFFFF00",
+    "CP300V3_BTN2_2": "#FFFF4500",
+    "CP300V3_BTN3_2": "#FFFF0000",
+    "CP300V3_BTN4_2": "#FFFF4500",
+    "CP300V3_RING1_2": "#FFFF0000",
+    "CP300V3_RING2_2": "#FFFFFF00",
+    "CP300V3_RING3_2": "#FFFF0000",
+    "CP300V3_ACCENT_2": "#FFFFD700",
+    "CP300V3_PIT_A_2": "#FFFFFFFF",
+    "CP300V3_PIT_B_2": "#FFFF0000",
+    "CP300V3_BTN1_3": "#FFFFFF00",
+    "CP300V3_BTN2_3": "#FFFF4500",
+    "CP300V3_BTN3_3": "#FFFF0000",
+    "CP300V3_BTN4_3": "#FFFF4500",
+    "CP300V3_RING1_3": "#FFFF0000",
+    "CP300V3_RING2_3": "#FFFFFF00",
+    "CP300V3_RING3_3": "#FFFF0000",
+    "CP300V3_ACCENT_3": "#FFFFD700"
+  },
+  "layoutOverrides": [
+    {
+      "path": [
+        "LedContainers",
+        "0",
+        "LedContainers",
+        "0",
+        "Description"
+      ],
+      "value": "Conspit 300 GT Sun Flare - Brightness & Idle"
+    },
+    {
+      "path": [
+        "LedContainers",
+        "0",
+        "LedContainers",
+        "1",
+        "LedContainers",
+        "0",
+        "Description"
+      ],
+      "value": "Conspit 300 GT Sun Flare - Top Telemetry"
+    },
+    {
+      "path": [
+        "LedContainers",
+        "0",
+        "LedContainers",
+        "1",
+        "Description"
+      ],
+      "value": "Conspit 300 GT Sun Flare - Live Session Output"
+    },
+    {
+      "path": [
+        "LedContainers",
+        "0",
+        "Description"
+      ],
+      "value": "Conspit 300 GT Sun Flare - Top Status Lights"
+    },
+    {
+      "path": [
+        "LedContainers",
+        "1",
+        "LedContainers",
+        "0",
+        "Description"
+      ],
+      "value": "Conspit 300 GT Sun Flare - Desktop & Menu Output"
+    },
+    {
+      "path": [
+        "LedContainers",
+        "1",
+        "LedContainers",
+        "1",
+        "LedContainers",
+        "0",
+        "Description"
+      ],
+      "value": "Conspit 300 GT Sun Flare - Buttons, Rings & Telemetry"
+    },
+    {
+      "path": [
+        "LedContainers",
+        "1",
+        "LedContainers",
+        "1",
+        "Description"
+      ],
+      "value": "Conspit 300 GT Sun Flare - Live Wheel Output"
+    },
+    {
+      "path": [
+        "LedContainers",
+        "1",
+        "Description"
+      ],
+      "value": "Conspit 300 GT Sun Flare - Buttons, Rings & Race Functions"
+    },
+    {
+      "path": [
+        "LedContainers",
+        "2",
+        "LedContainers",
+        "0",
+        "Description"
+      ],
+      "value": "Conspit 300 GT Sun Flare - Buttons, Encoders & Multifunction Switches"
+    },
+    {
+      "path": [
+        "LedContainers",
+        "2",
+        "Description"
+      ],
+      "value": "Conspit 300 GT Sun Flare - Wheel & Input Feedback"
+    },
+    {
+      "path": [
+        "LedContainers",
+        "3",
+        "LedContainers",
+        "0",
+        "Description"
+      ],
+      "value": "Conspit 300 GT Sun Flare - Dedicated Input Animation Overlay"
+    },
+    {
+      "path": [
+        "LedContainers",
+        "3",
+        "Description"
+      ],
+      "value": "Conspit 300 GT Sun Flare - Input Animations (Final Priority)"
+    }
+  ]
+}

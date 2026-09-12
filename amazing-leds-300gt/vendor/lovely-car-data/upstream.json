@@ -1,0 +1,22 @@
+{
+  "project": "Lovely Car Data",
+  "author": "Lovely Sim Racing, ATSR and Gomez Sim Industries",
+  "repository": "https://github.com/Lovely-Sim-Racing/lovely-car-data",
+  "revision": "7cd16dd51d403f9f688e3e02f064e690e6b1a22c",
+  "license": "CC-BY-NC-SA-4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+  "files": [
+    {
+      "file": "porsche992rgt3.json",
+      "upstreamPath": "data/iracing/porsche992rgt3.json",
+      "url": "https://raw.githubusercontent.com/Lovely-Sim-Racing/lovely-car-data/7cd16dd51d403f9f688e3e02f064e690e6b1a22c/data/iracing/porsche992rgt3.json",
+      "sha256": "6fd418fdbf5df6d9ebd20ed1be27a7ce1cee477788ea357d5b915c1c633fb83a"
+    },
+    {
+      "file": "bmwm4gt3.json",
+      "upstreamPath": "data/iracing/bmwm4gt3.json",
+      "url": "https://raw.githubusercontent.com/Lovely-Sim-Racing/lovely-car-data/7cd16dd51d403f9f688e3e02f064e690e6b1a22c/data/iracing/bmwm4gt3.json",
+      "sha256": "01f26b8d9d60f37681dda7c8e9344e92b43a881afa168fbc3f5ddc16b5f180de"
+    }
+  ]
+}
