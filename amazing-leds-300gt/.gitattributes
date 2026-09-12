@@ -1,0 +1,4 @@
+# Stable source strings and generated profiles on Windows and Unix.
+* text eol=lf
+# Preserve the exact upstream bytes used for provenance checks.
+vendor/lovely-car-data/* -text

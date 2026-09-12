@@ -10,6 +10,14 @@ adds a separate RPM framework for Porsche 911 GT3 R (992), BMW M4 GT3 EVO, and
 generic cars, with editable sources and generated SimHub LED profiles. Car data
 and derived profiles have separate licensing; see the project's README.
 
+## CONSPIT 300GT DNR-based standalone
+
+[conspit-300gt-dnr](conspit-300gt-dnr/README.md) integrates the separate DNR task's
+CONSPIT V1.6 full-wheel framework with embedded DNR 7.0.3 car data. It includes
+the full-wheel profile, two RPM-only profiles, local build inputs and validation
+tools. It retains multi-game support and the imported DNR layouts as a separate
+configuration alongside amazing-leds-300gt. See its own third-party notices.
+
 ## Conspit 300 GT versioning
 
 `Conspit 300 GT Themes Pack V1.2` and the `V1.2` profile filenames identify the

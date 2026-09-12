@@ -3,8 +3,10 @@
   "name": "BMW M4 GT3 EVO",
   "carIds": ["bmwm4gt3"],
   "carNames": ["BMW M4 GT3 EVO", "BMW M4 GT3"],
+  "dataSource": "lovely-car-data",
   "dataFile": "bmwm4gt3.json",
-  "calibrationStatus": "evo-calibration-pending",
-  "mapping": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
-  "notes": "iRacing updated the existing bmwm4gt3 to EVO in 2025 Season 4. Lovely still names this data BMW M4 GT3; EVO thresholds have not been verified. Source positions 3 and 10 are gaps. A zero blink interval means steady redline, not an invented flash."
+  "calibrationStatus": "community-timing-left-to-right-evo-unverified",
+  "sourceLedOrder": [1, 12, 2, 11, 4, 9, 5, 8, 6, 7],
+  "mapping": [1, 12, 2, 11, 4, 9, 5, 8, 6, 6, 7, 7],
+  "notes": "Restore Lovely per-gear thresholds after the user rejected the pre-EVO 2024 manual single table. User previously reported the Lovely timing looked close and confirmed left-to-right game direction. sourceLedOrder explicitly rearranges the ten nontransparent community lamps by activation, preserving each lamp's RPM/color and all five source stages; the final two sources 6 and 7 expand to physical pairs 9-10 and 11-12. This is a provisional adaptation, not a measured EVO physical lamp table. Current EVO timing, colors and stage count still need in-game comparison. CarId bmwm4gt3 is reused by EVO and does not prove legacy data equivalence. Do not reactivate the old manual table as an EVO baseline."
 }

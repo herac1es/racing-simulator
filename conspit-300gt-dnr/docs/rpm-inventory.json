@@ -1,0 +1,1253 @@
+{
+  "scope": "RPM only; full wheel effect compilation requires original DNR 300GT device profiles",
+  "sourceVersion": "7.0.3",
+  "width": 12,
+  "games": [
+    "AssettoCorsa",
+    "AssettoCorsaRally",
+    "AssettoCorsaCompetizione",
+    "Automobilista2",
+    "EAWRC23",
+    "LMU",
+    "IRacing"
+  ],
+  "selectorsByGame": {
+    "AssettoCorsa": 131,
+    "AssettoCorsaRally": 2,
+    "AssettoCorsaCompetizione": 46,
+    "Automobilista2": 122,
+    "EAWRC23": 54,
+    "LMU": 30,
+    "IRacing": 99
+  },
+  "nodeCounts": {
+    "RPMSegments": 745,
+    "Groups.CustomConditionalGroup": 1171,
+    "StaticColor": 195,
+    "Base.Group": 184,
+    "Animation": 153,
+    "ScriptedContent": 487,
+    "Groups.CurrentGameGroup": 7,
+    "Groups.GameCarModelGroup": 482
+  },
+  "explicitNamedCars": [
+    {
+      "game": "AssettoCorsaRally",
+      "model": "Peugeot 208 Rally4",
+      "id": "Peugeot 208 Rally4"
+    },
+    {
+      "game": "AssettoCorsaRally",
+      "model": "Peugeot 306 II Maxi Kit",
+      "id": "Peugeot 306 II Maxi Kit"
+    },
+    {
+      "game": "AssettoCorsaCompetizione",
+      "model": "Audi R8 LMS GT2 2021",
+      "id": "audi_r8_lms_gt2"
+    },
+    {
+      "game": "AssettoCorsaCompetizione",
+      "model": "KTM Xbow GT2 2021",
+      "id": "ktm_xbow_gt2"
+    },
+    {
+      "game": "AssettoCorsaCompetizione",
+      "model": "Maserati GT2 2023",
+      "id": "maserati_mc20_gt2"
+    },
+    {
+      "game": "AssettoCorsaCompetizione",
+      "model": "Mercedes AMG GT2 2023",
+      "id": "mercedes_amg_gt2"
+    },
+    {
+      "game": "AssettoCorsaCompetizione",
+      "model": "Aston Martin Vantage V12 GT3 2013",
+      "id": "amr_v12_vantage_gt3"
+    },
+    {
+      "game": "AssettoCorsaCompetizione",
+      "model": "Aston Martin V8 Vantage GT3 2019",
+      "id": "amr_v8_vantage_gt3"
+    },
+    {
+      "game": "AssettoCorsaCompetizione",
+      "model": "Bentley Continental GT3 2015",
+      "id": "bentley_continental_gt3_2016"
+    },
+    {
+      "game": "AssettoCorsaCompetizione",
+      "model": "Bentley Continental GT3 2018",
+      "id": "bentley_continental_gt3_2018"
+    },
+    {
+      "game": "AssettoCorsaCompetizione",
+      "model": "BMW M4 GT3 2021",
+      "id": "bmw_m4_gt3"
+    },
+    {
+      "game": "AssettoCorsaCompetizione",
+      "model": "BMW M6 GT3 2017",
+      "id": "bmw_m6_gt3"
+    },
+    {
+      "game": "AssettoCorsaCompetizione",
+      "model": "Emil Frey Jaguar G3 2021",
+      "id": "jaguar_g3"
+    },
+    {
+      "game": "AssettoCorsaCompetizione",
+      "model": "Ferrari 296 GT3 2023",
+      "id": "ferrari_296_gt3"
+    },
+    {
+      "game": "AssettoCorsaCompetizione",
+      "model": "Ford Mustang GT3 2024",
+      "id": "ford_mustang_gt3"
+    },
+    {
+      "game": "AssettoCorsaCompetizione",
+      "model": "Lexus RCF GT3 2016",
+      "id": "lexus_rc_f_gt3"
+    },
+    {
+      "game": "AssettoCorsaCompetizione",
+      "model": "McLaren 650S GT3 2015",
+      "id": "mclaren_650s_gt3"
+    },
+    {
+      "game": "AssettoCorsaCompetizione",
+      "model": "McLaren 720S GT3 2019",
+      "id": "mclaren_720s_gt3"
+    },
+    {
+      "game": "AssettoCorsaCompetizione",
+      "model": "McLaren 720s GT3 Evo 2023",
+      "id": "mclaren_720s_gt3_evo"
+    },
+    {
+      "game": "AssettoCorsaCompetizione",
+      "model": "Nissan GT R Nismo GT3 2015",
+      "id": "nissan_gt_r_gt3_2017"
+    },
+    {
+      "game": "AssettoCorsaCompetizione",
+      "model": "Nissan GT R Nismo GT3 2018",
+      "id": "nissan_gt_r_gt3_2018"
+    },
+    {
+      "game": "AssettoCorsaCompetizione",
+      "model": "Porsche 911 GT3 R 2018",
+      "id": "porsche_991_gt3_r"
+    },
+    {
+      "game": "AssettoCorsaCompetizione",
+      "model": "Porsche 911 II GT3 R 2019",
+      "id": "porsche_991ii_gt3_r"
+    },
+    {
+      "game": "AssettoCorsaCompetizione",
+      "model": "Porsche 992 GT3 R 2023",
+      "id": "porsche_992_gt3_r"
+    },
+    {
+      "game": "AssettoCorsaCompetizione",
+      "model": "Lamborghini Gallardo G3 Reiter 2017",
+      "id": "lamborghini_gallardo_rex"
+    },
+    {
+      "game": "AssettoCorsaCompetizione",
+      "model": "Alpine A110 GT4 2018",
+      "id": "alpine_a110_gt4"
+    },
+    {
+      "game": "AssettoCorsaCompetizione",
+      "model": "Aston Martin Vantage AMR GT4 2018",
+      "id": "amr_v8_vantage_gt4"
+    },
+    {
+      "game": "AssettoCorsaCompetizione",
+      "model": "Audi R8 LMS GT4 2016",
+      "id": "audi_r8_gt4"
+    },
+    {
+      "game": "AssettoCorsaCompetizione",
+      "model": "BMW M4 GT4 2018",
+      "id": "bmw_m4_gt4"
+    },
+    {
+      "game": "AssettoCorsaCompetizione",
+      "model": "Chevrolet Camaro GT4 R 2017",
+      "id": "chevrolet_camaro_gt4r"
+    },
+    {
+      "game": "AssettoCorsaCompetizione",
+      "model": "Ginetta G55 GT4 2012",
+      "id": "ginetta_g55_gt4"
+    },
+    {
+      "game": "AssettoCorsaCompetizione",
+      "model": "KTM Xbow GT4 2016",
+      "id": "ktm_xbow_gt4"
+    },
+    {
+      "game": "AssettoCorsaCompetizione",
+      "model": "Maserati Gran Turismo MC GT4 2016",
+      "id": "maserati_mc_gt4"
+    },
+    {
+      "game": "AssettoCorsaCompetizione",
+      "model": "McLaren 570s GT4 2016",
+      "id": "mclaren_570s_gt4"
+    },
+    {
+      "game": "AssettoCorsaCompetizione",
+      "model": "Mercedes AMG GT4 2016",
+      "id": "mercedes_amg_gt4"
+    },
+    {
+      "game": "AssettoCorsaCompetizione",
+      "model": "Porsche 718 Cayman GT4 MR 2019",
+      "id": "porsche_718_cayman_gt4_mr"
+    },
+    {
+      "game": "AssettoCorsaCompetizione",
+      "model": "Porsche 991 II GT3 Cup 2017",
+      "id": "porsche_991ii_gt3_cup"
+    },
+    {
+      "game": "AssettoCorsaCompetizione",
+      "model": "Porsche 992 GT3 Cup 2021",
+      "id": "porsche_992_gt3_cup"
+    },
+    {
+      "game": "AssettoCorsaCompetizione",
+      "model": "Lamborghini Huracán ST 2015",
+      "id": "lamborghini_huracan_st"
+    },
+    {
+      "game": "AssettoCorsaCompetizione",
+      "model": "Lamborghini Huracán ST Evo2 2021",
+      "id": "lamborghini_huracan_st_evo2"
+    },
+    {
+      "game": "AssettoCorsaCompetizione",
+      "model": "Ferrari 488 Challenge Evo 2020",
+      "id": "ferrari_488_challenge_evo"
+    },
+    {
+      "game": "AssettoCorsaCompetizione",
+      "model": "BMW M2 Cup 2020",
+      "id": "bmw_m2_cs_racing"
+    },
+    {
+      "game": "Automobilista2",
+      "model": "Copa Montana",
+      "id": "Copa Montana"
+    },
+    {
+      "game": "Automobilista2",
+      "model": "Cadillac DPi-VR",
+      "id": "Cadillac DPi-VR"
+    },
+    {
+      "game": "Automobilista2",
+      "model": "Dallara F301",
+      "id": "Dallara F301"
+    },
+    {
+      "game": "Automobilista2",
+      "model": "Dallara F309",
+      "id": "Dallara F309"
+    },
+    {
+      "game": "Automobilista2",
+      "model": "Formula Dirt",
+      "id": "Formula Dirt"
+    },
+    {
+      "game": "Automobilista2",
+      "model": "Formula Inter MG-15",
+      "id": "Formula Inter MG-15"
+    },
+    {
+      "game": "Automobilista2",
+      "model": "Formula Trainer Advanced",
+      "id": "Formula Trainer Advanced"
+    },
+    {
+      "game": "Automobilista2",
+      "model": "Formula Vee Gen2",
+      "id": "Formula Vee Gen2"
+    },
+    {
+      "game": "Automobilista2",
+      "model": "Ginetta G40 Cup",
+      "id": "Ginetta G40 Cup"
+    },
+    {
+      "game": "Automobilista2",
+      "model": "Ginetta G55 GT4 Supercup",
+      "id": "Ginetta G55 GT4 Supercup"
+    },
+    {
+      "game": "Automobilista2",
+      "model": "Ginetta G55 GT3",
+      "id": "Ginetta G55 GT3"
+    },
+    {
+      "game": "Automobilista2",
+      "model": "Ultima GTR Race",
+      "id": "Ultima GTR Race"
+    },
+    {
+      "game": "Automobilista2",
+      "model": "BMW M6 GT3",
+      "id": "BMW M6 GT3"
+    },
+    {
+      "game": "Automobilista2",
+      "model": "McLaren 720S GT3",
+      "id": "McLaren 720S GT3"
+    },
+    {
+      "game": "Automobilista2",
+      "model": "Mercedes-AMG GT3",
+      "id": "Mercedes-AMG GT3"
+    },
+    {
+      "game": "Automobilista2",
+      "model": "Nissan GT-R Nismo GT3",
+      "id": "Nissan GT-R Nismo GT3"
+    },
+    {
+      "game": "Automobilista2",
+      "model": "Alpine A110 GT4 Evo",
+      "id": "Alpine A110 GT4 Evo"
+    },
+    {
+      "game": "Automobilista2",
+      "model": "Aston Martin Vantage GT4 Evo",
+      "id": "Aston Martin Vantage GT4 Evo"
+    },
+    {
+      "game": "Automobilista2",
+      "model": "Audi R8 LMS GT4",
+      "id": "Audi R8 LMS GT4"
+    },
+    {
+      "game": "Automobilista2",
+      "model": "BMW M4 GT4",
+      "id": "BMW M4 GT4"
+    },
+    {
+      "game": "Automobilista2",
+      "model": "Chevrolet Camaro GT4.R",
+      "id": "Chevrolet Camaro GT4.R"
+    },
+    {
+      "game": "Automobilista2",
+      "model": "Ginetta G55 GT4",
+      "id": "Ginetta G55 GT4"
+    },
+    {
+      "game": "Automobilista2",
+      "model": "McLaren 570S GT4",
+      "id": "McLaren 570S GT4"
+    },
+    {
+      "game": "Automobilista2",
+      "model": "Mercedes-AMG GT4",
+      "id": "Mercedes-AMG GT4"
+    },
+    {
+      "game": "Automobilista2",
+      "model": "Ginetta G40",
+      "id": "Ginetta G40"
+    },
+    {
+      "game": "Automobilista2",
+      "model": "Puma P052",
+      "id": "Puma P052"
+    },
+    {
+      "game": "Automobilista2",
+      "model": "Aston Martin Valkyrie",
+      "id": "Aston Martin Valkyrie"
+    },
+    {
+      "game": "Automobilista2",
+      "model": "Brabham BT62",
+      "id": "Brabham BT62"
+    },
+    {
+      "game": "Automobilista2",
+      "model": "Lamborghini Revuelto",
+      "id": "Lamborghini Revuelto"
+    },
+    {
+      "game": "Automobilista2",
+      "model": "Lamborghini Veneno Roadster",
+      "id": "Lamborghini Veneno Roadster"
+    },
+    {
+      "game": "Automobilista2",
+      "model": "Kart 2-Stroke 125cc Direct",
+      "id": "Kart 2-Stroke 125cc Direct"
+    },
+    {
+      "game": "Automobilista2",
+      "model": "Kart 4-Stroke Race",
+      "id": "Kart 4-Stroke Race"
+    },
+    {
+      "game": "Automobilista2",
+      "model": "Kart 2-Stroke 125cc Shifter",
+      "id": "Kart 2-Stroke 125cc Shifter"
+    },
+    {
+      "game": "Automobilista2",
+      "model": "Kart Cross",
+      "id": "Kart Cross"
+    },
+    {
+      "game": "Automobilista2",
+      "model": "Mitsubishi Lancer R",
+      "id": "Mitsubishi Lancer R"
+    },
+    {
+      "game": "Automobilista2",
+      "model": "Mitsubishi Lancer RS",
+      "id": "Mitsubishi Lancer RS"
+    },
+    {
+      "game": "Automobilista2",
+      "model": "MINI Cooper JCW",
+      "id": "MINI Cooper JCW"
+    },
+    {
+      "game": "Automobilista2",
+      "model": "Ligier JS P320",
+      "id": "Ligier JS P320"
+    },
+    {
+      "game": "Automobilista2",
+      "model": "MetalMoro AJR Judd",
+      "id": "MetalMoro AJR Judd"
+    },
+    {
+      "game": "Automobilista2",
+      "model": "MetalMoro AJR Nissan",
+      "id": "MetalMoro AJR Nissan"
+    },
+    {
+      "game": "Automobilista2",
+      "model": "MetalMoro AJR Gen2 Nissan",
+      "id": "MetalMoro AJR Gen2 Nissan"
+    },
+    {
+      "game": "Automobilista2",
+      "model": "Sigma P1 G5",
+      "id": "Sigma P1 G5"
+    },
+    {
+      "game": "Automobilista2",
+      "model": "MetalMoro MRX Duratec Turbo P2",
+      "id": "MetalMoro MRX Duratec Turbo P2"
+    },
+    {
+      "game": "Automobilista2",
+      "model": "Sigma P1",
+      "id": "Sigma P1"
+    },
+    {
+      "game": "Automobilista2",
+      "model": "MetalMoro MRX Honda P3",
+      "id": "MetalMoro MRX Honda P3"
+    },
+    {
+      "game": "Automobilista2",
+      "model": "MetalMoro MRX Duratec Turbo P3",
+      "id": "MetalMoro MRX Duratec Turbo P3"
+    },
+    {
+      "game": "Automobilista2",
+      "model": "Roco 001",
+      "id": "Roco 001"
+    },
+    {
+      "game": "Automobilista2",
+      "model": "MCR S2000",
+      "id": "MCR S2000"
+    },
+    {
+      "game": "Automobilista2",
+      "model": "Citroen DS3 RX",
+      "id": "Citroen DS3 RX"
+    },
+    {
+      "game": "Automobilista2",
+      "model": "MINI Countryman R60 RX",
+      "id": "MINI Countryman R60 RX"
+    },
+    {
+      "game": "Automobilista2",
+      "model": "Mitsubishi Lancer Evo10 RX",
+      "id": "Mitsubishi Lancer Evo10 RX"
+    },
+    {
+      "game": "Automobilista2",
+      "model": "Sprint Race",
+      "id": "Sprint Race"
+    },
+    {
+      "game": "Automobilista2",
+      "model": "Stock USA Gen3 LM",
+      "id": "Stock USA Gen3 LM"
+    },
+    {
+      "game": "Automobilista2",
+      "model": "Maserati GT2 Stradale",
+      "id": "Maserati GT2 Stradale"
+    },
+    {
+      "game": "Automobilista2",
+      "model": "Super Trophy Trucks",
+      "id": "Super Trophy Trucks"
+    },
+    {
+      "game": "Automobilista2",
+      "model": "Superkart 250cc",
+      "id": "Superkart 250cc"
+    },
+    {
+      "game": "EAWRC23",
+      "model": "Ford Puma Rally1 HYBRID",
+      "id": "103"
+    },
+    {
+      "game": "EAWRC23",
+      "model": "Ford Puma Rally1 HYBRID",
+      "id": "124"
+    },
+    {
+      "game": "EAWRC23",
+      "model": "Citroën C3 Rally2",
+      "id": "4"
+    },
+    {
+      "game": "EAWRC23",
+      "model": "Ford Fiesta Rally2",
+      "id": "5"
+    },
+    {
+      "game": "EAWRC23",
+      "model": "Toyota GR Yaris Rally2",
+      "id": "120"
+    },
+    {
+      "game": "EAWRC23",
+      "model": "Volkswagen Polo GTI R5",
+      "id": "9"
+    },
+    {
+      "game": "EAWRC23",
+      "model": "Ford Fiesta Rally3",
+      "id": "106"
+    },
+    {
+      "game": "EAWRC23",
+      "model": "Ford Fiesta Rally3 Evo",
+      "id": "121"
+    },
+    {
+      "game": "EAWRC23",
+      "model": "Citroën C3 WRC",
+      "id": "130"
+    },
+    {
+      "game": "EAWRC23",
+      "model": "Hyundai i20 Coupe WRC '21",
+      "id": "139"
+    },
+    {
+      "game": "EAWRC23",
+      "model": "Volkswagen Polo 2017",
+      "id": "95"
+    },
+    {
+      "game": "EAWRC23",
+      "model": "MINI John Cooper Works WRC",
+      "id": "134"
+    },
+    {
+      "game": "EAWRC23",
+      "model": "Volkswagen Polo R WRC 2013",
+      "id": "133"
+    },
+    {
+      "game": "EAWRC23",
+      "model": "Citroën Xsara WRC",
+      "id": "13"
+    },
+    {
+      "game": "EAWRC23",
+      "model": "Citroën C4 WRC",
+      "id": "12"
+    },
+    {
+      "game": "EAWRC23",
+      "model": "Ford Focus RS Rally 2001",
+      "id": "14"
+    },
+    {
+      "game": "EAWRC23",
+      "model": "Mitsubishi Lancer Evolution VI",
+      "id": "24"
+    },
+    {
+      "game": "EAWRC23",
+      "model": "Ford Focus RS Rally 2008",
+      "id": "15"
+    },
+    {
+      "game": "EAWRC23",
+      "model": "MINI Countryman Rally Edition",
+      "id": "86"
+    },
+    {
+      "game": "EAWRC23",
+      "model": "Peugeot 206 Rally",
+      "id": "16"
+    },
+    {
+      "game": "EAWRC23",
+      "model": "SEAT Córdoba WRC",
+      "id": "21"
+    },
+    {
+      "game": "EAWRC23",
+      "model": "ŠKODA Fabia WRC",
+      "id": "17"
+    },
+    {
+      "game": "EAWRC23",
+      "model": "SUBARU Impreza 2001",
+      "id": "18"
+    },
+    {
+      "game": "EAWRC23",
+      "model": "SUBARU Impreza 2008",
+      "id": "20"
+    },
+    {
+      "game": "EAWRC23",
+      "model": "Ford Fiesta R5 MK7 Evo 2",
+      "id": "112"
+    },
+    {
+      "game": "EAWRC23",
+      "model": "Peugeot 208 T16 R5",
+      "id": "85"
+    },
+    {
+      "game": "EAWRC23",
+      "model": "Volkswagen Polo GTI R5",
+      "id": "116"
+    },
+    {
+      "game": "EAWRC23",
+      "model": "Ford Fiesta Rally3",
+      "id": "123"
+    },
+    {
+      "game": "EAWRC23",
+      "model": "Renault Clio Rally3",
+      "id": "122"
+    },
+    {
+      "game": "EAWRC23",
+      "model": "Citroën C2 R2 Max",
+      "id": "128"
+    },
+    {
+      "game": "EAWRC23",
+      "model": "Ford Fiesta MK8 Rally4",
+      "id": "45"
+    },
+    {
+      "game": "EAWRC23",
+      "model": "Opel Adam R2",
+      "id": "46"
+    },
+    {
+      "game": "EAWRC23",
+      "model": "Opel Corsa Rally4",
+      "id": "135"
+    },
+    {
+      "game": "EAWRC23",
+      "model": "Peugeot 208 Rally4",
+      "id": "7"
+    },
+    {
+      "game": "EAWRC23",
+      "model": "Renault Clio Rally4",
+      "id": "137"
+    },
+    {
+      "game": "EAWRC23",
+      "model": "Renault Twingo II",
+      "id": "48"
+    },
+    {
+      "game": "EAWRC23",
+      "model": "Mitsubishi Lancer Evolution X",
+      "id": "60"
+    },
+    {
+      "game": "EAWRC23",
+      "model": "McRae R4",
+      "id": "62"
+    },
+    {
+      "game": "EAWRC23",
+      "model": "SUBARU WRX STI NR4",
+      "id": "61"
+    },
+    {
+      "game": "EAWRC23",
+      "model": "Opel Corsa S2000",
+      "id": "87"
+    },
+    {
+      "game": "EAWRC23",
+      "model": "Peugeot 207 S2000",
+      "id": "36"
+    },
+    {
+      "game": "EAWRC23",
+      "model": "Ford Puma S1600",
+      "id": "43"
+    },
+    {
+      "game": "EAWRC23",
+      "model": "Peugeot 206 S1600",
+      "id": "136"
+    },
+    {
+      "game": "EAWRC23",
+      "model": "Renault Clio S1600",
+      "id": "42"
+    },
+    {
+      "game": "EAWRC23",
+      "model": "Citroën Xsara Kit Car",
+      "id": "129"
+    },
+    {
+      "game": "EAWRC23",
+      "model": "Renault Maxi Mégane",
+      "id": "34"
+    },
+    {
+      "game": "EAWRC23",
+      "model": "SEAT Ibiza Kit Car",
+      "id": "31"
+    },
+    {
+      "game": "EAWRC23",
+      "model": "Vauxhall Astra Rally Car",
+      "id": "32"
+    },
+    {
+      "game": "EAWRC23",
+      "model": "Volkswagen Golf IV Kit Car",
+      "id": "30"
+    },
+    {
+      "game": "EAWRC23",
+      "model": "Ford Escort RS Cosworth",
+      "id": "22"
+    },
+    {
+      "game": "EAWRC23",
+      "model": "Mitsubishi Galant VR4",
+      "id": "83"
+    },
+    {
+      "game": "EAWRC23",
+      "model": "Ford Escort MK2 McRae Motorsport",
+      "id": "94"
+    },
+    {
+      "game": "EAWRC23",
+      "model": "Fiat 131 Abarth Rally",
+      "id": "71"
+    },
+    {
+      "game": "EAWRC23",
+      "model": "Opel Kadett C GT/E",
+      "id": "73"
+    },
+    {
+      "game": "EAWRC23",
+      "model": "Volkswagen Golf GTI",
+      "id": "79"
+    },
+    {
+      "game": "IRacing",
+      "model": "Acura ARX-06",
+      "id": null
+    },
+    {
+      "game": "IRacing",
+      "model": "Aston Martin DBR9 GT1",
+      "id": null
+    },
+    {
+      "game": "IRacing",
+      "model": "Aston Martin Vantage GT3 EVO",
+      "id": "amvantageevogt3"
+    },
+    {
+      "game": "IRacing",
+      "model": "Audi RS 3 LMS TCR",
+      "id": null
+    },
+    {
+      "game": "IRacing",
+      "model": "Audi RS3 LMS Gen2 TCR",
+      "id": "audirs3lmsgen2"
+    },
+    {
+      "game": "IRacing",
+      "model": "BMW M2 CS Racing",
+      "id": null
+    },
+    {
+      "game": "IRacing",
+      "model": "BMW M4 GT4",
+      "id": null
+    },
+    {
+      "game": "IRacing",
+      "model": "BMW M4 G82 GT4 EVO",
+      "id": "bmwm4evogt4"
+    },
+    {
+      "game": "IRacing",
+      "model": "BMW Z4 GT3",
+      "id": null
+    },
+    {
+      "game": "IRacing",
+      "model": "Cadillac CTS-V Racecar",
+      "id": null
+    },
+    {
+      "game": "IRacing",
+      "model": "Cadillac V-Series.R",
+      "id": null
+    },
+    {
+      "game": "IRacing",
+      "model": "Chevrolet Corvette C6R GT1",
+      "id": null
+    },
+    {
+      "game": "IRacing",
+      "model": "Corvette C7 Daytona Prototype",
+      "id": null
+    },
+    {
+      "game": "IRacing",
+      "model": "Chevrolet Corvette Z06 GT3.R",
+      "id": null
+    },
+    {
+      "game": "IRacing",
+      "model": "Dallara DW-12",
+      "id": null
+    },
+    {
+      "game": "IRacing",
+      "model": "Dallara F312 F3",
+      "id": null
+    },
+    {
+      "game": "IRacing",
+      "model": "Dallara IL15 Indy NXT",
+      "id": "dallarail15"
+    },
+    {
+      "game": "IRacing",
+      "model": "Dallara IR01",
+      "id": null
+    },
+    {
+      "game": "IRacing",
+      "model": "Dallara IR-05",
+      "id": null
+    },
+    {
+      "game": "IRacing",
+      "model": "Dallara IR18",
+      "id": null
+    },
+    {
+      "game": "IRacing",
+      "model": "Dallara P217 LMP2",
+      "id": null
+    },
+    {
+      "game": "IRacing",
+      "model": "EURO NASCAR V8GP",
+      "id": "euronascar"
+    },
+    {
+      "game": "IRacing",
+      "model": "Ferrari 488 GTE",
+      "id": null
+    },
+    {
+      "game": "IRacing",
+      "model": "Ferrari 488 GT3",
+      "id": null
+    },
+    {
+      "game": "IRacing",
+      "model": "Ferrari 488 GT3 Evo 2020",
+      "id": null
+    },
+    {
+      "game": "IRacing",
+      "model": "Ferrari 296 GT3",
+      "id": null
+    },
+    {
+      "game": "IRacing",
+      "model": "Ferrari 296 Challenge",
+      "id": "ferrari296challenge"
+    },
+    {
+      "game": "IRacing",
+      "model": "FIA Cross Car",
+      "id": "crosscartn11"
+    },
+    {
+      "game": "IRacing",
+      "model": "FIA F4",
+      "id": null
+    },
+    {
+      "game": "IRacing",
+      "model": "Ford GT GTE",
+      "id": null
+    },
+    {
+      "game": "IRacing",
+      "model": "Ford Mustang FR500S",
+      "id": null
+    },
+    {
+      "game": "IRacing",
+      "model": "Ford Mustang GT3",
+      "id": null
+    },
+    {
+      "game": "IRacing",
+      "model": "Ford Mustang GT4",
+      "id": "fordmustanggt4"
+    },
+    {
+      "game": "IRacing",
+      "model": "Formula Renault 2.0",
+      "id": null
+    },
+    {
+      "game": "IRacing",
+      "model": "Formula Renault 3.5",
+      "id": null
+    },
+    {
+      "game": "IRacing",
+      "model": "Honda Civic Type R TCR",
+      "id": null
+    },
+    {
+      "game": "IRacing",
+      "model": "Indy Pro 2000 PM-18",
+      "id": null
+    },
+    {
+      "game": "IRacing",
+      "model": "Kia Optima",
+      "id": null
+    },
+    {
+      "game": "IRacing",
+      "model": "Ligier JS P320",
+      "id": null
+    },
+    {
+      "game": "IRacing",
+      "model": "Lotus 49",
+      "id": null
+    },
+    {
+      "game": "IRacing",
+      "model": "Lotus 79",
+      "id": null
+    },
+    {
+      "game": "IRacing",
+      "model": "Mazda MX-5 Cup",
+      "id": null
+    },
+    {
+      "game": "IRacing",
+      "model": "Mazda MX-5 Roadster",
+      "id": null
+    },
+    {
+      "game": "IRacing",
+      "model": "Mclaren 570s GT4",
+      "id": null
+    },
+    {
+      "game": "IRacing",
+      "model": "Porsche 718 Cayman GT4",
+      "id": null
+    },
+    {
+      "game": "IRacing",
+      "model": "Porsche 911 GT3 Cup (991)",
+      "id": null
+    },
+    {
+      "game": "IRacing",
+      "model": "Porsche 911 GT3 R",
+      "id": "porsche911rgt3"
+    },
+    {
+      "game": "IRacing",
+      "model": "Porsche 919 2016",
+      "id": null
+    },
+    {
+      "game": "IRacing",
+      "model": "Porsche 963 GTP",
+      "id": null
+    },
+    {
+      "game": "IRacing",
+      "model": "Pro Mazda",
+      "id": null
+    },
+    {
+      "game": "IRacing",
+      "model": "Radical SR8",
+      "id": null
+    },
+    {
+      "game": "IRacing",
+      "model": "Radical SR10",
+      "id": null
+    },
+    {
+      "game": "IRacing",
+      "model": "Ray Formula 1600",
+      "id": null
+    },
+    {
+      "game": "IRacing",
+      "model": "Riley Daytona Prototype",
+      "id": null
+    },
+    {
+      "game": "IRacing",
+      "model": "SCCA Spec Racer Ford",
+      "id": null
+    },
+    {
+      "game": "IRacing",
+      "model": "Skip Barber Formula 2000",
+      "id": null
+    },
+    {
+      "game": "IRacing",
+      "model": "Subaru WRX STI",
+      "id": null
+    },
+    {
+      "game": "IRacing",
+      "model": "Super Formula Lights 324",
+      "id": null
+    },
+    {
+      "game": "IRacing",
+      "model": "Supercars Ford Mustang GT",
+      "id": null
+    },
+    {
+      "game": "IRacing",
+      "model": "Toyota GR86",
+      "id": null
+    },
+    {
+      "game": "IRacing",
+      "model": "USF2000",
+      "id": null
+    },
+    {
+      "game": "IRacing",
+      "model": "VW Jetta TDI Cup",
+      "id": null
+    },
+    {
+      "game": "IRacing",
+      "model": "Acura NSX GT3 EVO 22",
+      "id": null
+    },
+    {
+      "game": "IRacing",
+      "model": "Aston Martin Vantage GT4",
+      "id": null
+    },
+    {
+      "game": "IRacing",
+      "model": "Audi R18 2016",
+      "id": null
+    },
+    {
+      "game": "IRacing",
+      "model": "Audi R8 LMS",
+      "id": null
+    },
+    {
+      "game": "IRacing",
+      "model": "Audi R8 LMS EVO II GT3",
+      "id": null
+    },
+    {
+      "game": "IRacing",
+      "model": "BMW M2 Racing (G87)",
+      "id": "bmwm2g87"
+    },
+    {
+      "game": "IRacing",
+      "model": "BMW M4 GT3 EVO",
+      "id": "bmwm4gt3"
+    },
+    {
+      "game": "IRacing",
+      "model": "BMW M8 GTE",
+      "id": null
+    },
+    {
+      "game": "IRacing",
+      "model": "BMW M Hybrid V8",
+      "id": "bmwlmdh"
+    },
+    {
+      "game": "IRacing",
+      "model": "Chevrolet Corvette C8.R",
+      "id": null
+    },
+    {
+      "game": "IRacing",
+      "model": "Ferrari 499P",
+      "id": null
+    },
+    {
+      "game": "IRacing",
+      "model": "HPD ARX-01c",
+      "id": null
+    },
+    {
+      "game": "IRacing",
+      "model": "Lamborghini Huracan GT3 EVO",
+      "id": null
+    },
+    {
+      "game": "IRacing",
+      "model": "McLaren 720S GT3 EVO",
+      "id": null
+    },
+    {
+      "game": "IRacing",
+      "model": "Mclaren MP4-30",
+      "id": null
+    },
+    {
+      "game": "IRacing",
+      "model": "McLaren MP4-12C GT3",
+      "id": null
+    },
+    {
+      "game": "IRacing",
+      "model": "Mercedes AMG GT3",
+      "id": null
+    },
+    {
+      "game": "IRacing",
+      "model": "Mercedes-AMG GT3 2020",
+      "id": null
+    },
+    {
+      "game": "IRacing",
+      "model": "Mercedes AMG GT4",
+      "id": null
+    },
+    {
+      "game": "IRacing",
+      "model": "Porsche 911 Cup (992.1)",
+      "id": "porsche992cup"
+    },
+    {
+      "game": "IRacing",
+      "model": "Porsche 911 Cup (992.2)",
+      "id": "porsche9922cup"
+    },
+    {
+      "game": "IRacing",
+      "model": "Porsche 911 GT3 R (992)",
+      "id": null
+    },
+    {
+      "game": "IRacing",
+      "model": "Porsche 911 RSR",
+      "id": "porsche991rsr"
+    },
+    {
+      "game": "IRacing",
+      "model": "Renault Clio R.S. V",
+      "id": null
+    },
+    {
+      "game": "IRacing",
+      "model": "Supercars Holden ZB Commodore",
+      "id": null
+    },
+    {
+      "game": "IRacing",
+      "model": "Williams-Toyota FW31",
+      "id": null
+    }
+  ],
+  "generated": [
+    {
+      "file": "300GT_DNR703_RPM_FullColour.ledsprofile",
+      "profileId": "d1bf598f-8a36-4cd6-9ae3-e2fb7a69dc24",
+      "bytes": 3010531
+    },
+    {
+      "file": "300GT_DNR703_RPM_TDM.ledsprofile",
+      "profileId": "5de0d8b6-fa03-4132-a0c7-f4f968de6c3e",
+      "bytes": 3010522
+    }
+  ],
+  "redlineSource": "Original embedded JavaScript tables, matching the retained native profile formulas. These differ from the C# redlines.json on some cars."
+}

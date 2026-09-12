@@ -1,0 +1,28 @@
+{
+  "sourceThread": "01a0962d-08a7-7390-af58-e108062985c5",
+  "historicalOnly": true,
+  "reports": {
+    "native-validation.json": {
+      "success": true,
+      "scope": "Deserialized in an isolated Windows PowerShell process with installed SimHub 9.12.6 RGBDriver.Settings.Profile and JsonConvert. No profile import, device connection, rendering or application settings change.",
+      "name": "CONSPIT 300GT - Standalone V2.0 - DNR 7.0.3 Data",
+      "topLevelGroups": 3,
+      "containers": 4205,
+      "embeddedJsCharacters": 125563
+    },
+    "ncalc-validation.json": {
+      "scope": "Parsed NCalc formulas with the installed SimHub NCalc.dll. Property availability and custom function execution are not evaluated.",
+      "count": 365,
+      "failed": 0,
+      "errors": []
+    },
+    "js-and-structure-validation.json": {
+      "scope": "Original non-RPM framework preservation, native SimHub JSON roundtrip, all JS formulas executed with synthetic inputs, M4 boundaries, F1 SC/DRS states. No live game or hardware test.",
+      "passed": 13522,
+      "failed": 0,
+      "containers": 4205,
+      "jsFormulas": 1683,
+      "ncalcFormulas": 365
+    }
+  }
+}

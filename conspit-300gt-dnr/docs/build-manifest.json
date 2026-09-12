@@ -1,0 +1,38 @@
+{
+  "sourcePath": "vendor/conspit/base-v1.6.ledsprofile",
+  "sourceSha256": "2A6274F7BE63B20DCC82CD85B11EE828399A0A5DBDCC29825B883251CA15F8D1",
+  "profileId": "3c70494a-f7ce-490d-98e4-9710341940a2",
+  "framework": "User-provided CONSPIT V1.6",
+  "data": "DNR 7.0.3 original width-12 car trees and JavaScript redline tables",
+  "layout": {
+    "rpm": [
+      1,
+      12
+    ],
+    "buttons": [
+      13,
+      20
+    ],
+    "knobLeft": [
+      21,
+      32
+    ],
+    "knobCenter": [
+      33,
+      44
+    ],
+    "knobRight": [
+      45,
+      56
+    ]
+  },
+  "file": "CONSPIT_300GT_Standalone_V2.0_DNR703.ledsprofile",
+  "bytes": 3977499,
+  "changes": 14,
+  "limitations": [
+    "All effects present in the provided CONSPIT V1.6 framework retained; not a claim to include every effect introduced by newer official DNR device profiles.",
+    "TDM option affects the updated car-specific RPM branches; existing wheel/F1 effect colors remain the original framework colors.",
+    "F1 2026 is enabled using existing field layouts; telemetry compatibility requires game testing.",
+    "Hardware-specific raw telemetry availability still depends on SimHub and the game."
+  ]
+}

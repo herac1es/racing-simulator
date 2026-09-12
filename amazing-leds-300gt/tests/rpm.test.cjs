@@ -47,19 +47,57 @@ test('Porsche uses gear-specific absolute thresholds and outside-in 16-to-12 map
   }
 });
 
-test('BMW gaps remain black, including at its non-flashing redline', () => {
-  const r = make({ CarId: 'bmwm4gt3', Gear: '3', Rpms: 5520 });
-  assert.deepEqual(frame(r), [green, ...Array(10).fill(black), green]);
+test('BMW restores Lovely per-gear stages in the documented provisional left-to-right layout', () => {
+  const car = loadRpm().cars.find((entry) => entry.id === 'bmw-m4-gt3-evo');
+  assert.deepEqual(car.mapping, [1, 12, 2, 11, 4, 9, 5, 8, 6, 6, 7, 7]);
+  const colors = [...Array(4).fill(green), ...Array(4).fill('#FFFFFF00'), ...Array(4).fill(red)];
+  const expected = {
+    R: [5600, 5800, 6000, 6200, 6400, 6600], N: [5600, 5800, 6000, 6200, 6400, 6600],
+    1: [4800, 5370, 5920, 6490, 7050, 7150], 2: [5400, 5850, 6250, 6650, 7050, 7150],
+    3: [5520, 5840, 6160, 6480, 6800, 6900], 4: [5715, 5985, 6255, 6528, 6800, 6900],
+    5: [5665, 5905, 6145, 6385, 6625, 6725], 6: [6000, 6250, 6500, 6750, 7000, 7250],
+  };
+  for (const [gear, row] of Object.entries(car.data.ledRpm[0])) {
+    const r = make({ CarId: 'bmwm4gt3', Gear: gear });
+    assert.deepEqual(diagnostic(r).colors, colors);
+    assert.deepEqual([...new Set(diagnostic(r).thresholds)].sort((a, b) => a - b),
+      [...new Set(row.slice(1).filter((rpm) => rpm > 0))].sort((a, b) => a - b));
+    const stages = expected[gear].slice(0, 5);
+    assert.equal(row[0], expected[gear][5]);
+    assert.deepEqual([...new Set(diagnostic(r).thresholds)], stages, 'keep gear-specific community values, never the legacy manual single table');
+    for (let stage = 0; stage < stages.length; stage++) {
+      r.properties.Rpms = stages[stage] - 0.01;
+      assert.equal(frame(r).filter((c) => c !== black).length, [0, 2, 4, 6, 8][stage]);
+      r.properties.Rpms = stages[stage];
+      const count = [2, 4, 6, 8, 12][stage];
+      assert.deepEqual(frame(r), colors.map((c, i) => i < count ? c : black));
+    }
+    r.properties.Rpms = row[0] - 0.01;
+    assert.deepEqual(frame(r), colors, gear + ': progressive colors remain visible before all-red');
+    r.properties.Rpms = row[0];
+    assert.deepEqual(frame(r), Array(12).fill(red));
+    r.tick(251); assert.deepEqual(frame(r), Array(12).fill(red));
+  }
+});
+
+test('BMW diagnostics disclose community provenance and reject the obsolete single-table baseline', () => {
+  const r = make({ CarId: 'bmwm4gt3', Gear: '3', Rpms: 4800 });
+  assert.deepEqual(frame(r), Array(12).fill(black));
+  r.properties.Rpms = 5520;
+  assert.deepEqual(frame(r), [green, green, ...Array(10).fill(black)]);
   r.properties.Rpms = 6900;
-  const expected = Array(12).fill(red); expected[2] = expected[9] = black;
+  const expected = Array(12).fill(red);
   assert.deepEqual(frame(r), expected);
   r.tick(251); assert.deepEqual(frame(r), expected);
-  assert.equal(diagnostic(r).calibrationStatus, 'evo-calibration-pending');
+  assert.equal(diagnostic(r).calibrationStatus, 'community-timing-left-to-right-evo-unverified');
+  assert.equal(diagnostic(r).sourceKind, 'lovely-car-data');
+  assert.equal(diagnostic(r).revision, '7cd16dd51d403f9f688e3e02f064e690e6b1a22c');
+  assert.match(diagnostic(r).notes, /not a measured EVO/);
 });
 
 test('every retained per-car LED changes exactly at its own threshold in all configured gears', () => {
   for (const car of loadRpm().cars) {
-    const raw = JSON.parse(fs.readFileSync(require.resolve('../vendor/lovely-car-data/' + car.dataFile)));
+    const raw = car.data;
     const r = make({ CarId: car.carIds[0] });
     for (const [gear, row] of Object.entries(raw.ledRpm[0])) {
       r.properties.Gear = gear;
@@ -155,26 +193,38 @@ test('RPM yields to desktop, other games, non-RPM modes, pit, pause, garage and 
   for (const mode of [null, 1, 2]) assert.notDeepEqual(frame(make({ CarId: 'porsche992rgt3', Rpms: 9000, 'ConspitLEDs.TelemetryFunction': mode })), Array(12).fill(null));
 });
 
-test('RPM is a 12-LED base below the original alert/startup layers without moving other containers', () => {
+test('top-level RPM stays between idle and alerts with unchanged inherited containers and native gates', () => {
+  for (const file of fs.readdirSync(require('node:path').resolve(__dirname, '../src/themes'))) {
+  const theme = require('../src/themes/' + file);
+  const profile = compile(theme);
   const original = JSON.parse(fs.readFileSync(require.resolve('../src/profile.json')));
-  const actual = structuredClone(profile.LedContainers[0].LedContainers);
-  let removed = 0;
-  function visit(node) {
-    if (node.LedContainers?.[0]?.Description === 'amazing-leds-300gt - iRacing RPM') {
-      const rpm = node.LedContainers.shift();
-      assert.equal(rpm.LedCount, 12);
-      assert.equal(node.Description, 'Device specific brightness and NightMode');
-      assert.deepEqual(node.LedContainers.map((child) => child.Description), ['Ignition On', 'Engine Start']);
-      removed++;
-    }
-    for (const child of node.LedContainers || []) visit(child);
-  }
-  actual.forEach(visit);
-  assert.equal(removed, 1);
   for (const override of theme.layoutOverrides) {
     let parent = original;
     for (const key of override.path.slice(0, -1)) parent = parent[key];
     parent[override.path.at(-1)] = override.value;
   }
-  assert.deepEqual(actual, original.LedContainers);
+  const [idle, rpm, alerts, unsupported] = profile.LedContainers;
+  assert.equal(rpm.Description, 'amazing-leds-300gt - iRacing RPM');
+  assert.equal(rpm.ContainerType, 'Groups.CustomConditionalGroup');
+  assert.equal(rpm.TriggerFormula.Expression, 'return amazingGameAllowed() && amazingRpmActive();');
+  assert.equal(unsupported.ContentFormula.Expression, 'return amazingUnsupportedGame();');
+  for (const wrapper of [idle, alerts]) assert.equal(wrapper.TriggerFormula.Expression, 'return amazingGameAllowed();');
+  const reconstructed = [
+    { ...idle.LedContainers[0], LedContainers: [
+      ...idle.LedContainers[0].LedContainers, ...alerts.LedContainers[0].LedContainers,
+    ] }, ...alerts.LedContainers.slice(1),
+  ];
+  assert.deepEqual(reconstructed, original.LedContainers, theme.slug);
+  // Native wrapper settings (including brightness formula) must be identical.
+  let rpmGate = rpm.LedContainers[0];
+  let originalGate = original.LedContainers[0].LedContainers[1];
+  for (let depth = 0; depth < 3; depth++) {
+    const settings = ({ Description, LedContainers, ...rest }) => rest;
+    assert.deepEqual(settings(rpmGate), settings(originalGate));
+    rpmGate = rpmGate.LedContainers[0];
+    originalGate = originalGate.LedContainers[0];
+  }
+  assert.equal(rpmGate.Description, 'RPM background - keep black');
+  assert.equal(rpmGate.LedCount, 12);
+  }
 });

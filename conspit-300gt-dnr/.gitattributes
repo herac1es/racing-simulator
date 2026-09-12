@@ -1,0 +1,4 @@
+* text eol=lf
+# Preserve original bytes, including CRLF and upstream whitespace, for hashes.
+vendor/** -text -whitespace linguist-vendored=true
+profiles/** linguist-generated=true

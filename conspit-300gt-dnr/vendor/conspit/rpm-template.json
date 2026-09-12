@@ -1,0 +1,237 @@
+{
+  "CarChoices": [],
+  "UseStrictJSIsolation": true,
+  "EmbeddedJavascript": "",
+  "GlobalBrightness": 65.19999999999953,
+  "GlobalBrightnessPreset": {
+    "CurrentMode": 0,
+    "Brightness": 65.19999999999953,
+    "BrightnessSettings": {}
+  },
+  "LedContainers": [
+    {
+      "Brightness": 20,
+      "LedContainers": [
+        {
+          "LedContainers": [
+            {
+              "BlinkDelay": 125,
+              "Segments": [
+                "1;60;#008000;1;Blue",
+                "1;62;#008000;1;Blue",
+                "1;64;#008000;1;Blue",
+                "1;69;#008000;1;Blue",
+                "1;72;#FFFF00;1;Blue",
+                "1;75;#FFFF00;1;Blue",
+                "1;79;#FFFF00;1;Blue",
+                "1;82;#FFFF00;1;Blue",
+                "1;85;#FF0000;1;Blue",
+                "1;87;#FF0000;1;Blue",
+                "1;89;#FF0000;1;Blue",
+                "1;94;#FF0000;1;Blue"
+              ],
+              "SegmentsCount": 12,
+              "RpmMode": 1,
+              "RelativeToRedline": true,
+              "BlinkOnLastGear": false,
+              "ContainerType": "RPMSegments",
+              "Description": "Left to Right"
+            },
+            {
+              "RpmMode": 0,
+              "OverrideMaxRPMWithRedlineValue": false,
+              "PercentMin": 60,
+              "PercentMax": 100,
+              "RPMMin": 0,
+              "RPMMax": 8000,
+              "BlinkDelay": 250,
+              "StartColor": "Blue",
+              "EndColor": "Red",
+              "LedCount": 6,
+              "BlinkEnabled": false,
+              "BlinkOnLastGear": false,
+              "UseLedDimming": true,
+              "RelativeToRedline": false,
+              "ContainerType": "RPM",
+              "Description": "",
+              "IsEnabled": false
+            },
+            {
+              "RpmMode": 0,
+              "OverrideMaxRPMWithRedlineValue": false,
+              "PercentMin": 60,
+              "PercentMax": 100,
+              "RPMMin": 0,
+              "RPMMax": 8000,
+              "BlinkDelay": 250,
+              "StartColor": "Blue",
+              "EndColor": "Red",
+              "RightToLeft": true,
+              "LedCount": 6,
+              "BlinkEnabled": false,
+              "BlinkOnLastGear": false,
+              "UseLedDimming": true,
+              "RelativeToRedline": false,
+              "StartPosition": 7,
+              "ContainerType": "RPM",
+              "Description": "",
+              "IsEnabled": false
+            },
+            {
+              "IdleColor": "Transparent",
+              "IdleBlinkingColor": "Transparent",
+              "EnableIdleBlinking": false,
+              "LedCount": 12,
+              "Color": "Red",
+              "BlinkingColor": "Transparent",
+              "BlinkEnabled": true,
+              "BlinkDelay": 200,
+              "ContainerType": "Flags.RedlineReached",
+              "IsEnabled": false
+            },
+            {
+              "Duration": 1000,
+              "LedContainers": [
+                {
+                  "Animation": {
+                    "Columns": 12,
+                    "Rows": 1,
+                    "Frames": [
+                      {
+                        "Colors": "0,7,Black;0,0,Black;0,1,Black;0,2,Black;0,3,Black;0,4,Black;0,5,#F0F8FF;0,6,#F0F8FF;0,8,Black;0,9,Black;0,10,Black;0,11,Black",
+                        "FrameDuration": 100
+                      },
+                      {
+                        "Colors": "0,3,#000000;0,11,#000000;0,2,#000000;0,1,#000000;0,0,#000000;0,4,#FFFFFF;0,5,#808080;0,6,#808080;0,7,#FFFFFF;0,8,#000000;0,9,#000000;0,10,#000000",
+                        "FrameDuration": 100
+                      },
+                      {
+                        "Colors": "0,3,#FFFFFF;0,11,#000000;0,2,#000000;0,1,#000000;0,0,#000000;0,4,#808080;0,5,#808080;0,6,#808080;0,7,#808080;0,8,#FFFFFF;0,9,#000000;0,10,#000000",
+                        "FrameDuration": 100
+                      },
+                      {
+                        "Colors": "0,3,#808080;0,11,#000000;0,2,#FFFFFF;0,1,#000000;0,0,#000000;0,4,#808080;0,5,#000000;0,6,#000000;0,7,#808080;0,8,#808080;0,9,#FFFFFF;0,10,#000000",
+                        "FrameDuration": 100
+                      },
+                      {
+                        "Colors": "0,3,#808080;0,11,#000000;0,2,#808080;0,1,#FFFFFF;0,0,#000000;0,4,#000000;0,5,#000000;0,6,#000000;0,7,#000000;0,8,#808080;0,9,#808080;0,10,#FFFFFF",
+                        "FrameDuration": 100
+                      },
+                      {
+                        "Colors": "0,0,#FFFFFF;0,1,#808080;0,2,#808080;0,3,#000000;0,4,#000000;0,5,#000000;0,6,#000000;0,7,#000000;0,8,#000000;0,9,#808080;0,10,#808080;0,11,#FFFFFF",
+                        "FrameDuration": 100
+                      }
+                    ],
+                    "PenColor": "Black"
+                  },
+                  "ContainerType": "Animation"
+                }
+              ],
+              "ContainerType": "Groups.GameCarStatedGroup"
+            },
+            {
+              "LedContainers": [
+                {
+                  "IdleColor": "Transparent",
+                  "IdleBlinkingColor": "Black",
+                  "EnableIdleBlinking": false,
+                  "LedCount": 12,
+                  "Color": "Black",
+                  "BlinkingColor": "Transparent",
+                  "BlinkEnabled": false,
+                  "ContainerType": "Status.SpeedLimiter",
+                  "Description": ""
+                },
+                {
+                  "IdleColor": "Transparent",
+                  "IdleBlinkingColor": "Black",
+                  "EnableIdleBlinking": false,
+                  "LedCount": 2,
+                  "Color": "Orange",
+                  "BlinkingColor": "Transparent",
+                  "BlinkEnabled": true,
+                  "ContainerType": "Status.SpeedLimiter",
+                  "Description": ""
+                },
+                {
+                  "IdleColor": "Transparent",
+                  "IdleBlinkingColor": "Black",
+                  "EnableIdleBlinking": false,
+                  "LedCount": 2,
+                  "Color": "Orange",
+                  "BlinkingColor": "Transparent",
+                  "BlinkEnabled": true,
+                  "StartPosition": 10,
+                  "ContainerType": "Status.SpeedLimiter",
+                  "Description": ""
+                }
+              ],
+              "ContainerType": "Base.Group",
+              "Description": "Speed Limiter"
+            }
+          ],
+          "ContainerType": "Groups.GameRunningGroup",
+          "Description": ""
+        }
+      ],
+      "ContainerType": "Groups.BrightnessGroup",
+      "Description": "RPMS  led"
+    }
+  ],
+  "TestLedsGameData": {
+    "CarModel": "",
+    "CarId": null,
+    "CarChoice": {
+      "CarId": null,
+      "CarModel": "",
+      "GameCode": null,
+      "IsSet": true
+    },
+    "GearEx": 2,
+    "FuelMax": 100,
+    "RPMSMax": 10000,
+    "TurboMax": 3.5,
+    "TurnIndicatorLeftEnabled": false,
+    "TurnIndicatorRightEnabled": false,
+    "SessionBestDeltaEx": 3,
+    "AllTimeBestDeltaEx": -3,
+    "DRSEnabled": true,
+    "DRSAvailable": false,
+    "MaxRpm": 10000,
+    "GameRunning": true,
+    "Brake": 26.020408163265326,
+    "GameName": "AssettoCorsaCompetizione",
+    "Fuel": 1.0204081632653061,
+    "RPMPercent": 45.918367346938794,
+    "RPMRedlineReached": false,
+    "SpeedKmh": 0,
+    "SpeedMph": 0,
+    "Turbo": 0,
+    "TurboPercent": 0,
+    "Gear": "2",
+    "IsInPitLane": false,
+    "PitLimiterOn": true,
+    "AbsEnabled": false,
+    "AbsActive": false,
+    "TCEnabled": false,
+    "TCActive": false,
+    "LowFuelAlert": false,
+    "SpotterCarLeft": false,
+    "SpotterCarRight": false,
+    "BlackFlag": false,
+    "YellowFlag": false,
+    "WhiteFlag": false,
+    "BlueFlag": false,
+    "GreenFlag": false,
+    "CarStartedTime": "2025-05-27T10:43:36.0456457+08:00",
+    "SessionBestDelta": -3,
+    "AllTimeBestDelta": 3
+  },
+  "UseProfileBrightness": true,
+  "LastLoaded": "2024-02-10T00:16:44.516858+08:00",
+  "Description": "Changlog:\r\n",
+  "Name": "CONSPIT  300GT Telemetry",
+  "ProfileId": "a6f15f97-572b-46c6-bd4c-ada2d5f26001",
+  "GameCode": null,
+  "CarChoice": null
+}
