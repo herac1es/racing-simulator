@@ -1,0 +1,10 @@
+{
+  "id": "bmw-m4-gt3-evo",
+  "name": "BMW M4 GT3 EVO",
+  "carIds": ["bmwm4gt3"],
+  "carNames": ["BMW M4 GT3 EVO", "BMW M4 GT3"],
+  "dataFile": "bmwm4gt3.json",
+  "calibrationStatus": "evo-calibration-pending",
+  "mapping": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+  "notes": "iRacing updated the existing bmwm4gt3 to EVO in 2025 Season 4. Lovely still names this data BMW M4 GT3; EVO thresholds have not been verified. Source positions 3 and 10 are gaps. A zero blink interval means steady redline, not an invented flash."
+}

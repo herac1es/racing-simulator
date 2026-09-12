@@ -1,0 +1,72 @@
+{
+  "directory": "Conspit 300 GT Themes Pack V1.2/LEDs Profiles",
+  "commit": "a8b27afef9ab7fee69035595920b1e507ac5b25b",
+  "files": [
+    {
+      "file": "Conspit 300 GT Conspit Signature V1.2 .ledsprofile",
+      "sha256": "b9a43c730c36f2be36a249e8258264fd14c24c964dc732096391d24a10f3d141",
+      "theme": "conspit-signature"
+    },
+    {
+      "file": "Conspit 300 GT Crimson Frost V1.2 .ledsprofile",
+      "sha256": "3e8e02049eadafe881db811faed903f4ffda2e68c63ae8b6125bce4956a18095",
+      "theme": "crimson-frost"
+    },
+    {
+      "file": "Conspit 300 GT Gulf Ignition V1.2 .ledsprofile",
+      "sha256": "4c492313ab60223e8be29570f4903cb8498ecea39dfd610fe8f6bfdb6eaeda0a",
+      "theme": "gulf-ignition"
+    },
+    {
+      "file": "Conspit 300 GT Lime Vector V1.2 .ledsprofile",
+      "sha256": "31dcdb8cc6554041b561a9d952a940275a33c2eeca8e36fc314c19f63358e744",
+      "theme": "lime-vector"
+    },
+    {
+      "file": "Conspit 300 GT Sun Flare V1.2 .ledsprofile",
+      "sha256": "f50af0d08cb5d290f97c079a2020a7c58a813e08a91b2f56675aa431f9aefb20",
+      "theme": "sun-flare"
+    }
+  ],
+  "removedContainers": [
+    "Conspit 300 GT Conspit Signature - RPM Synchronisation",
+    "Conspit 300 GT Crimson Frost - RPM Synchronisation",
+    "Conspit 300 GT Gulf Ignition - RPM Synchronisation",
+    "Conspit 300 GT Lime Vector - RPM Synchronisation",
+    "Conspit 300 GT Sun Flare - RPM Synchronisation",
+    "Conspit redline button sync",
+    "Game Colour Arctic Theme",
+    "Game Colour Blue",
+    "Game Colour Citrus Theme",
+    "Game Colour Conspit",
+    "Game Colour Green",
+    "Game Colour Gulf Oil Theme",
+    "Game Colour Orange",
+    "Game Colour Pink",
+    "Game Colour Purple",
+    "Game Colour Racing Theme",
+    "Game Colour Rainbow Theme",
+    "Game Colour Red",
+    "Game Colour Sunset Theme",
+    "Game Colour Tokyo Theme",
+    "Game Colour White",
+    "Game Colour Yellow",
+    "Menu Colour Arctic Theme",
+    "Menu Colour Blue",
+    "Menu Colour Citrus Theme",
+    "Menu Colour Conspit",
+    "Menu Colour Green",
+    "Menu Colour Gulf Oil Theme",
+    "Menu Colour Orange",
+    "Menu Colour Pink",
+    "Menu Colour Purple",
+    "Menu Colour Racing Theme",
+    "Menu Colour Rainbow Theme",
+    "Menu Colour Sunset Theme",
+    "Menu Colour Tokyo Theme",
+    "Menu Colour White",
+    "Menu Colour Yellow",
+    "Rpms Function",
+    "True Dark Mode (Default is On)"
+  ]
+}

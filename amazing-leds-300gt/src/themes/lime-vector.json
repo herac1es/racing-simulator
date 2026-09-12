@@ -1,0 +1,155 @@
+{
+  "name": "Lime Vector",
+  "slug": "lime-vector",
+  "profileId": "cee340ba-5deb-4af4-a30a-af2369873a9a",
+  "runtime": {
+    "CP300V1_PIT_A_1": "#FF00EFFF",
+    "CP300V1_PIT_B_1": "#FFFF6A00",
+    "CP300V3_BTN1_1": "#FF00D7C8",
+    "CP300V3_BTN2_1": "#FF66FF00",
+    "CP300V3_BTN3_1": "#FF00D7C8",
+    "CP300V3_BTN4_1": "#FF66FF00",
+    "CP300V3_RING1_1": "#FF66FF00",
+    "CP300V3_RING2_1": "#FF00D7C8",
+    "CP300V3_RING3_1": "#FF66FF00",
+    "CP300V3_ACCENT_1": "#FF00D7C8",
+    "CP300V3_PIT_A_1": "#FF00EFFF",
+    "CP300V3_PIT_B_1": "#FFFF6A00",
+    "CP300V3_BTN1_2": "#FF00D7C8",
+    "CP300V3_BTN2_2": "#FF66FF00",
+    "CP300V3_BTN3_2": "#FF00D7C8",
+    "CP300V3_BTN4_2": "#FF66FF00",
+    "CP300V3_RING1_2": "#FF66FF00",
+    "CP300V3_RING2_2": "#FF00D7C8",
+    "CP300V3_RING3_2": "#FF66FF00",
+    "CP300V3_ACCENT_2": "#FF00D7C8",
+    "CP300V3_PIT_A_2": "#FFFFFFFF",
+    "CP300V3_PIT_B_2": "#FFFF0000",
+    "CP300V3_BTN1_3": "#FF00D7C8",
+    "CP300V3_BTN2_3": "#FF66FF00",
+    "CP300V3_BTN3_3": "#FF00D7C8",
+    "CP300V3_BTN4_3": "#FF66FF00",
+    "CP300V3_RING1_3": "#FF66FF00",
+    "CP300V3_RING2_3": "#FF00D7C8",
+    "CP300V3_RING3_3": "#FF66FF00",
+    "CP300V3_ACCENT_3": "#FF00D7C8"
+  },
+  "layoutOverrides": [
+    {
+      "path": [
+        "LedContainers",
+        "0",
+        "LedContainers",
+        "0",
+        "Description"
+      ],
+      "value": "Conspit 300 GT Lime Vector - Brightness & Idle"
+    },
+    {
+      "path": [
+        "LedContainers",
+        "0",
+        "LedContainers",
+        "1",
+        "LedContainers",
+        "0",
+        "Description"
+      ],
+      "value": "Conspit 300 GT Lime Vector - Top Telemetry"
+    },
+    {
+      "path": [
+        "LedContainers",
+        "0",
+        "LedContainers",
+        "1",
+        "Description"
+      ],
+      "value": "Conspit 300 GT Lime Vector - Live Session Output"
+    },
+    {
+      "path": [
+        "LedContainers",
+        "0",
+        "Description"
+      ],
+      "value": "Conspit 300 GT Lime Vector - Top Status Lights"
+    },
+    {
+      "path": [
+        "LedContainers",
+        "1",
+        "LedContainers",
+        "0",
+        "Description"
+      ],
+      "value": "Conspit 300 GT Lime Vector - Desktop & Menu Output"
+    },
+    {
+      "path": [
+        "LedContainers",
+        "1",
+        "LedContainers",
+        "1",
+        "LedContainers",
+        "0",
+        "Description"
+      ],
+      "value": "Conspit 300 GT Lime Vector - Buttons, Rings & Telemetry"
+    },
+    {
+      "path": [
+        "LedContainers",
+        "1",
+        "LedContainers",
+        "1",
+        "Description"
+      ],
+      "value": "Conspit 300 GT Lime Vector - Live Wheel Output"
+    },
+    {
+      "path": [
+        "LedContainers",
+        "1",
+        "Description"
+      ],
+      "value": "Conspit 300 GT Lime Vector - Buttons, Rings & Race Functions"
+    },
+    {
+      "path": [
+        "LedContainers",
+        "2",
+        "LedContainers",
+        "0",
+        "Description"
+      ],
+      "value": "Conspit 300 GT Lime Vector - Buttons, Encoders & Multifunction Switches"
+    },
+    {
+      "path": [
+        "LedContainers",
+        "2",
+        "Description"
+      ],
+      "value": "Conspit 300 GT Lime Vector - Wheel & Input Feedback"
+    },
+    {
+      "path": [
+        "LedContainers",
+        "3",
+        "LedContainers",
+        "0",
+        "Description"
+      ],
+      "value": "Conspit 300 GT Lime Vector - Dedicated Input Animation Overlay"
+    },
+    {
+      "path": [
+        "LedContainers",
+        "3",
+        "Description"
+      ],
+      "value": "Conspit 300 GT Lime Vector - Input Animations (Final Priority)"
+    }
+  ]
+}

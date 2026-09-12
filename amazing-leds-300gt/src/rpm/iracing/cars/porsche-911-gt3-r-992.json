@@ -1,0 +1,10 @@
+{
+  "id": "porsche-911-gt3-r-992",
+  "name": "Porsche 911 GT3 R (992)",
+  "carIds": ["porsche992rgt3"],
+  "carNames": ["Porsche 911 GT3 R (992)", "Porsche 992R GT3"],
+  "dataFile": "porsche992rgt3.json",
+  "calibrationStatus": "community-data-unverified",
+  "mapping": [1, 2, 4, 6, 7, 8, 9, 10, 11, 13, 15, 16],
+  "notes": "16 source LEDs mapped to 12 physical LEDs, outside-in with two green, two yellow and two red per side. Source LEDs 3, 5, 12 and 14 are omitted; retained thresholds are unchanged."
+}

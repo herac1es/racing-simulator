@@ -1,0 +1,10 @@
+{
+  "mode": "auto",
+  "ledCount": 12,
+  "generic": {
+    "fallbackStartRatio": 0.8,
+    "blinkIntervalMs": 250,
+    "redlineColor": "#FF0080FF",
+    "colors": ["#FF00FF00", "#FF00FF00", "#FF00FF00", "#FF00FF00", "#FF00FF00", "#FFFFFF00", "#FFFFFF00", "#FFFFFF00", "#FFFFFF00", "#FFFF0000", "#FFFF0000", "#FFFF0000"]
+  }
+}

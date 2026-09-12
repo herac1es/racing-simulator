@@ -1,0 +1,2907 @@
+{
+  "CarChoices": [],
+  "UseStrictJSIsolation": false,
+  "GlobalBrightness": 100,
+  "GlobalBrightnessPreset": {
+    "CurrentMode": 0,
+    "Brightness": 100,
+    "BrightnessSettings": {
+      "Day": 100,
+      "Night": 100
+    }
+  },
+  "LedContainers": [
+    {
+      "LedContainers": [
+        {
+          "BrightnessFormula": {
+            "JSExt": 0,
+            "Interpreter": 1,
+            "Expression": "let csp300_DeviceType = $prop('ConspitLEDs.NMTelemetry') ?? true;\r\n\r\nlet csp300_DeviceTypeBrightness = ($prop('ConspitLEDs.TelemetryBrightness') ?? 100) * ($prop('ConspitLEDs.GlobalBrightness') ?? 100) / 100;\r\n\r\nlet csp300_BrightnessOutput = Math.ceil(csp300_DeviceTypeBrightness);\r\n\r\nreturn csp300_BrightnessOutput;"
+          },
+          "LedContainers": [
+            {
+              "ContentFormula": {
+                "JSExt": 4,
+                "Interpreter": 1,
+                "Expression": "return cp300v3TopOverlay();",
+                "PreExpression": "const csp300_totalLeds = 12;"
+              },
+              "LedCount": 12,
+              "ContainerType": "ScriptedContent",
+              "Description": "Idle Animation"
+            }
+          ],
+          "ContainerType": "Groups.BrightnessFormulaGroup",
+          "Description": "Conspit 300 GT Conspit Signature - Brightness & Idle"
+        },
+        {
+          "LedContainers": [
+            {
+              "TriggerFormula": {
+                "JSExt": 0,
+                "Interpreter": 1,
+                "Expression": "if ($prop('Spectating') == true) {\r\n\treturn ($prop('ConspitLEDs.SpectateShowTelemetry') == 1 ||\r\n\t\t\t$prop('ConspitLEDs.SpectateShowTelemetry') == null)\r\n}\r\nreturn true;"
+              },
+              "LedContainers": [
+                {
+                  "BrightnessFormula": {
+                    "JSExt": 4,
+                    "Interpreter": 1,
+                    "Expression": "let csp300_DeviceType = $prop('ConspitLEDs.NMTelemetry') ?? true;\r\n\r\nlet csp300_DeviceTypeBrightness = isnull($prop('ConspitLEDs.TelemetryBrightness'), 100) * isnull($prop('ConspitLEDs.GlobalBrightness'), 100) / 100;\r\n\r\nlet csp300_BrightnessOutput = Math.ceil(csp300_DeviceTypeBrightness);\r\nlet csp300_NightModeBrightnessOutput = Math.ceil(csp300_DeviceTypeBrightness * isnull($prop('ConspitLEDs.NightModeBrightness'), 25) / 100);\r\n\r\n\r\n;\r\n\r\n// Linked LD Behaviour\r\nif ($prop('ConspitLEDs.TDMDisplayDashboardBehaviour') ?? true) {\r\n\t\tif ($prop('DisplayPlugin.ld_NightMode') == true) NM_LD_Behaviour = true;\r\n\t\tif ($prop('DisplayPlugin.ld_NightMode') == false) return csp300_BrightnessOutput;\r\n}\r\nif ($prop('ConspitLEDs.TDMDisplayDashboardBehaviour') == false) NM_LD_Behaviour = false;\r\n\r\n// Fallback to own behavior when there is no LD connection\r\nNM_CSP_Behaviour = csp300_DeviceType;\r\n\r\nif (NM_LD_Behaviour || NM_CSP_Behaviour) {\r\n\r\nTDMState = NM_LD_Behaviour\r\n\t? $prop('DisplayPlugin.ld_TrueDarkModeState') ?? false\r\n\t: $prop('ConspitLEDs.TDMState') ?? false;\r\n\r\n\t\r\n\r\n\t\r\n\t\r\n\treturn TDMState == false\r\n\t\t? csp300_BrightnessOutput\r\n\t\t: csp300_NightModeBrightnessOutput; //All other games\r\n}\r\nreturn csp300_BrightnessOutput;"
+                  },
+                  "LedContainers": [
+                    {
+                      "TriggerFormula": {
+                        "JSExt": 0,
+                        "Interpreter": 1,
+                        "Expression": "return $prop('EngineIgnitionOn') == 1 ||\r\n\ttrue && $prop('GameRawData.Telemetry.IsReplayPlaying') == true;"
+                      },
+                      "LedContainers": [
+                        {
+                          "TriggerFormula": {
+                            "JSExt": 4,
+                            "Interpreter": 1,
+                            "Expression": "return true;"
+                          },
+                          "LedContainers": [
+                            {
+                              "ContentFormula": {
+                                "JSExt": 4,
+                                "Interpreter": 1,
+                                "Expression": "if ($prop('CONSPITLEDS.TelemetryFunction') == 4) {\r\n\t// Brake\r\n\tconst csp300_BrakeValue = Math.round((csp300_brake_propertySelect() / 100) * (csp300_ledLength / 2));\r\n\tconst csp300_brakeArray = Array(Math.floor(csp300_ledLength / 2)).fill($prop('ConspitLEDs.BrakeColour') ?? '#FFFF0000', 0, csp300_BrakeValue).reverse();\r\n\r\n\t// Throttle\r\n\tconst csp300_ThrottleValue = Math.round(($prop('Throttle') / 100) * (csp300_ledLength / 2));\r\n\tconst csp300_throttleArray = Array(Math.floor(csp300_ledLength / 2)).fill($prop('ConspitLEDs.ThrottleColour') ?? '#FF00FF00', 0, csp300_ThrottleValue);\r\n\r\n\treturn csp300_ledLength % 2 != 0\r\n    \t? csp300_brakeArray.concat(['#FFFFFFFF'], csp300_throttleArray)\r\n    \t: csp300_brakeArray.concat(csp300_throttleArray);\r\n}\r\nreturn [null];",
+                                "PreExpression": "const csp300_ledLength = 12;"
+                              },
+                              "LedCount": 12,
+                              "ContainerType": "ScriptedContent",
+                              "Description": "Throttle/Brake Function"
+                            },
+                            {
+                              "TriggerFormula": {
+                                "JSExt": 0,
+                                "Interpreter": 1,
+                                "Expression": "return $prop('CONSPITLEDS.TelemetryFunction') == 5;"
+                              },
+                              "LedContainers": [
+                                {
+                                  "TriggerFormula": {
+                                    "JSExt": 0,
+                                    "Interpreter": 1,
+                                    "Expression": "return $prop('CONSPITLEDS.TelemetryFuelType') == 1 || $prop('CONSPITLEDS.TelemetryFuelType') == null;"
+                                  },
+                                  "LedContainers": [
+                                    {
+                                      "UsePercent": true,
+                                      "PercentMin": 0,
+                                      "PercentMax": 100,
+                                      "FuelMin": 0,
+                                      "FuelMax": 60,
+                                      "BlinkDelay": 250,
+                                      "StartColor": "Red",
+                                      "EndColor": "Red",
+                                      "LedCount": 12,
+                                      "UseLedDimming": false,
+                                      "FuelAlertLevelPercent": 5,
+                                      "FuelAlertLevelLiters": 12,
+                                      "ContainerType": "Fuel",
+                                      "Description": ""
+                                    }
+                                  ],
+                                  "ContainerType": "Groups.CustomConditionalGroup",
+                                  "Description": "Fuel Static Colour"
+                                },
+                                {
+                                  "TriggerFormula": {
+                                    "JSExt": 0,
+                                    "Interpreter": 1,
+                                    "Expression": "return $prop('CONSPITLEDS.TelemetryFuelType') == 2;"
+                                  },
+                                  "LedContainers": [
+                                    {
+                                      "UsePercent": true,
+                                      "PercentMin": 0,
+                                      "PercentMax": 100,
+                                      "FuelMin": 0,
+                                      "FuelMax": 60,
+                                      "BlinkDelay": 250,
+                                      "StartColor": "Red",
+                                      "EndColor": "Lime",
+                                      "LedCount": 12,
+                                      "UseLedDimming": false,
+                                      "FuelAlertLevelPercent": 5,
+                                      "FuelAlertLevelLiters": 12,
+                                      "ContainerType": "Fuel",
+                                      "Description": ""
+                                    }
+                                  ],
+                                  "ContainerType": "Groups.CustomConditionalGroup",
+                                  "Description": "Fuel Gradient"
+                                }
+                              ],
+                              "ContainerType": "Groups.CustomConditionalGroup",
+                              "Description": "Fuel Gauge Function"
+                            },
+                            {
+                              "LedContainers": [
+                                {
+                                  "ContentFormula": {
+                                    "JSExt": 4,
+                                    "Interpreter": 1,
+                                    "Expression": "if ($prop('ConspitLEDs.Clutch') ?? false) {\r\n\tUpdateGlobalColours.update();\r\n\tconst { csp300_Clutch_Hex } = UpdateGlobalColours;\r\n\tconst csp300_ClutchValue = Math.round(($prop('Clutch') / 100) * csp300_ledLength);\r\n\r\n\treturn Array(csp300_ledLength).fill(csp300_Clutch_Hex, 0, csp300_ClutchValue);\r\n}\r\nreturn [null];",
+                                    "PreExpression": "const csp300_ledLength = 12;"
+                                  },
+                                  "LedCount": 12,
+                                  "ContainerType": "ScriptedContent",
+                                  "Description": "Clutch"
+                                },
+                                {
+                                  "TriggerFormula": {
+                                    "JSExt": 0,
+                                    "Interpreter": 1,
+                                    "Expression": "return ($prop('ConspitLEDs.PitLaneIndicator') ?? true) && $prop('IsInPitLane') == 1;"
+                                  },
+                                  "LedContainers": [
+                                    {
+                                      "Animation": {
+                                        "Columns": 12,
+                                        "Rows": 1,
+                                        "Frames": [
+                                          {
+                                            "Colors": "0,0,#FFFF00;0,1,#000000;0,10,#000000;0,11,#FFFF00;0,2,Black;0,3,Black;0,4,Black;0,5,Black;0,6,Black;0,7,Black;0,8,Black;0,9,Black",
+                                            "FrameDuration": 300
+                                          },
+                                          {
+                                            "Colors": "0,0,Black;0,1,#FFFF00;0,10,#FFFF00;0,11,Black;0,2,Black;0,3,Black;0,4,Black;0,5,Black;0,6,Black;0,7,Black;0,8,Black;0,9,Black",
+                                            "FrameDuration": 300
+                                          }
+                                        ],
+                                        "PenColor": "Black"
+                                      },
+                                      "ContainerType": "Animation",
+                                      "Description": ""
+                                    }
+                                  ],
+                                  "ContainerType": "Groups.CustomConditionalGroup",
+                                  "Description": "Pit Lane Animation"
+                                },
+                                {
+                                  "ContentFormula": {
+                                    "JSExt": 4,
+                                    "Interpreter": 1,
+                                    "Expression": "return cp300v3PitTop();",
+                                    "PreExpression": "const csp300_ledLength = 12;"
+                                  },
+                                  "LedCount": 12,
+                                  "ContainerType": "ScriptedContent",
+                                  "Description": "Speed Limiter"
+                                },
+                                {
+                                  "TriggerFormula": {
+                                    "JSExt": 0,
+                                    "Interpreter": 1,
+                                    "Expression": "return ($prop('ConspitLEDs.TelemetryFunction') == 1 ||\r\n\t\t$prop('ConspitLEDs.TelemetryFunction') == 3 ||\r\n\t\t$prop('ConspitLEDs.TelemetryFunction') == null)\r\n\t\t&& $prop('IsInPit') == 0;"
+                                  },
+                                  "LedContainers": [
+                                    {
+                                      "BrightnessFormula": {
+                                        "JSExt": 4,
+                                        "Interpreter": 1,
+                                        "Expression": "return csp300_brake_propertySelect();"
+                                      },
+                                      "LedContainers": [
+                                        {
+                                          "ContentFormula": {
+                                            "JSExt": 4,
+                                            "Interpreter": 1,
+                                            "Expression": "const currentBrakeType = $prop('ConspitLEDs.BrakeType');\r\n\r\nif (currentBrakeType >= 2 && currentBrakeType <= 5) {\r\n\r\n\tUpdateGlobalColours.update();\r\n\tconst { csp300_Brake_Hex } = UpdateGlobalColours;\r\n\r\n\tconst currentBrakePressure = csp300_brake_propertySelect();\r\n\tconst ledsLit = Math.min(\r\n\t\tcsp300_brakeLedLength,\r\n\t\tMath.ceil((currentBrakePressure / 100) * csp300_brakeLedLength));\r\n\r\n\tconst halfLedsLit = ledsLit / 2;\r\n\tconst halfLength = csp300_brakeLedLength / 2;\r\n\r\n\tlet needsBlinking = false;\r\n\tlet blinkOutput = null;\r\n\tlet blinkThresholdLedCount = 0;\r\n\tlet blinkThresholdLedCountHalf = 0;\r\n\r\n\tconst csp300_BrakeForceBlink = $prop('ConspitLEDs.BrakeForceBlink') ?? 80;\r\n\tconst csp300_BrakeForceBlink2 = $prop('ConspitLEDs.BrakeForceBlink2') ?? 100;\r\n\tconst blinkThresholdPercent = csp300_BrakeForceBlink / 100;\r\n\r\n\tif (currentBrakePressure >= csp300_BrakeForceBlink && ledsLit > 0) {\r\n\t\tblinkThresholdLedCount = Math.floor(blinkThresholdPercent * csp300_brakeLedLength);\r\n\t\tblinkThresholdLedCountHalf = Math.floor(blinkThresholdPercent * halfLength);\r\n\t\t\r\n\t\t// Fix 100% blink threshold\r\n\t\tif (csp300_BrakeForceBlink == 100 && csp300_brakeLedLength > 0) {\r\n\t\t\tblinkThresholdLedCount = csp300_brakeLedLength - 1;\r\n\t\t\tblinkThresholdLedCountHalf = Math.ceil(halfLength) - 1;\r\n\t\t}\r\n\r\n\t\tneedsBlinking = currentBrakePressure >= csp300_BrakeForceBlink;\r\n\t\tif (needsBlinking) {\r\n\t\t\tconst blinkFreqSelect = currentBrakePressure >= csp300_BrakeForceBlink2\r\n\t\t\t\t? 75\r\n\t\t\t\t: 150;\r\n\t\t\tblinkOutput = Math.floor(Date.now() / blinkFreqSelect) % 2 == 0\r\n\t\t\t\t? csp300_Brake_Hex\r\n\t\t\t\t: null;\r\n\t\t}\r\n\t}\r\n\tconst BrakeArray = new Array(csp300_brakeLedLength).fill(null);\r\n\tconst applyBlink = (index) => {\r\n\t\tif (BrakeArray[index] !== null) BrakeArray[index] = blinkOutput;\r\n\t};\r\n\r\n\tswitch (currentBrakeType) {\r\n\t\tcase 2: // Left to Right\r\n\t\t\tfor (let i = 0; i < ledsLit; i++) {\r\n\t\t\t\tBrakeArray[i] = csp300_Brake_Hex;\r\n\t\t\t\tif (needsBlinking && i >= blinkThresholdLedCount) applyBlink(i);\r\n\t\t\t}\r\n\t\t\tbreak;\r\n\r\n\t\tcase 3: // Right to Left \r\n\t\t\tfor (let i = 0; i < ledsLit; i++) {\r\n\t\t\t\tconst pos = csp300_brakeLedLength - 1 - i;\r\n\t\t\t\tBrakeArray[pos] = csp300_Brake_Hex;\r\n\t\t\t\tif (needsBlinking && i >= blinkThresholdLedCount) applyBlink(pos);\r\n\t\t\t}\r\n\t\t\tbreak;\r\n\r\n\t\tcase 4: // Meet in Middle \r\n\t\t\tconst ledsPerSide = Math.ceil(halfLedsLit);\r\n\r\n\t\t\tfor (let i = 0; i < ledsPerSide; i++) {\r\n\t\t\t\tif (i >= halfLength) break;\r\n\r\n\t\t\t\t// Left side\r\n\t\t\t\tBrakeArray[i] = csp300_Brake_Hex;\r\n\t\t\t\tif (needsBlinking && i >= blinkThresholdLedCountHalf) applyBlink(i);\r\n\r\n\t\t\t\t// Right side\r\n\t\t\t\tconst rightPos = csp300_brakeLedLength - 1 - i;\r\n\r\n\t\t\t\tBrakeArray[rightPos] = csp300_Brake_Hex;\r\n\t\t\t\tif (needsBlinking && i >= blinkThresholdLedCountHalf) applyBlink(rightPos);\r\n\t\t\t}\r\n\t\t\tbreak;\r\n\r\n\t\tcase 5: // In to Out\r\n\t\t\tconst centerPos = (csp300_brakeLedLength - 1) / 2;\r\n\t\t\tconst isEven = csp300_brakeLedLength % 2 == 0;\r\n\r\n\t\t\tfor (let i = 0; i < csp300_brakeLedLength; i++) {\r\n\t\t\t\tconst distance = isEven \r\n\t\t\t\t\t? Math.abs(i - (halfLength - 0.5))\r\n\t\t\t\t\t: Math.abs(i - centerPos);\r\n\r\n\t\t\t\tif (distance < halfLedsLit) {\r\n\t\t\t\t\tBrakeArray[i] = csp300_Brake_Hex;\r\n\t\t\t\t\tif (needsBlinking && distance >= blinkThresholdLedCountHalf) applyBlink(i);\r\n\t\t\t\t}\r\n\t\t\t}\r\n\t\t\tbreak;\r\n\t\t}\r\n\treturn BrakeArray;\r\n}\r\nreturn [null];",
+                                            "PreExpression": "const csp300_brakeLedLength = 12;"
+                                          },
+                                          "LedCount": 12,
+                                          "ContainerType": "ScriptedContent",
+                                          "Description": "Brake Function Leds"
+                                        }
+                                      ],
+                                      "ContainerType": "Groups.BrightnessFormulaGroup",
+                                      "Description": ""
+                                    }
+                                  ],
+                                  "ContainerType": "Groups.CustomConditionalGroup",
+                                  "Description": "Brake"
+                                }
+                              ],
+                              "ContainerType": "Base.Group",
+                              "Description": "Generic Effects (Spotter, Pit Limiters etc)"
+                            }
+                          ],
+                          "ContainerType": "Groups.CustomConditionalGroup",
+                          "Description": "Full Colour (Default is Off)"
+                        },
+                        {
+                          "LedContainers": [
+                            {
+                              "TriggerFormula": {
+                                "JSExt": 0,
+                                "Interpreter": 1,
+                                "Expression": "return $prop('ConspitLEDs.PitLaneAlerts') ?? true;"
+                              },
+                              "LedContainers": [
+                                {
+                                  "TotalWidth": 12,
+                                  "LedContainers": [
+                                    {
+                                      "TriggerFormula": {
+                                        "JSExt": 0,
+                                        "Interpreter": 1,
+                                        "Expression": "return $prop('IsInPitLane') == 1 && $prop('SpeedKmh') > 1 && $prop('PitLimiterOn') == 0;"
+                                      },
+                                      "LedContainers": [
+                                        {
+                                          "Animation": {
+                                            "Columns": 2,
+                                            "Rows": 1,
+                                            "Frames": [
+                                              {
+                                                "Colors": "0,0,Red;0,1,Black",
+                                                "FrameDuration": 125
+                                              },
+                                              {
+                                                "Colors": "0,0,Black;0,1,#FF0000",
+                                                "FrameDuration": 125
+                                              }
+                                            ],
+                                            "PenColor": "Red"
+                                          },
+                                          "ContainerType": "Animation",
+                                          "Description": ""
+                                        }
+                                      ],
+                                      "ContainerType": "Groups.CustomConditionalGroup",
+                                      "Description": "Pitlane Entry warning"
+                                    },
+                                    {
+                                      "TriggerFormula": {
+                                        "JSExt": 4,
+                                        "Interpreter": 1,
+                                        "Expression": "return csp300_isdecreasing_maxTime (10000, $prop('IsInPitLane'), 'PITEXIT') && $prop('PitLimiterOn') == 1;"
+                                      },
+                                      "LedContainers": [
+                                        {
+                                          "Animation": {
+                                            "Columns": 2,
+                                            "Rows": 1,
+                                            "Frames": [
+                                              {
+                                                "Colors": "0,0,Lime;0,1,#000000",
+                                                "FrameDuration": 125
+                                              },
+                                              {
+                                                "Colors": "0,0,Black;0,1,Lime",
+                                                "FrameDuration": 125
+                                              }
+                                            ],
+                                            "PenColor": "Black"
+                                          },
+                                          "ContainerType": "Animation",
+                                          "Description": ""
+                                        }
+                                      ],
+                                      "ContainerType": "Groups.CustomConditionalGroup",
+                                      "Description": "Pitlane Exit warning"
+                                    }
+                                  ],
+                                  "ContainerType": "Groups.MirrorGroup",
+                                  "Description": ""
+                                }
+                              ],
+                              "ContainerType": "Groups.CustomConditionalGroup",
+                              "Description": "Pit Lane - Entry & Exit Animations - (Default On)"
+                            },
+                            {
+                              "TriggerFormula": {
+                                "JSExt": 4,
+                                "Interpreter": 1,
+                                "Expression": "if ($prop('ConspitLEDs.PitLaneSpeeding') ?? true) {\r\n\treturn \t$prop('IsInPitLane') == 1 &&\r\n\t\t\t$prop('SpeedKmh') > csp300_pitLaneMaxSpeed_propertySelect() && \r\n\t\t\t$prop('PitLimiterOn') == 0;\r\n}\r\nreturn false;"
+                              },
+                              "LedContainers": [
+                                {
+                                  "Animation": {
+                                    "Columns": 12,
+                                    "Rows": 1,
+                                    "Frames": [
+                                      {
+                                        "Colors": "0,0,#FF0000;0,1,#000000;0,2,#FF0000;0,3,#000000;0,4,#FF0000;0,5,#000000;0,6,#FF0000;0,7,#000000;0,8,#FF0000;0,9,#000000;0,10,#FF0000;0,11,#000000",
+                                        "FrameDuration": 125
+                                      },
+                                      {
+                                        "Colors": "0,0,#000000;0,1,#FF0000;0,2,#000000;0,3,#FF0000;0,4,#000000;0,5,#FF0000;0,6,#000000;0,7,#FF0000;0,8,#000000;0,9,#FF0000;0,10,#000000;0,11,#FF0000",
+                                        "FrameDuration": 125
+                                      }
+                                    ],
+                                    "PenColor": "Red"
+                                  },
+                                  "ContainerType": "Animation",
+                                  "Description": "No limiter Alert"
+                                }
+                              ],
+                              "ContainerType": "Groups.CustomConditionalGroup",
+                              "Description": "Pit Lane Speeding Alert (Default On)"
+                            }
+                          ],
+                          "ContainerType": "Base.Group",
+                          "Description": "Pit Lane Effects (Unwavering Colour)"
+                        }
+                      ],
+                      "ContainerType": "Groups.CustomConditionalGroup",
+                      "Description": "Ignition On"
+                    },
+                    {
+                      "ContentFormula": {
+                        "JSExt": 4,
+                        "Interpreter": 1,
+                        "Expression": "return cp300v3EngineStartupTop();",
+                        "PreExpression": "const csp300_totalLeds = 12;"
+                      },
+                      "LedCount": 12,
+                      "ContainerType": "ScriptedContent",
+                      "Description": "Engine Start"
+                    }
+                  ],
+                  "ContainerType": "Groups.BrightnessFormulaGroup",
+                  "Description": "Device specific brightness and NightMode"
+                }
+              ],
+              "ContainerType": "Groups.CustomConditionalGroup",
+              "Description": "Conspit 300 GT Conspit Signature - Top Telemetry"
+            }
+          ],
+          "ContainerType": "Groups.GameRunningGroup",
+          "Description": "Conspit 300 GT Conspit Signature - Live Session Output"
+        }
+      ],
+      "ContainerType": "Base.Group",
+      "Description": "Conspit 300 GT Conspit Signature - Top Status Lights"
+    },
+    {
+      "LedContainers": [
+        {
+          "LedContainers": [
+            {
+              "BrightnessFormula": {
+                "JSExt": 0,
+                "Interpreter": 1,
+                "Expression": "let csp300_DeviceType = isnull($prop('ConspitLEDs.NM'));\r\n\r\nlet csp300_DeviceTypeBrightness = ($prop('ConspitLEDs.WheelBrightness') ?? 100) * ($prop('ConspitLEDs.GlobalBrightness') ?? 100) / 100;\r\n\r\nlet csp300_BrightnessOutput = Math.ceil(csp300_DeviceTypeBrightness);\r\n\r\nreturn csp300_BrightnessOutput;"
+              },
+              "LedContainers": [
+                {
+                  "TriggerFormula": {
+                    "JSExt": 0,
+                    "Interpreter": 1,
+                    "Expression": "return isnull($prop('ConspitLEDs.WheelMenu'));"
+                  },
+                  "LedContainers": [
+                    {
+                      "LedContainers": [
+                        {
+                          "TriggerFormula": {
+                            "JSExt": 0,
+                            "Interpreter": 1,
+                            "Expression": "return true;"
+                          },
+                          "LedContainers": [
+                            {
+                              "TriggerFormula": {
+                                "JSExt": 0,
+                                "Interpreter": 1,
+                                "Expression": "return $prop('ConspitLEDs.WheelMenuAnimation') == 1 || $prop('ConspitLEDs.WheelMenuAnimation') == null;"
+                              },
+                              "LedContainers": [
+                                {
+                                  "LedContainers": [
+                                    {
+                                      "ContentFormula": {
+                                        "JSExt": 0,
+                                        "Interpreter": 1,
+                                        "Expression": "return ['#FFFFD8E5'];"
+                                      },
+                                      "LedCount": 1,
+                                      "ContainerType": "ScriptedContent",
+                                      "Description": "Button 1"
+                                    },
+                                    {
+                                      "ContentFormula": {
+                                        "JSExt": 0,
+                                        "Interpreter": 1,
+                                        "Expression": "return ['#FFFF0038'];"
+                                      },
+                                      "LedCount": 1,
+                                      "StartPosition": 2,
+                                      "ContainerType": "ScriptedContent",
+                                      "Description": "Button 2"
+                                    },
+                                    {
+                                      "ContentFormula": {
+                                        "JSExt": 0,
+                                        "Interpreter": 1,
+                                        "Expression": "return ['#FFFFEAF2'];"
+                                      },
+                                      "LedCount": 1,
+                                      "StartPosition": 3,
+                                      "ContainerType": "ScriptedContent",
+                                      "Description": "Button 3"
+                                    },
+                                    {
+                                      "ContentFormula": {
+                                        "JSExt": 0,
+                                        "Interpreter": 1,
+                                        "Expression": "return ['#FFFF0038'];"
+                                      },
+                                      "LedCount": 1,
+                                      "StartPosition": 4,
+                                      "ContainerType": "ScriptedContent",
+                                      "Description": "Button 4"
+                                    },
+                                    {
+                                      "ContentFormula": {
+                                        "JSExt": 0,
+                                        "Interpreter": 1,
+                                        "Expression": "return ['#FFFFD8E5'];"
+                                      },
+                                      "LedCount": 1,
+                                      "StartPosition": 5,
+                                      "ContainerType": "ScriptedContent",
+                                      "Description": "Button 5"
+                                    },
+                                    {
+                                      "ContentFormula": {
+                                        "JSExt": 0,
+                                        "Interpreter": 1,
+                                        "Expression": "return ['#FFFF0038'];"
+                                      },
+                                      "LedCount": 1,
+                                      "StartPosition": 6,
+                                      "ContainerType": "ScriptedContent",
+                                      "Description": "Button 6"
+                                    },
+                                    {
+                                      "ContentFormula": {
+                                        "JSExt": 0,
+                                        "Interpreter": 1,
+                                        "Expression": "return ['#FFFFEAF2'];"
+                                      },
+                                      "LedCount": 1,
+                                      "StartPosition": 7,
+                                      "ContainerType": "ScriptedContent",
+                                      "Description": "Button 7"
+                                    },
+                                    {
+                                      "ContentFormula": {
+                                        "JSExt": 0,
+                                        "Interpreter": 1,
+                                        "Expression": "return ['#FFFF0038'];"
+                                      },
+                                      "LedCount": 1,
+                                      "StartPosition": 8,
+                                      "ContainerType": "ScriptedContent",
+                                      "Description": "Button 8"
+                                    }
+                                  ],
+                                  "ContainerType": "Base.Group",
+                                  "Description": "Custom Buttons"
+                                },
+                                {
+                                  "LedContainers": [
+                                    {
+                                      "ContentFormula": {
+                                        "JSExt": 0,
+                                        "Interpreter": 1,
+                                        "Expression": "return Array(12).fill('#FFFF0038');"
+                                      },
+                                      "LedCount": 12,
+                                      "StartPosition": 9,
+                                      "ContainerType": "ScriptedContent",
+                                      "Description": "Rotary 1"
+                                    },
+                                    {
+                                      "ContentFormula": {
+                                        "JSExt": 0,
+                                        "Interpreter": 1,
+                                        "Expression": "return Array(12).fill('#FFFFFFFF');"
+                                      },
+                                      "LedCount": 12,
+                                      "StartPosition": 21,
+                                      "ContainerType": "ScriptedContent",
+                                      "Description": "Rotary 2"
+                                    },
+                                    {
+                                      "ContentFormula": {
+                                        "JSExt": 0,
+                                        "Interpreter": 1,
+                                        "Expression": "return Array(12).fill('#FFFF0038');"
+                                      },
+                                      "LedCount": 12,
+                                      "StartPosition": 33,
+                                      "ContainerType": "ScriptedContent",
+                                      "Description": "Rotary 3"
+                                    }
+                                  ],
+                                  "ContainerType": "Base.Group",
+                                  "Description": "Custom Rotaries"
+                                }
+                              ],
+                              "ContainerType": "Groups.CustomConditionalGroup",
+                              "Description": "Static Menu Colour"
+                            },
+                            {
+                              "TriggerFormula": {
+                                "JSExt": 0,
+                                "Interpreter": 1,
+                                "Expression": "return $prop('ConspitLEDs.WheelMenuAnimation') == 2;"
+                              },
+                              "LedContainers": [
+                                {
+                                  "BreathDuration": 1250,
+                                  "StartBreathDuration": 100,
+                                  "EndBreathDuration": 100,
+                                  "BreathStartBrightness": 10,
+                                  "BreathEndBrightness": 100,
+                                  "LedContainers": [
+                                    {
+                                      "LedContainers": [
+                                        {
+                                          "ContentFormula": {
+                                            "JSExt": 0,
+                                            "Interpreter": 1,
+                                            "Expression": "return ['#FFFFD8E5'];"
+                                          },
+                                          "LedCount": 1,
+                                          "ContainerType": "ScriptedContent",
+                                          "Description": "Button 1"
+                                        },
+                                        {
+                                          "ContentFormula": {
+                                            "JSExt": 0,
+                                            "Interpreter": 1,
+                                            "Expression": "return ['#FFFF0038'];"
+                                          },
+                                          "LedCount": 1,
+                                          "StartPosition": 2,
+                                          "ContainerType": "ScriptedContent",
+                                          "Description": "Button 2"
+                                        },
+                                        {
+                                          "ContentFormula": {
+                                            "JSExt": 0,
+                                            "Interpreter": 1,
+                                            "Expression": "return ['#FFFFEAF2'];"
+                                          },
+                                          "LedCount": 1,
+                                          "StartPosition": 3,
+                                          "ContainerType": "ScriptedContent",
+                                          "Description": "Button 3"
+                                        },
+                                        {
+                                          "ContentFormula": {
+                                            "JSExt": 0,
+                                            "Interpreter": 1,
+                                            "Expression": "return ['#FFFF0038'];"
+                                          },
+                                          "LedCount": 1,
+                                          "StartPosition": 4,
+                                          "ContainerType": "ScriptedContent",
+                                          "Description": "Button 4"
+                                        },
+                                        {
+                                          "ContentFormula": {
+                                            "JSExt": 0,
+                                            "Interpreter": 1,
+                                            "Expression": "return ['#FFFFD8E5'];"
+                                          },
+                                          "LedCount": 1,
+                                          "StartPosition": 5,
+                                          "ContainerType": "ScriptedContent",
+                                          "Description": "Button 5"
+                                        },
+                                        {
+                                          "ContentFormula": {
+                                            "JSExt": 0,
+                                            "Interpreter": 1,
+                                            "Expression": "return ['#FFFF0038'];"
+                                          },
+                                          "LedCount": 1,
+                                          "StartPosition": 6,
+                                          "ContainerType": "ScriptedContent",
+                                          "Description": "Button 6"
+                                        },
+                                        {
+                                          "ContentFormula": {
+                                            "JSExt": 0,
+                                            "Interpreter": 1,
+                                            "Expression": "return ['#FFFFEAF2'];"
+                                          },
+                                          "LedCount": 1,
+                                          "StartPosition": 7,
+                                          "ContainerType": "ScriptedContent",
+                                          "Description": "Button 7"
+                                        },
+                                        {
+                                          "ContentFormula": {
+                                            "JSExt": 0,
+                                            "Interpreter": 1,
+                                            "Expression": "return ['#FFFF0038'];"
+                                          },
+                                          "LedCount": 1,
+                                          "StartPosition": 8,
+                                          "ContainerType": "ScriptedContent",
+                                          "Description": "Button 8"
+                                        }
+                                      ],
+                                      "ContainerType": "Base.Group",
+                                      "Description": "Custom Buttons"
+                                    },
+                                    {
+                                      "LedContainers": [
+                                        {
+                                          "ContentFormula": {
+                                            "JSExt": 0,
+                                            "Interpreter": 1,
+                                            "Expression": "return Array(12).fill('#FFFF0038');"
+                                          },
+                                          "LedCount": 12,
+                                          "StartPosition": 9,
+                                          "ContainerType": "ScriptedContent",
+                                          "Description": "Rotary 1"
+                                        },
+                                        {
+                                          "ContentFormula": {
+                                            "JSExt": 0,
+                                            "Interpreter": 1,
+                                            "Expression": "return Array(12).fill('#FFFFFFFF');"
+                                          },
+                                          "LedCount": 12,
+                                          "StartPosition": 21,
+                                          "ContainerType": "ScriptedContent",
+                                          "Description": "Rotary 2"
+                                        },
+                                        {
+                                          "ContentFormula": {
+                                            "JSExt": 0,
+                                            "Interpreter": 1,
+                                            "Expression": "return Array(12).fill('#FFFF0038');"
+                                          },
+                                          "LedCount": 12,
+                                          "StartPosition": 33,
+                                          "ContainerType": "ScriptedContent",
+                                          "Description": "Rotary 3"
+                                        }
+                                      ],
+                                      "ContainerType": "Base.Group",
+                                      "Description": "Custom Rotaries"
+                                    }
+                                  ],
+                                  "ContainerType": "Groups.BreathGroup",
+                                  "Description": ""
+                                }
+                              ],
+                              "ContainerType": "Groups.CustomConditionalGroup",
+                              "Description": "Breathing Menu Colour"
+                            }
+                          ],
+                          "ContainerType": "Groups.CustomConditionalGroup",
+                          "Description": "Menu Colour Custom"
+                        },
+                        {
+                          "TriggerFormula": {
+                            "JSExt": 0,
+                            "Interpreter": 1,
+                            "Expression": "if ($prop('ConspitLEDs.UniversalTheme') == true) {\r\n\treturn $prop('ConspitLEDs.UniversalThemeMenuColour') == 3;\r\n}\r\nreturn $prop('ConspitLEDs.WheelMenuColour') == 3;"
+                          },
+                          "LedContainers": [
+                            {
+                              "TriggerFormula": {
+                                "JSExt": 0,
+                                "Interpreter": 1,
+                                "Expression": "return $prop('ConspitLEDs.WheelMenuAnimation') == 1 || $prop('ConspitLEDs.WheelMenuAnimation') == null;"
+                              },
+                              "LedContainers": [
+                                {
+                                  "LedContainers": [
+                                    {
+                                      "Animation": {
+                                        "Columns": 44,
+                                        "Rows": 1,
+                                        "Frames": [
+                                          {
+                                            "Colors": "0,0,#FF0000;0,1,#FF0000;0,2,Red;0,3,Red;0,4,#FF0000;0,5,#FF0000;0,6,Red;0,7,Red;0,8,Red;0,9,Red;0,10,Red;0,11,Red;0,12,Red;0,13,Red;0,14,Red;0,15,Red;0,16,Red;0,17,Red;0,18,Red;0,19,Red;0,20,Red;0,21,Red;0,22,Red;0,23,Red;0,24,Red;0,25,Red;0,26,Red;0,27,Red;0,28,Red;0,29,Red;0,30,Red;0,31,Red;0,32,Red;0,33,Red;0,34,Red;0,35,Red;0,36,Red;0,37,Red;0,38,Red;0,39,Red;0,40,Red;0,41,Red;0,42,Red;0,43,Red",
+                                            "FrameDuration": 100
+                                          }
+                                        ],
+                                        "PenColor": "Red"
+                                      },
+                                      "ContainerType": "Animation",
+                                      "Description": "Colour"
+                                    },
+                                    {
+                                      "Animation": {
+                                        "Columns": 44,
+                                        "Rows": 1,
+                                        "Frames": [
+                                          {
+                                            "Colors": "0,1,White;0,2,White;0,3,White;0,5,White;0,6,White;0,7,White;0,8,White;0,9,White;0,10,White;0,11,White;0,12,White;0,13,White;0,14,White;0,15,White;0,16,White;0,17,White;0,18,White;0,19,White;0,20,White;0,21,White;0,22,White;0,23,White;0,24,White;0,25,White;0,26,White;0,27,White;0,28,White;0,29,White;0,30,White;0,31,White;0,32,White;0,33,White;0,34,White;0,35,White;0,36,White;0,37,White;0,38,White;0,39,White;0,40,White;0,41,White;0,42,White;0,43,White",
+                                            "FrameDuration": 100
+                                          }
+                                        ],
+                                        "PenColor": "25, 255, 255, 255"
+                                      },
+                                      "ContainerType": "Animation",
+                                      "Description": "Fade"
+                                    }
+                                  ],
+                                  "ContainerType": "Base.Group",
+                                  "Description": "CSP Red Fade"
+                                }
+                              ],
+                              "ContainerType": "Groups.CustomConditionalGroup",
+                              "Description": "Static Menu Colour"
+                            },
+                            {
+                              "TriggerFormula": {
+                                "JSExt": 0,
+                                "Interpreter": 1,
+                                "Expression": "return $prop('ConspitLEDs.WheelMenuAnimation') == 2;"
+                              },
+                              "LedContainers": [
+                                {
+                                  "BreathDuration": 1250,
+                                  "StartBreathDuration": 100,
+                                  "EndBreathDuration": 100,
+                                  "BreathStartBrightness": 10,
+                                  "BreathEndBrightness": 100,
+                                  "LedContainers": [
+                                    {
+                                      "LedContainers": [
+                                        {
+                                          "Animation": {
+                                            "Columns": 44,
+                                            "Rows": 1,
+                                            "Frames": [
+                                              {
+                                                "Colors": "0,0,#FF0000;0,1,#FF0000;0,2,Red;0,3,Red;0,4,#FF0000;0,5,#FF0000;0,6,Red;0,7,Red;0,8,Red;0,9,Red;0,10,Red;0,11,Red;0,12,Red;0,13,Red;0,14,Red;0,15,Red;0,16,Red;0,17,Red;0,18,Red;0,19,Red;0,20,Red;0,21,Red;0,22,Red;0,23,Red;0,24,Red;0,25,Red;0,26,Red;0,27,Red;0,28,Red;0,29,Red;0,30,Red;0,31,Red;0,32,Red;0,33,Red;0,34,Red;0,35,Red;0,36,Red;0,37,Red;0,38,Red;0,39,Red;0,40,Red;0,41,Red;0,42,Red;0,43,Red",
+                                                "FrameDuration": 100
+                                              }
+                                            ],
+                                            "PenColor": "Red"
+                                          },
+                                          "ContainerType": "Animation",
+                                          "Description": "Colour"
+                                        },
+                                        {
+                                          "Animation": {
+                                            "Columns": 44,
+                                            "Rows": 1,
+                                            "Frames": [
+                                              {
+                                                "Colors": "0,1,White;0,2,White;0,3,White;0,5,White;0,6,White;0,7,White;0,8,White;0,9,White;0,10,White;0,11,White;0,12,White;0,13,White;0,14,White;0,15,White;0,16,White;0,17,White;0,18,White;0,19,White;0,20,White;0,21,White;0,22,White;0,23,White;0,24,White;0,25,White;0,26,White;0,27,White;0,28,White;0,29,White;0,30,White;0,31,White;0,32,White;0,33,White;0,34,White;0,35,White;0,36,White;0,37,White;0,38,White;0,39,White;0,40,White;0,41,White;0,42,White;0,43,White",
+                                                "FrameDuration": 100
+                                              }
+                                            ],
+                                            "PenColor": "25, 255, 255, 255"
+                                          },
+                                          "ContainerType": "Animation",
+                                          "Description": "Fade"
+                                        }
+                                      ],
+                                      "ContainerType": "Base.Group",
+                                      "Description": "CSP Red Fade"
+                                    }
+                                  ],
+                                  "ContainerType": "Groups.BreathGroup",
+                                  "Description": ""
+                                }
+                              ],
+                              "ContainerType": "Groups.CustomConditionalGroup",
+                              "Description": "Breathing Menu Colour"
+                            }
+                          ],
+                          "ContainerType": "Groups.CustomConditionalGroup",
+                          "Description": " Menu Colour Red"
+                        }
+                      ],
+                      "ContainerType": "Base.Group",
+                      "Description": "Menu Theme Colours"
+                    },
+                    {
+                      "LedContainers": [
+                        {
+                          "ContentFormula": {
+                            "JSExt": 4,
+                            "Interpreter": 1,
+                            "Expression": "const csp300_WheelsRotaryEffect = $prop('ConspitLEDs.WheelCustomMenuEffectRotary1');\r\nconst csp300_RotaryDisplayStyle = $prop('ConspitLEDs.WheelRotaryDisplayStyle1') ?? 0; // 0 = Single LED, 1 = Fill to current value\r\n\r\nconst themes = {\r\n\t// Custom\r\n\t'0': { ActiveColourRotary: [$prop('ConspitLEDs.WheelCustomMenuActiveColourRotary1') ?? '#FFFF0000']},\r\n\t// CSP\r\n\t'1': { ActiveColourRotary: ['#FFFF0000']},\r\n\t// Racing\r\n\t'2': { ActiveColourRotary: ['#FFFF0000']},\r\n\t// White\r\n\t'10': { ActiveColourRotary: ['#FFFF0000']},\r\n\t// Arctic\r\n\t'11': { ActiveColourRotary: ['#FF0000FF']},\r\n\t// Sunset\r\n\t'12': { ActiveColourRotary: ['#FFFF0000']},\r\n\t// Rainbow\r\n\t'13': { ActiveColourRotary: ['#FFFF1493']},\r\n\t// Citrus\r\n\t'14': { ActiveColourRotary: ['#FF00FF00']},\r\n\t// Tokyo\r\n\t'15': { ActiveColourRotary: ['#FFFF1493']},\r\n\t// Gulf Oil\r\n\t'16': { ActiveColourRotary: ['#FFFF4500']},\r\n\t// Default\r\n\t'default': {ActiveColourRotary: ['#FFFFFFFF']}\r\n};\r\n\r\n// Apply Theme\r\nlet themeSettings;\r\nlet currentThemeId;\r\n\r\nif ($prop('ConspitLEDs.UniversalTheme') == true) {\r\n\tcurrentThemeId = $prop('ConspitLEDs.UniversalThemeMenuColour');\r\n\tthemeSettings = themes[currentThemeId] || themes['default'];\r\n} else {\r\n\tcurrentThemeId = $prop('ConspitLEDs.WheelMenuColour');\r\n\tthemeSettings = themes[currentThemeId] || themes['default'];\r\n};\r\n\r\nlet RotaryArray = Array(csp300_ledLength).fill(null);\r\nlet currentPosition = root.lastRotaryPosition;\r\n\r\nfor (const [button, leds] of Object.entries(buttonMap)) {\r\n\tif (getcontrollerbuttonstate(CONTROLLER_ID , Number(button))) {\r\n\t\tcurrentPosition = leds[0];\r\n\t\tbreak;\r\n\t}\r\n}\r\nroot.lastRotaryPosition = currentPosition;\r\n\r\nif (csp300_RotaryDisplayStyle == 0) {\r\n\tRotaryArray[currentPosition] = themeSettings.ActiveColourRotary[0];\r\n}\r\nif (csp300_RotaryDisplayStyle == 1) {\r\n\tfor (let i = 0; i <= currentPosition; i++) {\r\n\t\tRotaryArray[i] = themeSettings.ActiveColourRotary[0];\r\n\t}\r\n}\r\nreturn RotaryArray;",
+                            "PreExpression": "const csp300_ledLength = 12;\r\nconst CONTROLLER_ID = '0x3514,0x000E';\r\nconst buttonMap = {\r\n\t36: [0], 37: [1], 38: [2], 39: [3], \r\n\t40: [4], 41: [5], 42: [6], 43: [7], \r\n\t44: [8], 45: [9], 46: [10], 47: [11]\r\n};"
+                          },
+                          "LedCount": 12,
+                          "StartPosition": 9,
+                          "ContainerType": "ScriptedContent",
+                          "Description": "Rotary 1 Multi Positional Indicator",
+                          "IsEnabled": false
+                        },
+                        {
+                          "ContentFormula": {
+                            "JSExt": 4,
+                            "Interpreter": 1,
+                            "Expression": "const csp300_WheelsRotaryEffect = $prop('ConspitLEDs.WheelCustomMenuEffectRotary1');\r\nconst csp300_RotaryDisplayStyle = $prop('ConspitLEDs.WheelRotaryDisplayStyle1') ?? 0; // 0 = Single LED, 1 = Fill to current value\r\n\r\nconst themes = {\r\n\t// Custom\r\n\t'0': { ActiveColourRotary: [$prop('ConspitLEDs.WheelCustomMenuActiveColourRotary1') ?? '#FFFF0000']},\r\n\t// CSP\r\n\t'1': { ActiveColourRotary: ['#FFFF0000']},\r\n\t// Racing\r\n\t'2': { ActiveColourRotary: ['#FFFF0000']},\r\n\t// White\r\n\t'10': { ActiveColourRotary: ['#FFFF0000']},\r\n\t// Arctic\r\n\t'11': { ActiveColourRotary: ['#FF0000FF']},\r\n\t// Sunset\r\n\t'12': { ActiveColourRotary: ['#FFFF0000']},\r\n\t// Rainbow\r\n\t'13': { ActiveColourRotary: ['#FFFF1493']},\r\n\t// Citrus\r\n\t'14': { ActiveColourRotary: ['#FF00FF00']},\r\n\t// Tokyo\r\n\t'15': { ActiveColourRotary: ['#FFFF1493']},\r\n\t// Gulf Oil\r\n\t'16': { ActiveColourRotary: ['#FFFF4500']},\r\n\t// Default\r\n\t'default': {ActiveColourRotary: ['#FFFFFFFF']}\r\n};\r\n\r\n// Apply Theme\r\nlet themeSettings;\r\nlet currentThemeId;\r\n\r\nif ($prop('ConspitLEDs.UniversalTheme') == true) {\r\n\tcurrentThemeId = $prop('ConspitLEDs.UniversalThemeMenuColour');\r\n\tthemeSettings = themes[currentThemeId] || themes['default'];\r\n} else {\r\n\tcurrentThemeId = $prop('ConspitLEDs.WheelMenuColour');\r\n\tthemeSettings = themes[currentThemeId] || themes['default'];\r\n};\r\n\r\nlet RotaryArray = Array(csp300_ledLength).fill(null);\r\nlet currentPosition = root.lastRotaryPosition;\r\n\r\nif ($prop('ConspitPlugin.Conspit.300GT.BandLeft') != undefined) {\r\n\tcurrentPosition = $prop('ConspitPlugin.Conspit.300GT.BandLeft') - 1;\r\n} else {\r\n\tfor (const [button, leds] of Object.entries(buttonMap)) {\r\n\t\tif (getcontrollerbuttonstate(CONTROLLER_ID , Number(button))) {\r\n\t\t\tcurrentPosition = leds[0];\r\n\t\t\tbreak;\r\n\t\t}\r\n\t}\r\n}\r\nroot.lastRotaryPosition = currentPosition;\r\n\r\nif (csp300_RotaryDisplayStyle == 0) {\r\n\tRotaryArray[currentPosition] = themeSettings.ActiveColourRotary[0];\r\n}\r\nif (csp300_RotaryDisplayStyle == 1) {\r\n\tfor (let i = 0; i <= currentPosition; i++) {\r\n\t\tRotaryArray[i] = themeSettings.ActiveColourRotary[0];\r\n\t}\r\n}\r\nreturn RotaryArray;",
+                            "PreExpression": "const csp300_ledLength = 12;\r\nconst CONTROLLER_ID = '0x3514,0x000E';\r\nconst buttonMap = {\r\n\t36: [0], 37: [1], 38: [2], 39: [3], \r\n\t40: [4], 41: [5], 42: [6], 43: [7], \r\n\t44: [8], 45: [9], 46: [10], 47: [11]\r\n};"
+                          },
+                          "LedCount": 12,
+                          "StartPosition": 9,
+                          "ContainerType": "ScriptedContent",
+                          "Description": "Rotary 1 Multi Positional Indicator"
+                        },
+                        {
+                          "ContentFormula": {
+                            "JSExt": 4,
+                            "Interpreter": 1,
+                            "Expression": "const csp300_WheelsRotaryEffect = $prop('ConspitLEDs.WheelCustomMenuEffectRotary2');\r\nconst csp300_RotaryDisplayStyle = $prop('ConspitLEDs.WheelRotaryDisplayStyle2') ?? 0; // 0 = Single LED, 1 = Fill to current value\r\n\r\nconst themes = {\r\n\t// Custom\r\n\t'0': { ActiveColourRotary: [$prop('ConspitLEDs.WheelCustomMenuActiveColourRotary2') ?? '#FFFF0000']},\r\n\t// CSP\r\n\t'1': { ActiveColourRotary: ['#FFFF0000']},\r\n\t// Racing\r\n\t'2': { ActiveColourRotary: ['#FF00FF00']},\r\n\t// White\r\n\t'10': { ActiveColourRotary: ['#FFFF0000']},\r\n\t// Arctic\r\n\t'11': { ActiveColourRotary: ['#FF0000FF']},\r\n\t// Sunset\r\n\t'12': { ActiveColourRotary: ['#FFFF0000']},\r\n\t// Rainbow\r\n\t'13': { ActiveColourRotary: ['#FF0000FF']},\r\n\t// Citrus\r\n\t'14': { ActiveColourRotary: ['#FF00FF00']},\r\n\t// Tokyo\r\n\t'15': { ActiveColourRotary: ['#FFFF1493']},\r\n\t// Gulf Oil\r\n\t'16': { ActiveColourRotary: ['#FF1E90FF']},\r\n\t// Default\r\n\t'default': {ActiveColourRotary: ['#FFFFFFFF']}\r\n};\r\n\r\n// Apply Theme\r\nlet themeSettings;\r\nlet currentThemeId;\r\n\r\nif ($prop('ConspitLEDs.UniversalTheme') == true) {\r\n\tcurrentThemeId = $prop('ConspitLEDs.UniversalThemeMenuColour');\r\n\tthemeSettings = themes[currentThemeId] || themes['default'];\r\n} else {\r\n\tcurrentThemeId = $prop('ConspitLEDs.WheelMenuColour');\r\n\tthemeSettings = themes[currentThemeId] || themes['default'];\r\n};\r\n\r\nlet RotaryArray = Array(csp300_ledLength).fill(null);\r\nlet currentPosition = root.lastRotaryPosition;\r\n\r\nfor (const [button, leds] of Object.entries(buttonMap)) {\r\n\tif (getcontrollerbuttonstate(CONTROLLER_ID , Number(button))) {\r\n\t\tcurrentPosition = leds[0];\r\n\t\tbreak;\r\n\t}\r\n}\r\nroot.lastRotaryPosition = currentPosition;\r\n\r\nif (csp300_RotaryDisplayStyle == 0) {\r\n\tRotaryArray[currentPosition] = themeSettings.ActiveColourRotary[0];\r\n}\r\nif (csp300_RotaryDisplayStyle == 1) {\r\n\tfor (let i = 0; i <= currentPosition; i++) {\r\n\t\tRotaryArray[i] = themeSettings.ActiveColourRotary[0];\r\n\t}\r\n}\r\nreturn RotaryArray;",
+                            "PreExpression": "const csp300_ledLength = 12;\r\nconst CONTROLLER_ID = '0x3514,0x000E';\r\nconst buttonMap = {\r\n\t48: [0], 49: [1], 50: [2], 51: [3], \r\n\t52: [4], 53: [5], 54: [6], 55: [7], \r\n\t56: [8], 57: [9], 58: [10], 59: [11]\r\n};"
+                          },
+                          "LedCount": 12,
+                          "StartPosition": 21,
+                          "ContainerType": "ScriptedContent",
+                          "Description": "Rotary 2 Multi Positional Indicator"
+                        },
+                        {
+                          "ContentFormula": {
+                            "JSExt": 4,
+                            "Interpreter": 1,
+                            "Expression": "const csp300_WheelsRotaryEffect = $prop('ConspitLEDs.WheelCustomMenuEffectRotary3');\r\nconst csp300_RotaryDisplayStyle = $prop('ConspitLEDs.WheelRotaryDisplayStyle3') ?? 0; // 0 = Single LED, 1 = Fill to current value\r\n\r\nconst themes = {\r\n\t// Custom\r\n\t'0': { ActiveColourRotary: [$prop('ConspitLEDs.WheelCustomMenuActiveColourRotary3') ?? '#FFFF0000']},\r\n\t// CSP\r\n\t'1': { ActiveColourRotary: ['#FFFF0000']},\r\n\t// Racing\r\n\t'2': { ActiveColourRotary: ['#FFFF0000']},\r\n\t// White\r\n\t'10': { ActiveColourRotary: ['#FFFF0000']},\r\n\t// Arctic\r\n\t'11': { ActiveColourRotary: ['#FF0000FF']},\r\n\t// Sunset\r\n\t'12': { ActiveColourRotary: ['#FFFF0000']},\r\n\t// Rainbow\r\n\t'13': { ActiveColourRotary: ['#FFFF1493']},\r\n\t// Citrus\r\n\t'14': { ActiveColourRotary: ['#FF00FF00']},\r\n\t// Tokyo\r\n\t'15': { ActiveColourRotary: ['#FFFF1493']},\r\n\t// Gulf Oil\r\n\t'16': { ActiveColourRotary: ['#FFFF4500']},\r\n\t// Default\r\n\t'default': {ActiveColourRotary: ['#FFFFFFFF']}\r\n};\r\n\r\n// Apply Theme\r\nlet themeSettings;\r\nlet currentThemeId;\r\n\r\nif ($prop('ConspitLEDs.UniversalTheme') == true) {\r\n\tcurrentThemeId = $prop('ConspitLEDs.UniversalThemeMenuColour');\r\n\tthemeSettings = themes[currentThemeId] || themes['default'];\r\n} else {\r\n\tcurrentThemeId = $prop('ConspitLEDs.WheelMenuColour');\r\n\tthemeSettings = themes[currentThemeId] || themes['default'];\r\n};\r\n\r\nlet RotaryArray = Array(csp300_ledLength).fill(null);\r\nlet currentPosition = root.lastRotaryPosition;\r\n\r\nfor (const [button, leds] of Object.entries(buttonMap)) {\r\n\tif (getcontrollerbuttonstate(CONTROLLER_ID , Number(button))) {\r\n\t\tcurrentPosition = leds[0];\r\n\t\tbreak;\r\n\t}\r\n}\r\nroot.lastRotaryPosition = currentPosition;\r\n\r\nif (csp300_RotaryDisplayStyle == 0) {\r\n\tRotaryArray[currentPosition] = themeSettings.ActiveColourRotary[0];\r\n}\r\nif (csp300_RotaryDisplayStyle == 1) {\r\n\tfor (let i = 0; i <= currentPosition; i++) {\r\n\t\tRotaryArray[i] = themeSettings.ActiveColourRotary[0];\r\n\t}\r\n}\r\nreturn RotaryArray;",
+                            "PreExpression": "const csp300_ledLength = 12;\r\nconst CONTROLLER_ID = '0x3514,0x000E';\r\nconst buttonMap = {\r\n\t60: [0], 61: [1], 62: [2], 63: [3], \r\n\t64: [4], 65: [5], 66: [6], 67: [7], \r\n\t68: [8], 69: [9], 70: [10], 71: [11]\r\n};"
+                          },
+                          "LedCount": 12,
+                          "StartPosition": 33,
+                          "ContainerType": "ScriptedContent",
+                          "Description": "Rotary 3 Multi Positional Indicator"
+                        }
+                      ],
+                      "ContainerType": "Base.Group",
+                      "Description": "Rotary Indicator"
+                    },
+                    {
+                      "TriggerFormula": {
+                        "JSExt": 0,
+                        "Interpreter": 1,
+                        "Expression": "return true;"
+                      },
+                      "LedContainers": [
+                        {
+                          "LedContainers": [
+                            {
+                              "TriggerFormula": {
+                                "Expression": "Changed(400, getcontrollerbuttonstate('0x3514,0x000E', 0))"
+                              },
+                              "LedContainers": [
+                                {
+                                  "Animation": {
+                                    "Columns": 1,
+                                    "Rows": 1,
+                                    "Frames": [
+                                      {
+                                        "Colors": "",
+                                        "FrameDuration": 100
+                                      },
+                                      {
+                                        "Colors": "0,0,Black",
+                                        "FrameDuration": 100
+                                      }
+                                    ],
+                                    "PenColor": "Black"
+                                  },
+                                  "ContainerType": "Animation",
+                                  "Description": ""
+                                }
+                              ],
+                              "ContainerType": "Groups.CustomConditionalGroup",
+                              "Description": "Button 1"
+                            },
+                            {
+                              "TriggerFormula": {
+                                "Expression": "Changed(400, getcontrollerbuttonstate('0x3514,0x000E', 1))"
+                              },
+                              "LedContainers": [
+                                {
+                                  "Animation": {
+                                    "Columns": 1,
+                                    "Rows": 1,
+                                    "Frames": [
+                                      {
+                                        "Colors": "",
+                                        "FrameDuration": 100
+                                      },
+                                      {
+                                        "Colors": "0,0,Black",
+                                        "FrameDuration": 100
+                                      }
+                                    ],
+                                    "PenColor": "Black"
+                                  },
+                                  "ContainerType": "Animation",
+                                  "Description": ""
+                                }
+                              ],
+                              "StartPosition": 2,
+                              "ContainerType": "Groups.CustomConditionalGroup",
+                              "Description": "Button 2"
+                            },
+                            {
+                              "TriggerFormula": {
+                                "Expression": "Changed(400, getcontrollerbuttonstate('0x3514,0x000E', 2))"
+                              },
+                              "LedContainers": [
+                                {
+                                  "Animation": {
+                                    "Columns": 1,
+                                    "Rows": 1,
+                                    "Frames": [
+                                      {
+                                        "Colors": "",
+                                        "FrameDuration": 100
+                                      },
+                                      {
+                                        "Colors": "0,0,Black",
+                                        "FrameDuration": 100
+                                      }
+                                    ],
+                                    "PenColor": "Black"
+                                  },
+                                  "ContainerType": "Animation",
+                                  "Description": ""
+                                }
+                              ],
+                              "StartPosition": 3,
+                              "ContainerType": "Groups.CustomConditionalGroup",
+                              "Description": "Button 3"
+                            },
+                            {
+                              "TriggerFormula": {
+                                "Expression": "Changed(400, getcontrollerbuttonstate('0x3514,0x000E', 3))"
+                              },
+                              "LedContainers": [
+                                {
+                                  "Animation": {
+                                    "Columns": 1,
+                                    "Rows": 1,
+                                    "Frames": [
+                                      {
+                                        "Colors": "",
+                                        "FrameDuration": 100
+                                      },
+                                      {
+                                        "Colors": "0,0,Black",
+                                        "FrameDuration": 100
+                                      }
+                                    ],
+                                    "PenColor": "Black"
+                                  },
+                                  "ContainerType": "Animation",
+                                  "Description": ""
+                                }
+                              ],
+                              "StartPosition": 4,
+                              "ContainerType": "Groups.CustomConditionalGroup",
+                              "Description": "Button 4"
+                            },
+                            {
+                              "TriggerFormula": {
+                                "Expression": "Changed(400, getcontrollerbuttonstate('0x3514,0x000E', 4))"
+                              },
+                              "LedContainers": [
+                                {
+                                  "Animation": {
+                                    "Columns": 1,
+                                    "Rows": 1,
+                                    "Frames": [
+                                      {
+                                        "Colors": "",
+                                        "FrameDuration": 100
+                                      },
+                                      {
+                                        "Colors": "0,0,Black",
+                                        "FrameDuration": 100
+                                      }
+                                    ],
+                                    "PenColor": "Black"
+                                  },
+                                  "ContainerType": "Animation",
+                                  "Description": ""
+                                }
+                              ],
+                              "StartPosition": 5,
+                              "ContainerType": "Groups.CustomConditionalGroup",
+                              "Description": "Button 5"
+                            },
+                            {
+                              "TriggerFormula": {
+                                "Expression": "Changed(400, getcontrollerbuttonstate('0x3514,0x000E', 5))"
+                              },
+                              "LedContainers": [
+                                {
+                                  "Animation": {
+                                    "Columns": 1,
+                                    "Rows": 1,
+                                    "Frames": [
+                                      {
+                                        "Colors": "",
+                                        "FrameDuration": 100
+                                      },
+                                      {
+                                        "Colors": "0,0,Black",
+                                        "FrameDuration": 100
+                                      }
+                                    ],
+                                    "PenColor": "Black"
+                                  },
+                                  "ContainerType": "Animation",
+                                  "Description": ""
+                                }
+                              ],
+                              "StartPosition": 6,
+                              "ContainerType": "Groups.CustomConditionalGroup",
+                              "Description": "Button 6"
+                            },
+                            {
+                              "TriggerFormula": {
+                                "Expression": "Changed(400, getcontrollerbuttonstate('0x3514,0x000E', 6))"
+                              },
+                              "LedContainers": [
+                                {
+                                  "Animation": {
+                                    "Columns": 1,
+                                    "Rows": 1,
+                                    "Frames": [
+                                      {
+                                        "Colors": "",
+                                        "FrameDuration": 100
+                                      },
+                                      {
+                                        "Colors": "0,0,Black",
+                                        "FrameDuration": 100
+                                      }
+                                    ],
+                                    "PenColor": "Black"
+                                  },
+                                  "ContainerType": "Animation",
+                                  "Description": ""
+                                }
+                              ],
+                              "StartPosition": 7,
+                              "ContainerType": "Groups.CustomConditionalGroup",
+                              "Description": "Button 7"
+                            },
+                            {
+                              "TriggerFormula": {
+                                "Expression": "Changed(400, getcontrollerbuttonstate('0x3514,0x000E', 7))"
+                              },
+                              "LedContainers": [
+                                {
+                                  "Animation": {
+                                    "Columns": 1,
+                                    "Rows": 1,
+                                    "Frames": [
+                                      {
+                                        "Colors": "",
+                                        "FrameDuration": 100
+                                      },
+                                      {
+                                        "Colors": "0,0,Black",
+                                        "FrameDuration": 100
+                                      }
+                                    ],
+                                    "PenColor": "Black"
+                                  },
+                                  "ContainerType": "Animation",
+                                  "Description": ""
+                                }
+                              ],
+                              "StartPosition": 8,
+                              "ContainerType": "Groups.CustomConditionalGroup",
+                              "Description": "Button 8"
+                            },
+                            {
+                              "TriggerFormula": {
+                                "Expression": "return false;"
+                              },
+                              "LedContainers": [
+                                {
+                                  "Animation": {
+                                    "Columns": 4,
+                                    "Rows": 1,
+                                    "Frames": [
+                                      {
+                                        "Colors": "",
+                                        "FrameDuration": 100
+                                      },
+                                      {
+                                        "Colors": "0,0,Black;0,1,Black;0,2,Black;0,3,Black",
+                                        "FrameDuration": 100
+                                      }
+                                    ],
+                                    "PenColor": "Black"
+                                  },
+                                  "ContainerType": "Animation",
+                                  "Description": ""
+                                }
+                              ],
+                              "ContainerType": "Groups.CustomConditionalGroup",
+                              "Description": "Rear Left"
+                            },
+                            {
+                              "TriggerFormula": {
+                                "Expression": "return false;"
+                              },
+                              "LedContainers": [
+                                {
+                                  "Animation": {
+                                    "Columns": 4,
+                                    "Rows": 1,
+                                    "Frames": [
+                                      {
+                                        "Colors": "",
+                                        "FrameDuration": 100
+                                      },
+                                      {
+                                        "Colors": "0,0,Black;0,1,Black;0,2,Black;0,3,Black",
+                                        "FrameDuration": 100
+                                      }
+                                    ],
+                                    "PenColor": "Black"
+                                  },
+                                  "ContainerType": "Animation",
+                                  "Description": ""
+                                }
+                              ],
+                              "StartPosition": 5,
+                              "ContainerType": "Groups.CustomConditionalGroup",
+                              "Description": "Rear Right"
+                            }
+                          ],
+                          "ContainerType": "Base.Group",
+                          "Description": "Buttons"
+                        },
+                        {
+                          "LedContainers": [
+                            {
+                              "LedContainers": [
+                                {
+                                  "TriggerFormula": {
+                                    "Expression": "isincreasing(400,getcontrollerbuttonstate('0x3514,0x000E', 30))"
+                                  },
+                                  "LedContainers": [
+                                    {
+                                      "Animation": {
+                                        "Columns": 12,
+                                        "Rows": 1,
+                                        "Frames": [
+                                          {
+                                            "Colors": "0,0,Black;0,1,Black;0,2,Black;0,3,Black;0,4,Black;0,5,Black;0,6,Black;0,7,Black;0,8,Black;0,9,Black;0,10,Black;0,11,Black",
+                                            "FrameDuration": 200
+                                          },
+                                          {
+                                            "Colors": "",
+                                            "FrameDuration": 200
+                                          }
+                                        ],
+                                        "PenColor": "Black"
+                                      },
+                                      "ContainerType": "Animation",
+                                      "Description": "Turn"
+                                    }
+                                  ],
+                                  "ContainerType": "Groups.CustomConditionalGroup",
+                                  "Description": "Left Turn"
+                                },
+                                {
+                                  "TriggerFormula": {
+                                    "Expression": "isincreasing(400,getcontrollerbuttonstate('0x3514,0x000E', 31))"
+                                  },
+                                  "LedContainers": [
+                                    {
+                                      "Animation": {
+                                        "Columns": 12,
+                                        "Rows": 1,
+                                        "Frames": [
+                                          {
+                                            "Colors": "0,0,Black;0,1,Black;0,2,Black;0,3,Black;0,4,Black;0,5,Black;0,6,Black;0,7,Black;0,8,Black;0,9,Black;0,10,Black;0,11,Black",
+                                            "FrameDuration": 200
+                                          },
+                                          {
+                                            "Colors": "",
+                                            "FrameDuration": 200
+                                          }
+                                        ],
+                                        "PenColor": "Black"
+                                      },
+                                      "ContainerType": "Animation",
+                                      "Description": "Turn"
+                                    }
+                                  ],
+                                  "ContainerType": "Groups.CustomConditionalGroup",
+                                  "Description": "Right Turn"
+                                }
+                              ],
+                              "StartPosition": 9,
+                              "ContainerType": "Base.Group",
+                              "Description": "Rotary 1"
+                            },
+                            {
+                              "LedContainers": [
+                                {
+                                  "TriggerFormula": {
+                                    "Expression": "isincreasing(400,getcontrollerbuttonstate('0x3514,0x000E', 32))"
+                                  },
+                                  "LedContainers": [
+                                    {
+                                      "Animation": {
+                                        "Columns": 12,
+                                        "Rows": 1,
+                                        "Frames": [
+                                          {
+                                            "Colors": "0,0,Black;0,1,Black;0,2,Black;0,3,Black;0,4,Black;0,5,Black;0,6,Black;0,7,Black;0,8,Black;0,9,Black;0,10,Black;0,11,Black",
+                                            "FrameDuration": 200
+                                          },
+                                          {
+                                            "Colors": "",
+                                            "FrameDuration": 200
+                                          }
+                                        ],
+                                        "PenColor": "Black"
+                                      },
+                                      "ContainerType": "Animation",
+                                      "Description": "Turn"
+                                    }
+                                  ],
+                                  "ContainerType": "Groups.CustomConditionalGroup",
+                                  "Description": "Left Turn"
+                                },
+                                {
+                                  "TriggerFormula": {
+                                    "Expression": "isincreasing(400,getcontrollerbuttonstate('0x3514,0x000E', 33))"
+                                  },
+                                  "LedContainers": [
+                                    {
+                                      "Animation": {
+                                        "Columns": 12,
+                                        "Rows": 1,
+                                        "Frames": [
+                                          {
+                                            "Colors": "0,0,Black;0,1,Black;0,2,Black;0,3,Black;0,4,Black;0,5,Black;0,6,Black;0,7,Black;0,8,Black;0,9,Black;0,10,Black;0,11,Black",
+                                            "FrameDuration": 200
+                                          },
+                                          {
+                                            "Colors": "",
+                                            "FrameDuration": 200
+                                          }
+                                        ],
+                                        "PenColor": "Black"
+                                      },
+                                      "ContainerType": "Animation",
+                                      "Description": "Turn"
+                                    }
+                                  ],
+                                  "ContainerType": "Groups.CustomConditionalGroup",
+                                  "Description": "Right Turn"
+                                }
+                              ],
+                              "StartPosition": 21,
+                              "ContainerType": "Base.Group",
+                              "Description": "Rotary 2"
+                            },
+                            {
+                              "LedContainers": [
+                                {
+                                  "TriggerFormula": {
+                                    "Expression": "isincreasing(400,getcontrollerbuttonstate('0x3514,0x000E', 34))"
+                                  },
+                                  "LedContainers": [
+                                    {
+                                      "Animation": {
+                                        "Columns": 12,
+                                        "Rows": 1,
+                                        "Frames": [
+                                          {
+                                            "Colors": "0,0,Black;0,1,Black;0,2,Black;0,3,Black;0,4,Black;0,5,Black;0,6,Black;0,7,Black;0,8,Black;0,9,Black;0,10,Black;0,11,Black",
+                                            "FrameDuration": 200
+                                          },
+                                          {
+                                            "Colors": "",
+                                            "FrameDuration": 200
+                                          }
+                                        ],
+                                        "PenColor": "Black"
+                                      },
+                                      "ContainerType": "Animation",
+                                      "Description": "Turn"
+                                    }
+                                  ],
+                                  "ContainerType": "Groups.CustomConditionalGroup",
+                                  "Description": "Left Turn"
+                                },
+                                {
+                                  "TriggerFormula": {
+                                    "Expression": "isincreasing(400,getcontrollerbuttonstate('0x3514,0x000E', 35))"
+                                  },
+                                  "LedContainers": [
+                                    {
+                                      "Animation": {
+                                        "Columns": 12,
+                                        "Rows": 1,
+                                        "Frames": [
+                                          {
+                                            "Colors": "0,0,Black;0,1,Black;0,2,Black;0,3,Black;0,4,Black;0,5,Black;0,6,Black;0,7,Black;0,8,Black;0,9,Black;0,10,Black;0,11,Black",
+                                            "FrameDuration": 200
+                                          },
+                                          {
+                                            "Colors": "",
+                                            "FrameDuration": 200
+                                          }
+                                        ],
+                                        "PenColor": "Black"
+                                      },
+                                      "ContainerType": "Animation",
+                                      "Description": "Turn"
+                                    }
+                                  ],
+                                  "ContainerType": "Groups.CustomConditionalGroup",
+                                  "Description": "Right Turn"
+                                }
+                              ],
+                              "StartPosition": 33,
+                              "ContainerType": "Base.Group",
+                              "Description": "Rotary 3"
+                            }
+                          ],
+                          "ContainerType": "Base.Group",
+                          "Description": "Rotary turn"
+                        },
+                        {
+                          "LedContainers": [
+                            {
+                              "TriggerFormula": {
+                                "Expression": "return false; // V21: legacy thumb animation disabled, final clustered overlay handles it"
+                              },
+                              "LedContainers": [
+                                {
+                                  "Animation": {
+                                    "Columns": 4,
+                                    "Rows": 1,
+                                    "Frames": [
+                                      {
+                                        "Colors": "0,0,Black",
+                                        "FrameDuration": 100
+                                      },
+                                      {
+                                        "Colors": "0,1,Black",
+                                        "FrameDuration": 100
+                                      },
+                                      {
+                                        "Colors": "0,2,Black",
+                                        "FrameDuration": 100
+                                      },
+                                      {
+                                        "Colors": "0,3,Black",
+                                        "FrameDuration": 100
+                                      }
+                                    ],
+                                    "PenColor": "Black"
+                                  },
+                                  "ContainerType": "Animation",
+                                  "Description": ""
+                                }
+                              ],
+                              "ContainerType": "Groups.CustomConditionalGroup",
+                              "Description": "TE Left down"
+                            },
+                            {
+                              "TriggerFormula": {
+                                "Expression": "return false; // V21: legacy thumb animation disabled, final clustered overlay handles it"
+                              },
+                              "LedContainers": [
+                                {
+                                  "Animation": {
+                                    "Columns": 4,
+                                    "Rows": 1,
+                                    "Frames": [
+                                      {
+                                        "Colors": "0,3,Black",
+                                        "FrameDuration": 100
+                                      },
+                                      {
+                                        "Colors": "0,2,Black",
+                                        "FrameDuration": 100
+                                      },
+                                      {
+                                        "Colors": "0,1,Black",
+                                        "FrameDuration": 100
+                                      },
+                                      {
+                                        "Colors": "0,0,Black",
+                                        "FrameDuration": 100
+                                      }
+                                    ],
+                                    "PenColor": "Black"
+                                  },
+                                  "ContainerType": "Animation",
+                                  "Description": ""
+                                }
+                              ],
+                              "ContainerType": "Groups.CustomConditionalGroup",
+                              "Description": "TE Left up"
+                            },
+                            {
+                              "TriggerFormula": {
+                                "Expression": "return false; // V21: legacy thumb animation disabled, final clustered overlay handles it"
+                              },
+                              "LedContainers": [
+                                {
+                                  "Animation": {
+                                    "Columns": 4,
+                                    "Rows": 1,
+                                    "Frames": [
+                                      {
+                                        "Colors": "0,0,Black",
+                                        "FrameDuration": 100
+                                      },
+                                      {
+                                        "Colors": "0,1,Black",
+                                        "FrameDuration": 100
+                                      },
+                                      {
+                                        "Colors": "0,2,Black",
+                                        "FrameDuration": 100
+                                      },
+                                      {
+                                        "Colors": "0,3,Black",
+                                        "FrameDuration": 100
+                                      }
+                                    ],
+                                    "PenColor": "Black"
+                                  },
+                                  "ContainerType": "Animation",
+                                  "Description": ""
+                                }
+                              ],
+                              "StartPosition": 5,
+                              "ContainerType": "Groups.CustomConditionalGroup",
+                              "Description": "TE Right down "
+                            },
+                            {
+                              "TriggerFormula": {
+                                "Expression": "return false; // V21: legacy thumb animation disabled, final clustered overlay handles it"
+                              },
+                              "LedContainers": [
+                                {
+                                  "Animation": {
+                                    "Columns": 4,
+                                    "Rows": 1,
+                                    "Frames": [
+                                      {
+                                        "Colors": "0,3,Black",
+                                        "FrameDuration": 100
+                                      },
+                                      {
+                                        "Colors": "0,2,Black",
+                                        "FrameDuration": 100
+                                      },
+                                      {
+                                        "Colors": "0,1,Black",
+                                        "FrameDuration": 100
+                                      },
+                                      {
+                                        "Colors": "0,0,Black",
+                                        "FrameDuration": 100
+                                      }
+                                    ],
+                                    "PenColor": "Black"
+                                  },
+                                  "ContainerType": "Animation",
+                                  "Description": ""
+                                }
+                              ],
+                              "StartPosition": 5,
+                              "ContainerType": "Groups.CustomConditionalGroup",
+                              "Description": "TE Right up"
+                            }
+                          ],
+                          "ContainerType": "Base.Group",
+                          "Description": "Thumb Encoder up/down turn"
+                        }
+                      ],
+                      "ContainerType": "Groups.CustomConditionalGroup",
+                      "Description": "Input Effects"
+                    }
+                  ],
+                  "ContainerType": "Groups.CustomConditionalGroup",
+                  "Description": "Wheel Menu"
+                }
+              ],
+              "ContainerType": "Groups.BrightnessFormulaGroup",
+              "Description": "Device specific brightness"
+            }
+          ],
+          "ContainerType": "Groups.GameNotRunningGroup",
+          "Description": "Conspit 300 GT Conspit Signature - Desktop & Menu Output"
+        },
+        {
+          "LedContainers": [
+            {
+              "TriggerFormula": {
+                "JSExt": 0,
+                "Interpreter": 1,
+                "Expression": "if ($prop('Spectating') == true) {\r\n\treturn ($prop('ConspitLEDs.SpectateShowTelemetry') == 1 ||\r\n\t\t\t$prop('ConspitLEDs.SpectateShowTelemetry') == null)\r\n}\r\nreturn true;"
+              },
+              "LedContainers": [
+                {
+                  "BrightnessFormula": {
+                    "JSExt": 4,
+                    "Interpreter": 1,
+                    "Expression": "let csp300_DeviceType = $prop('ConspitLEDs.NM') ?? true;\r\n\r\nlet csp300_DeviceTypeBrightness = isnull($prop('ConspitLEDs.WheelBrightness'), 100) * isnull($prop('ConspitLEDs.GlobalBrightness'), 100) / 100;\r\n\r\nlet csp300_BrightnessOutput = Math.ceil(csp300_DeviceTypeBrightness);\r\nlet csp300_NightModeBrightnessOutput = Math.ceil(csp300_DeviceTypeBrightness * isnull($prop('ConspitLEDs.NightModeBrightness'), 25) / 100);\r\n\r\n\r\n;\r\n\r\n// Linked LD Behaviour\r\nif ($prop('ConspitLEDs.TDMDisplayDashboardBehaviour') ?? true) {\r\n\t\tif ($prop('DisplayPlugin.ld_NightMode') == true) NM_LD_Behaviour = true;\r\n\t\tif ($prop('DisplayPlugin.ld_NightMode') == false) return csp300_BrightnessOutput;\r\n}\r\nif ($prop('ConspitLEDs.TDMDisplayDashboardBehaviour') == false) NM_LD_Behaviour = false;\r\n\r\n// Fallback to own behavior when there is no LD connection\r\nNM_CSP_Behaviour = csp300_DeviceType;\r\n\r\nif (NM_LD_Behaviour || NM_CSP_Behaviour) {\r\n\r\nTDMState = NM_LD_Behaviour\r\n\t? $prop('DisplayPlugin.ld_TrueDarkModeState') ?? false\r\n\t: $prop('ConspitLEDs.TDMState') ?? false;\r\n\r\n\t\r\n\r\n\t\r\n\t\r\n\treturn TDMState == false\r\n\t\t? csp300_BrightnessOutput\r\n\t\t: csp300_NightModeBrightnessOutput; //All other games\r\n}\r\nreturn csp300_BrightnessOutput;"
+                  },
+                  "LedContainers": [
+                    {
+                      "TriggerFormula": {
+                        "JSExt": 0,
+                        "Interpreter": 1,
+                        "Expression": "{\r\n\treturn $prop('GameRawData.Telemetry.IsReplayPlaying')\r\n\t\t? false\r\n\t\t: $prop('EngineIgnitionOn') == 0;\r\n}\r\nreturn $prop('EngineIgnitionOn') == 0;"
+                      },
+                      "LedContainers": [
+                        {
+                          "TriggerFormula": {
+                            "JSExt": 0,
+                            "Interpreter": 1,
+                            "Expression": "let csp300_WheelGameThemeEffects;\r\n\r\nif ($prop('ConspitLEDs.UniversalTheme') == true)\r\n\tcsp300_WheelGameThemeEffects = $prop(`ConspitLEDs.WheelGameThemeEffects${$prop('ConspitLEDs.UniversalThemeGameColour')}`);\r\nelse\r\n\tcsp300_WheelGameThemeEffects = $prop(`ConspitLEDs.WheelGameThemeEffects${$prop('ConspitLEDs.WheelGameColour')}`);\r\n\r\nreturn csp300_WheelGameThemeEffects != undefined\r\n\t? csp300_WheelGameThemeEffects\r\n\t: true;"
+                          },
+                          "LedContainers": [
+                            {
+                              "TriggerFormula": {
+                                "JSExt": 0,
+                                "Interpreter": 1,
+                                "Expression": "return \t$prop('ConspitLEDs.WheelCustomGameEffectButton1') == 8 ||\r\n\t\t$prop('ConspitLEDs.WheelCustomGameEffectButton1') == 10;"
+                              },
+                              "LedContainers": [
+                                {
+                                  "IdleBlinkingColor": "Black",
+                                  "EnableIdleBlinking": false,
+                                  "LedCount": 1,
+                                  "Color": "255, 216, 229",
+                                  "BlinkingColor": "Black",
+                                  "BlinkEnabled": false,
+                                  "BlinkDelay": 1000,
+                                  "ContainerType": "StaticColor",
+                                  "Description": ""
+                                }
+                              ],
+                              "ContainerType": "Groups.CustomConditionalGroup",
+                              "Description": "Button 1"
+                            },
+                            {
+                              "TriggerFormula": {
+                                "JSExt": 0,
+                                "Interpreter": 1,
+                                "Expression": "return \t$prop('ConspitLEDs.WheelCustomGameEffectButton2') == 8 ||\r\n\t\t$prop('ConspitLEDs.WheelCustomGameEffectButton2') == 10;"
+                              },
+                              "LedContainers": [
+                                {
+                                  "IdleBlinkingColor": "Black",
+                                  "EnableIdleBlinking": false,
+                                  "LedCount": 1,
+                                  "Color": "255, 0, 56",
+                                  "BlinkingColor": "Black",
+                                  "BlinkEnabled": false,
+                                  "BlinkDelay": 1000,
+                                  "ContainerType": "StaticColor",
+                                  "Description": ""
+                                }
+                              ],
+                              "StartPosition": 2,
+                              "ContainerType": "Groups.CustomConditionalGroup",
+                              "Description": "Button 2"
+                            },
+                            {
+                              "TriggerFormula": {
+                                "JSExt": 0,
+                                "Interpreter": 1,
+                                "Expression": "return \t$prop('ConspitLEDs.WheelCustomGameEffectButton3') == 8 ||\r\n\t\t$prop('ConspitLEDs.WheelCustomGameEffectButton3') == 10;"
+                              },
+                              "LedContainers": [
+                                {
+                                  "IdleBlinkingColor": "Black",
+                                  "EnableIdleBlinking": false,
+                                  "LedCount": 1,
+                                  "Color": "255, 234, 242",
+                                  "BlinkingColor": "Black",
+                                  "BlinkEnabled": false,
+                                  "BlinkDelay": 1000,
+                                  "ContainerType": "StaticColor",
+                                  "Description": ""
+                                }
+                              ],
+                              "StartPosition": 3,
+                              "ContainerType": "Groups.CustomConditionalGroup",
+                              "Description": "Button 3"
+                            },
+                            {
+                              "TriggerFormula": {
+                                "JSExt": 0,
+                                "Interpreter": 1,
+                                "Expression": "return \t$prop('ConspitLEDs.WheelCustomGameEffectButton4') == 8 ||\r\n\t\t$prop('ConspitLEDs.WheelCustomGameEffectButton4') == 10;"
+                              },
+                              "LedContainers": [
+                                {
+                                  "IdleBlinkingColor": "Black",
+                                  "EnableIdleBlinking": false,
+                                  "LedCount": 1,
+                                  "Color": "255, 0, 56",
+                                  "BlinkingColor": "Black",
+                                  "BlinkEnabled": false,
+                                  "BlinkDelay": 1000,
+                                  "ContainerType": "StaticColor",
+                                  "Description": ""
+                                }
+                              ],
+                              "StartPosition": 4,
+                              "ContainerType": "Groups.CustomConditionalGroup",
+                              "Description": "Button 4"
+                            },
+                            {
+                              "TriggerFormula": {
+                                "JSExt": 0,
+                                "Interpreter": 1,
+                                "Expression": "return \t$prop('ConspitLEDs.WheelCustomGameEffectButton5') == 8 ||\r\n\t\t$prop('ConspitLEDs.WheelCustomGameEffectButton5') == 10;"
+                              },
+                              "LedContainers": [
+                                {
+                                  "IdleBlinkingColor": "Black",
+                                  "EnableIdleBlinking": false,
+                                  "LedCount": 1,
+                                  "Color": "255, 216, 229",
+                                  "BlinkingColor": "Black",
+                                  "BlinkEnabled": false,
+                                  "BlinkDelay": 1000,
+                                  "ContainerType": "StaticColor",
+                                  "Description": ""
+                                }
+                              ],
+                              "StartPosition": 5,
+                              "ContainerType": "Groups.CustomConditionalGroup",
+                              "Description": "Button 5"
+                            },
+                            {
+                              "TriggerFormula": {
+                                "JSExt": 0,
+                                "Interpreter": 1,
+                                "Expression": "return \t$prop('ConspitLEDs.WheelCustomGameEffectButton6') == 8 ||\r\n\t\t$prop('ConspitLEDs.WheelCustomGameEffectButton6') == 10;"
+                              },
+                              "LedContainers": [
+                                {
+                                  "IdleBlinkingColor": "Black",
+                                  "EnableIdleBlinking": false,
+                                  "LedCount": 1,
+                                  "Color": "255, 0, 56",
+                                  "BlinkingColor": "Black",
+                                  "BlinkEnabled": false,
+                                  "BlinkDelay": 1000,
+                                  "ContainerType": "StaticColor",
+                                  "Description": ""
+                                }
+                              ],
+                              "StartPosition": 6,
+                              "ContainerType": "Groups.CustomConditionalGroup",
+                              "Description": "Button 6"
+                            },
+                            {
+                              "TriggerFormula": {
+                                "JSExt": 0,
+                                "Interpreter": 1,
+                                "Expression": "return \t$prop('ConspitLEDs.WheelCustomGameEffectButton7') == 8 ||\r\n\t\t$prop('ConspitLEDs.WheelCustomGameEffectButton7') == 10;"
+                              },
+                              "LedContainers": [
+                                {
+                                  "IdleBlinkingColor": "Black",
+                                  "EnableIdleBlinking": false,
+                                  "LedCount": 1,
+                                  "Color": "255, 234, 242",
+                                  "BlinkingColor": "Black",
+                                  "BlinkEnabled": false,
+                                  "BlinkDelay": 1000,
+                                  "ContainerType": "StaticColor",
+                                  "Description": ""
+                                }
+                              ],
+                              "StartPosition": 7,
+                              "ContainerType": "Groups.CustomConditionalGroup",
+                              "Description": "Button 7"
+                            },
+                            {
+                              "TriggerFormula": {
+                                "JSExt": 0,
+                                "Interpreter": 1,
+                                "Expression": "return \t$prop('ConspitLEDs.WheelCustomGameEffectButton8') == 8 ||\r\n\t\t$prop('ConspitLEDs.WheelCustomGameEffectButton8') == 10;"
+                              },
+                              "LedContainers": [
+                                {
+                                  "IdleBlinkingColor": "Black",
+                                  "EnableIdleBlinking": false,
+                                  "LedCount": 1,
+                                  "Color": "255, 0, 56",
+                                  "BlinkingColor": "Black",
+                                  "BlinkEnabled": false,
+                                  "BlinkDelay": 1000,
+                                  "ContainerType": "StaticColor",
+                                  "Description": ""
+                                }
+                              ],
+                              "StartPosition": 8,
+                              "ContainerType": "Groups.CustomConditionalGroup",
+                              "Description": "Button 8"
+                            }
+                          ],
+                          "ContainerType": "Groups.CustomConditionalGroup",
+                          "Description": "Ignition OFF Game Button effect"
+                        }
+                      ],
+                      "ContainerType": "Groups.CustomConditionalGroup",
+                      "Description": "Ignition Off"
+                    },
+                    {
+                      "TriggerFormula": {
+                        "JSExt": 0,
+                        "Interpreter": 1,
+                        "Expression": "return $prop('EngineIgnitionOn') == 1 ||\r\n\ttrue && $prop('GameRawData.Telemetry.IsReplayPlaying') == true;"
+                      },
+                      "LedContainers": [
+                        {
+                          "TriggerFormula": {
+                            "JSExt": 4,
+                            "Interpreter": 1,
+                            "Expression": "return true;"
+                          },
+                          "LedContainers": [
+                            {
+                              "LedContainers": [
+                                {
+                                  "TriggerFormula": {
+                                    "JSExt": 0,
+                                    "Interpreter": 1,
+                                    "Expression": "return true;"
+                                  },
+                                  "LedContainers": [
+                                    {
+                                      "LedContainers": [
+                                        {
+                                          "ContentFormula": {
+                                            "JSExt": 0,
+                                            "Interpreter": 1,
+                                            "Expression": "return ['#FFFFD8E5'];"
+                                          },
+                                          "LedCount": 1,
+                                          "ContainerType": "ScriptedContent",
+                                          "Description": "Button 1"
+                                        },
+                                        {
+                                          "ContentFormula": {
+                                            "JSExt": 0,
+                                            "Interpreter": 1,
+                                            "Expression": "return ['#FFFF0038'];"
+                                          },
+                                          "LedCount": 1,
+                                          "StartPosition": 2,
+                                          "ContainerType": "ScriptedContent",
+                                          "Description": "Button 2"
+                                        },
+                                        {
+                                          "ContentFormula": {
+                                            "JSExt": 0,
+                                            "Interpreter": 1,
+                                            "Expression": "return ['#FFFFEAF2'];"
+                                          },
+                                          "LedCount": 1,
+                                          "StartPosition": 3,
+                                          "ContainerType": "ScriptedContent",
+                                          "Description": "Button 3"
+                                        },
+                                        {
+                                          "ContentFormula": {
+                                            "JSExt": 0,
+                                            "Interpreter": 1,
+                                            "Expression": "return ['#FFFF0038'];"
+                                          },
+                                          "LedCount": 1,
+                                          "StartPosition": 4,
+                                          "ContainerType": "ScriptedContent",
+                                          "Description": "Button 4"
+                                        },
+                                        {
+                                          "ContentFormula": {
+                                            "JSExt": 0,
+                                            "Interpreter": 1,
+                                            "Expression": "return ['#FFFFD8E5'];"
+                                          },
+                                          "LedCount": 1,
+                                          "StartPosition": 5,
+                                          "ContainerType": "ScriptedContent",
+                                          "Description": "Button 5"
+                                        },
+                                        {
+                                          "ContentFormula": {
+                                            "JSExt": 0,
+                                            "Interpreter": 1,
+                                            "Expression": "return ['#FFFF0038'];"
+                                          },
+                                          "LedCount": 1,
+                                          "StartPosition": 6,
+                                          "ContainerType": "ScriptedContent",
+                                          "Description": "Button 6"
+                                        },
+                                        {
+                                          "ContentFormula": {
+                                            "JSExt": 0,
+                                            "Interpreter": 1,
+                                            "Expression": "return ['#FFFFEAF2'];"
+                                          },
+                                          "LedCount": 1,
+                                          "StartPosition": 7,
+                                          "ContainerType": "ScriptedContent",
+                                          "Description": "Button 7"
+                                        },
+                                        {
+                                          "ContentFormula": {
+                                            "JSExt": 0,
+                                            "Interpreter": 1,
+                                            "Expression": "return ['#FFFF0038'];"
+                                          },
+                                          "LedCount": 1,
+                                          "StartPosition": 8,
+                                          "ContainerType": "ScriptedContent",
+                                          "Description": "Button 8"
+                                        }
+                                      ],
+                                      "ContainerType": "Base.Group",
+                                      "Description": "Custom Buttons"
+                                    },
+                                    {
+                                      "LedContainers": [
+                                        {
+                                          "ContentFormula": {
+                                            "JSExt": 0,
+                                            "Interpreter": 1,
+                                            "Expression": "return Array(12).fill('#FFFF0038');"
+                                          },
+                                          "LedCount": 12,
+                                          "StartPosition": 9,
+                                          "ContainerType": "ScriptedContent",
+                                          "Description": "Rotary 1"
+                                        },
+                                        {
+                                          "ContentFormula": {
+                                            "JSExt": 0,
+                                            "Interpreter": 1,
+                                            "Expression": "return Array(12).fill('#FFFFFFFF');"
+                                          },
+                                          "LedCount": 12,
+                                          "StartPosition": 21,
+                                          "ContainerType": "ScriptedContent",
+                                          "Description": "Rotary 2"
+                                        },
+                                        {
+                                          "ContentFormula": {
+                                            "JSExt": 0,
+                                            "Interpreter": 1,
+                                            "Expression": "return Array(12).fill('#FFFF0038');"
+                                          },
+                                          "LedCount": 12,
+                                          "StartPosition": 33,
+                                          "ContainerType": "ScriptedContent",
+                                          "Description": "Rotary 3"
+                                        }
+                                      ],
+                                      "ContainerType": "Base.Group",
+                                      "Description": "Custom Rotaries"
+                                    }
+                                  ],
+                                  "ContainerType": "Groups.CustomConditionalGroup",
+                                  "Description": "Game Colour Custom"
+                                }
+                              ],
+                              "ContainerType": "Base.Group",
+                              "Description": "Static Button Colours"
+                            },
+                            {
+                              "TriggerFormula": {
+                                "JSExt": 0,
+                                "Interpreter": 1,
+                                "Expression": "return true;"
+                              },
+                              "LedContainers": [
+                                {
+                                  "ContentFormula": {
+                                    "JSExt": 4,
+                                    "Interpreter": 1,
+                                    "Expression": "return ['#FFFFD8E5'];",
+                                    "PreExpression": "const csp300_ledLength = 1;\r\nconst csp300_buttonNumber = 1;"
+                                  },
+                                  "LedCount": 1,
+                                  "ContainerType": "ScriptedContent",
+                                  "Description": "Button 1"
+                                },
+                                {
+                                  "ContentFormula": {
+                                    "JSExt": 4,
+                                    "Interpreter": 1,
+                                    "Expression": "return ['#FFFF0038'];",
+                                    "PreExpression": "const csp300_ledLength = 1;\r\nconst csp300_buttonNumber = 2;"
+                                  },
+                                  "LedCount": 1,
+                                  "StartPosition": 2,
+                                  "ContainerType": "ScriptedContent",
+                                  "Description": "Button 2"
+                                },
+                                {
+                                  "ContentFormula": {
+                                    "JSExt": 4,
+                                    "Interpreter": 1,
+                                    "Expression": "return ['#FFFFEAF2'];",
+                                    "PreExpression": "const csp300_ledLength = 1;\r\nconst csp300_buttonNumber = 3;"
+                                  },
+                                  "LedCount": 1,
+                                  "StartPosition": 3,
+                                  "ContainerType": "ScriptedContent",
+                                  "Description": "Button 3"
+                                },
+                                {
+                                  "ContentFormula": {
+                                    "JSExt": 4,
+                                    "Interpreter": 1,
+                                    "Expression": "return ['#FFFF0038'];",
+                                    "PreExpression": "const csp300_ledLength = 1;\r\nconst csp300_buttonNumber = 4;"
+                                  },
+                                  "LedCount": 1,
+                                  "StartPosition": 4,
+                                  "ContainerType": "ScriptedContent",
+                                  "Description": "Button 4"
+                                },
+                                {
+                                  "ContentFormula": {
+                                    "JSExt": 4,
+                                    "Interpreter": 1,
+                                    "Expression": "return ['#FFFFD8E5'];",
+                                    "PreExpression": "const csp300_ledLength = 1;\r\nconst csp300_buttonNumber = 5;"
+                                  },
+                                  "LedCount": 1,
+                                  "StartPosition": 5,
+                                  "ContainerType": "ScriptedContent",
+                                  "Description": "Button 5"
+                                },
+                                {
+                                  "ContentFormula": {
+                                    "JSExt": 4,
+                                    "Interpreter": 1,
+                                    "Expression": "return ['#FFFF0038'];",
+                                    "PreExpression": "const csp300_ledLength = 1;\r\nconst csp300_buttonNumber = 6;"
+                                  },
+                                  "LedCount": 1,
+                                  "StartPosition": 6,
+                                  "ContainerType": "ScriptedContent",
+                                  "Description": "Button 6"
+                                },
+                                {
+                                  "ContentFormula": {
+                                    "JSExt": 4,
+                                    "Interpreter": 1,
+                                    "Expression": "return ['#FFFFEAF2'];",
+                                    "PreExpression": "const csp300_ledLength = 1;\r\nconst csp300_buttonNumber = 7;"
+                                  },
+                                  "LedCount": 1,
+                                  "StartPosition": 7,
+                                  "ContainerType": "ScriptedContent",
+                                  "Description": "Button 7"
+                                },
+                                {
+                                  "ContentFormula": {
+                                    "JSExt": 4,
+                                    "Interpreter": 1,
+                                    "Expression": "return ['#FFFF0038'];",
+                                    "PreExpression": "const csp300_ledLength = 1;\r\nconst csp300_buttonNumber = 8;"
+                                  },
+                                  "LedCount": 1,
+                                  "StartPosition": 8,
+                                  "ContainerType": "ScriptedContent",
+                                  "Description": "Button 8"
+                                },
+                                {
+                                  "ContentFormula": {
+                                    "JSExt": 4,
+                                    "Interpreter": 1,
+                                    "Expression": "return Array(12).fill('#FFFF0038');",
+                                    "PreExpression": "const csp300_ledLength = 12;\r\nconst CONTROLLER_ID = '0x3514,0x000E';\r\nconst buttonMap = {\r\n\t36: [0], 37: [1], 38: [2], 39: [3], \r\n\t40: [4], 41: [5], 42: [6], 43: [7], \r\n\t44: [8], 45: [9], 46: [10], 47: [11]\r\n};"
+                                  },
+                                  "LedCount": 12,
+                                  "StartPosition": 9,
+                                  "ContainerType": "ScriptedContent",
+                                  "Description": "Rotary 1"
+                                },
+                                {
+                                  "ContentFormula": {
+                                    "JSExt": 4,
+                                    "Interpreter": 1,
+                                    "Expression": "return Array(12).fill('#FFFFFFFF');",
+                                    "PreExpression": "const csp300_ledLength = 12;\r\nconst CONTROLLER_ID = '0x3514,0x000E';\r\nconst buttonMap = {\r\n\t48: [0], 49: [1], 50: [2], 51: [3], \r\n\t52: [4], 53: [5], 54: [6], 55: [7], \r\n\t56: [8], 57: [9], 58: [10], 59: [11]\r\n};"
+                                  },
+                                  "LedCount": 12,
+                                  "StartPosition": 21,
+                                  "ContainerType": "ScriptedContent",
+                                  "Description": "Rotary 2"
+                                },
+                                {
+                                  "ContentFormula": {
+                                    "JSExt": 4,
+                                    "Interpreter": 1,
+                                    "Expression": "return Array(12).fill('#FFFF0038');",
+                                    "PreExpression": "const csp300_ledLength = 12;\r\nconst CONTROLLER_ID = '0x3514,0x000E';\r\nconst buttonMap = {\r\n\t60: [0], 61: [1], 62: [2], 63: [3], \r\n\t64: [4], 65: [5], 66: [6], 67: [7], \r\n\t68: [8], 69: [9], 70: [10], 71: [11]\r\n};"
+                                  },
+                                  "LedCount": 12,
+                                  "StartPosition": 33,
+                                  "ContainerType": "ScriptedContent",
+                                  "Description": "Rotary 3"
+                                }
+                              ],
+                              "ContainerType": "Groups.CustomConditionalGroup",
+                              "Description": "Game Button effects"
+                            }
+                          ],
+                          "ContainerType": "Groups.CustomConditionalGroup",
+                          "Description": "Full Colour (Default is Off)"
+                        },
+                        {
+                          "TriggerFormula": {
+                            "JSExt": 0,
+                            "Interpreter": 1,
+                            "Expression": "return true;"
+                          },
+                          "LedContainers": [
+                            {
+                              "TriggerFormula": {
+                                "JSExt": 0,
+                                "Interpreter": 1,
+                                "Expression": "return true;"
+                              },
+                              "LedContainers": [
+                                {
+                                  "LedContainers": [
+                                    {
+                                      "TriggerFormula": {
+                                        "Expression": "Changed(400, getcontrollerbuttonstate('0x3514,0x000E', 0))"
+                                      },
+                                      "LedContainers": [
+                                        {
+                                          "Animation": {
+                                            "Columns": 1,
+                                            "Rows": 1,
+                                            "Frames": [
+                                              {
+                                                "Colors": "",
+                                                "FrameDuration": 100
+                                              },
+                                              {
+                                                "Colors": "0,0,Black",
+                                                "FrameDuration": 100
+                                              }
+                                            ],
+                                            "PenColor": "Black"
+                                          },
+                                          "ContainerType": "Animation",
+                                          "Description": ""
+                                        }
+                                      ],
+                                      "ContainerType": "Groups.CustomConditionalGroup",
+                                      "Description": "Button 1"
+                                    },
+                                    {
+                                      "TriggerFormula": {
+                                        "Expression": "Changed(400, getcontrollerbuttonstate('0x3514,0x000E', 1))"
+                                      },
+                                      "LedContainers": [
+                                        {
+                                          "Animation": {
+                                            "Columns": 1,
+                                            "Rows": 1,
+                                            "Frames": [
+                                              {
+                                                "Colors": "",
+                                                "FrameDuration": 100
+                                              },
+                                              {
+                                                "Colors": "0,0,Black",
+                                                "FrameDuration": 100
+                                              }
+                                            ],
+                                            "PenColor": "Black"
+                                          },
+                                          "ContainerType": "Animation",
+                                          "Description": ""
+                                        }
+                                      ],
+                                      "StartPosition": 2,
+                                      "ContainerType": "Groups.CustomConditionalGroup",
+                                      "Description": "Button 2"
+                                    },
+                                    {
+                                      "TriggerFormula": {
+                                        "Expression": "Changed(400, getcontrollerbuttonstate('0x3514,0x000E', 2))"
+                                      },
+                                      "LedContainers": [
+                                        {
+                                          "Animation": {
+                                            "Columns": 1,
+                                            "Rows": 1,
+                                            "Frames": [
+                                              {
+                                                "Colors": "",
+                                                "FrameDuration": 100
+                                              },
+                                              {
+                                                "Colors": "0,0,Black",
+                                                "FrameDuration": 100
+                                              }
+                                            ],
+                                            "PenColor": "Black"
+                                          },
+                                          "ContainerType": "Animation",
+                                          "Description": ""
+                                        }
+                                      ],
+                                      "StartPosition": 3,
+                                      "ContainerType": "Groups.CustomConditionalGroup",
+                                      "Description": "Button 3"
+                                    },
+                                    {
+                                      "TriggerFormula": {
+                                        "Expression": "Changed(400, getcontrollerbuttonstate('0x3514,0x000E', 3))"
+                                      },
+                                      "LedContainers": [
+                                        {
+                                          "Animation": {
+                                            "Columns": 1,
+                                            "Rows": 1,
+                                            "Frames": [
+                                              {
+                                                "Colors": "",
+                                                "FrameDuration": 100
+                                              },
+                                              {
+                                                "Colors": "0,0,Black",
+                                                "FrameDuration": 100
+                                              }
+                                            ],
+                                            "PenColor": "Black"
+                                          },
+                                          "ContainerType": "Animation",
+                                          "Description": ""
+                                        }
+                                      ],
+                                      "StartPosition": 4,
+                                      "ContainerType": "Groups.CustomConditionalGroup",
+                                      "Description": "Button 4"
+                                    },
+                                    {
+                                      "TriggerFormula": {
+                                        "Expression": "Changed(400, getcontrollerbuttonstate('0x3514,0x000E', 4))"
+                                      },
+                                      "LedContainers": [
+                                        {
+                                          "Animation": {
+                                            "Columns": 1,
+                                            "Rows": 1,
+                                            "Frames": [
+                                              {
+                                                "Colors": "",
+                                                "FrameDuration": 100
+                                              },
+                                              {
+                                                "Colors": "0,0,Black",
+                                                "FrameDuration": 100
+                                              }
+                                            ],
+                                            "PenColor": "Black"
+                                          },
+                                          "ContainerType": "Animation",
+                                          "Description": ""
+                                        }
+                                      ],
+                                      "StartPosition": 5,
+                                      "ContainerType": "Groups.CustomConditionalGroup",
+                                      "Description": "Button 5"
+                                    },
+                                    {
+                                      "TriggerFormula": {
+                                        "Expression": "Changed(400, getcontrollerbuttonstate('0x3514,0x000E', 5))"
+                                      },
+                                      "LedContainers": [
+                                        {
+                                          "Animation": {
+                                            "Columns": 1,
+                                            "Rows": 1,
+                                            "Frames": [
+                                              {
+                                                "Colors": "",
+                                                "FrameDuration": 100
+                                              },
+                                              {
+                                                "Colors": "0,0,Black",
+                                                "FrameDuration": 100
+                                              }
+                                            ],
+                                            "PenColor": "Black"
+                                          },
+                                          "ContainerType": "Animation",
+                                          "Description": ""
+                                        }
+                                      ],
+                                      "StartPosition": 6,
+                                      "ContainerType": "Groups.CustomConditionalGroup",
+                                      "Description": "Button 6"
+                                    },
+                                    {
+                                      "TriggerFormula": {
+                                        "Expression": "Changed(400, getcontrollerbuttonstate('0x3514,0x000E', 6))"
+                                      },
+                                      "LedContainers": [
+                                        {
+                                          "Animation": {
+                                            "Columns": 1,
+                                            "Rows": 1,
+                                            "Frames": [
+                                              {
+                                                "Colors": "",
+                                                "FrameDuration": 100
+                                              },
+                                              {
+                                                "Colors": "0,0,Black",
+                                                "FrameDuration": 100
+                                              }
+                                            ],
+                                            "PenColor": "Black"
+                                          },
+                                          "ContainerType": "Animation",
+                                          "Description": ""
+                                        }
+                                      ],
+                                      "StartPosition": 7,
+                                      "ContainerType": "Groups.CustomConditionalGroup",
+                                      "Description": "Button 7"
+                                    },
+                                    {
+                                      "TriggerFormula": {
+                                        "Expression": "Changed(400, getcontrollerbuttonstate('0x3514,0x000E', 7))"
+                                      },
+                                      "LedContainers": [
+                                        {
+                                          "Animation": {
+                                            "Columns": 1,
+                                            "Rows": 1,
+                                            "Frames": [
+                                              {
+                                                "Colors": "",
+                                                "FrameDuration": 100
+                                              },
+                                              {
+                                                "Colors": "0,0,Black",
+                                                "FrameDuration": 100
+                                              }
+                                            ],
+                                            "PenColor": "Black"
+                                          },
+                                          "ContainerType": "Animation",
+                                          "Description": ""
+                                        }
+                                      ],
+                                      "StartPosition": 8,
+                                      "ContainerType": "Groups.CustomConditionalGroup",
+                                      "Description": "Button 8"
+                                    },
+                                    {
+                                      "TriggerFormula": {
+                                        "Expression": "return false;"
+                                      },
+                                      "LedContainers": [
+                                        {
+                                          "Animation": {
+                                            "Columns": 4,
+                                            "Rows": 1,
+                                            "Frames": [
+                                              {
+                                                "Colors": "",
+                                                "FrameDuration": 100
+                                              },
+                                              {
+                                                "Colors": "0,0,Black;0,1,Black;0,2,Black;0,3,Black",
+                                                "FrameDuration": 100
+                                              }
+                                            ],
+                                            "PenColor": "Black"
+                                          },
+                                          "ContainerType": "Animation",
+                                          "Description": ""
+                                        }
+                                      ],
+                                      "ContainerType": "Groups.CustomConditionalGroup",
+                                      "Description": "Rear Left"
+                                    },
+                                    {
+                                      "TriggerFormula": {
+                                        "Expression": "return false;"
+                                      },
+                                      "LedContainers": [
+                                        {
+                                          "Animation": {
+                                            "Columns": 4,
+                                            "Rows": 1,
+                                            "Frames": [
+                                              {
+                                                "Colors": "",
+                                                "FrameDuration": 100
+                                              },
+                                              {
+                                                "Colors": "0,0,Black;0,1,Black;0,2,Black;0,3,Black",
+                                                "FrameDuration": 100
+                                              }
+                                            ],
+                                            "PenColor": "Black"
+                                          },
+                                          "ContainerType": "Animation",
+                                          "Description": ""
+                                        }
+                                      ],
+                                      "StartPosition": 5,
+                                      "ContainerType": "Groups.CustomConditionalGroup",
+                                      "Description": "Rear Right"
+                                    }
+                                  ],
+                                  "ContainerType": "Base.Group",
+                                  "Description": "Buttons"
+                                }
+                              ],
+                              "ContainerType": "Groups.CustomConditionalGroup",
+                              "Description": "Input Effects when Game Button effects disabled"
+                            },
+                            {
+                              "LedContainers": [
+                                {
+                                  "LedContainers": [
+                                    {
+                                      "TriggerFormula": {
+                                        "Expression": "isincreasing(400,getcontrollerbuttonstate('0x3514,0x000E', 30))"
+                                      },
+                                      "LedContainers": [
+                                        {
+                                          "Animation": {
+                                            "Columns": 12,
+                                            "Rows": 1,
+                                            "Frames": [
+                                              {
+                                                "Colors": "0,0,Black;0,1,Black;0,2,Black;0,3,Black;0,4,Black;0,5,Black;0,6,Black;0,7,Black;0,8,Black;0,9,Black;0,10,Black;0,11,Black",
+                                                "FrameDuration": 200
+                                              },
+                                              {
+                                                "Colors": "",
+                                                "FrameDuration": 200
+                                              }
+                                            ],
+                                            "PenColor": "Black"
+                                          },
+                                          "ContainerType": "Animation",
+                                          "Description": "Turn"
+                                        }
+                                      ],
+                                      "ContainerType": "Groups.CustomConditionalGroup",
+                                      "Description": "Left Turn"
+                                    },
+                                    {
+                                      "TriggerFormula": {
+                                        "Expression": "isincreasing(400,getcontrollerbuttonstate('0x3514,0x000E', 31))"
+                                      },
+                                      "LedContainers": [
+                                        {
+                                          "Animation": {
+                                            "Columns": 12,
+                                            "Rows": 1,
+                                            "Frames": [
+                                              {
+                                                "Colors": "0,0,Black;0,1,Black;0,2,Black;0,3,Black;0,4,Black;0,5,Black;0,6,Black;0,7,Black;0,8,Black;0,9,Black;0,10,Black;0,11,Black",
+                                                "FrameDuration": 200
+                                              },
+                                              {
+                                                "Colors": "",
+                                                "FrameDuration": 200
+                                              }
+                                            ],
+                                            "PenColor": "Black"
+                                          },
+                                          "ContainerType": "Animation",
+                                          "Description": "Turn"
+                                        }
+                                      ],
+                                      "ContainerType": "Groups.CustomConditionalGroup",
+                                      "Description": "Right Turn"
+                                    }
+                                  ],
+                                  "StartPosition": 9,
+                                  "ContainerType": "Base.Group",
+                                  "Description": "Rotary 1"
+                                },
+                                {
+                                  "LedContainers": [
+                                    {
+                                      "TriggerFormula": {
+                                        "Expression": "isincreasing(400,getcontrollerbuttonstate('0x3514,0x000E', 32))"
+                                      },
+                                      "LedContainers": [
+                                        {
+                                          "Animation": {
+                                            "Columns": 12,
+                                            "Rows": 1,
+                                            "Frames": [
+                                              {
+                                                "Colors": "0,0,Black;0,1,Black;0,2,Black;0,3,Black;0,4,Black;0,5,Black;0,6,Black;0,7,Black;0,8,Black;0,9,Black;0,10,Black;0,11,Black",
+                                                "FrameDuration": 200
+                                              },
+                                              {
+                                                "Colors": "",
+                                                "FrameDuration": 200
+                                              }
+                                            ],
+                                            "PenColor": "Black"
+                                          },
+                                          "ContainerType": "Animation",
+                                          "Description": "Turn"
+                                        }
+                                      ],
+                                      "ContainerType": "Groups.CustomConditionalGroup",
+                                      "Description": "Left Turn"
+                                    },
+                                    {
+                                      "TriggerFormula": {
+                                        "Expression": "isincreasing(400,getcontrollerbuttonstate('0x3514,0x000E', 33))"
+                                      },
+                                      "LedContainers": [
+                                        {
+                                          "Animation": {
+                                            "Columns": 12,
+                                            "Rows": 1,
+                                            "Frames": [
+                                              {
+                                                "Colors": "0,0,Black;0,1,Black;0,2,Black;0,3,Black;0,4,Black;0,5,Black;0,6,Black;0,7,Black;0,8,Black;0,9,Black;0,10,Black;0,11,Black",
+                                                "FrameDuration": 200
+                                              },
+                                              {
+                                                "Colors": "",
+                                                "FrameDuration": 200
+                                              }
+                                            ],
+                                            "PenColor": "Black"
+                                          },
+                                          "ContainerType": "Animation",
+                                          "Description": "Turn"
+                                        }
+                                      ],
+                                      "ContainerType": "Groups.CustomConditionalGroup",
+                                      "Description": "Right Turn"
+                                    }
+                                  ],
+                                  "StartPosition": 21,
+                                  "ContainerType": "Base.Group",
+                                  "Description": "Rotary 2"
+                                },
+                                {
+                                  "LedContainers": [
+                                    {
+                                      "TriggerFormula": {
+                                        "Expression": "isincreasing(400,getcontrollerbuttonstate('0x3514,0x000E', 34))"
+                                      },
+                                      "LedContainers": [
+                                        {
+                                          "Animation": {
+                                            "Columns": 12,
+                                            "Rows": 1,
+                                            "Frames": [
+                                              {
+                                                "Colors": "0,0,Black;0,1,Black;0,2,Black;0,3,Black;0,4,Black;0,5,Black;0,6,Black;0,7,Black;0,8,Black;0,9,Black;0,10,Black;0,11,Black",
+                                                "FrameDuration": 200
+                                              },
+                                              {
+                                                "Colors": "",
+                                                "FrameDuration": 200
+                                              }
+                                            ],
+                                            "PenColor": "Black"
+                                          },
+                                          "ContainerType": "Animation",
+                                          "Description": "Turn"
+                                        }
+                                      ],
+                                      "ContainerType": "Groups.CustomConditionalGroup",
+                                      "Description": "Left Turn"
+                                    },
+                                    {
+                                      "TriggerFormula": {
+                                        "Expression": "isincreasing(400,getcontrollerbuttonstate('0x3514,0x000E', 35))"
+                                      },
+                                      "LedContainers": [
+                                        {
+                                          "Animation": {
+                                            "Columns": 12,
+                                            "Rows": 1,
+                                            "Frames": [
+                                              {
+                                                "Colors": "0,0,Black;0,1,Black;0,2,Black;0,3,Black;0,4,Black;0,5,Black;0,6,Black;0,7,Black;0,8,Black;0,9,Black;0,10,Black;0,11,Black",
+                                                "FrameDuration": 200
+                                              },
+                                              {
+                                                "Colors": "",
+                                                "FrameDuration": 200
+                                              }
+                                            ],
+                                            "PenColor": "Black"
+                                          },
+                                          "ContainerType": "Animation",
+                                          "Description": "Turn"
+                                        }
+                                      ],
+                                      "ContainerType": "Groups.CustomConditionalGroup",
+                                      "Description": "Right Turn"
+                                    }
+                                  ],
+                                  "StartPosition": 33,
+                                  "ContainerType": "Base.Group",
+                                  "Description": "Rotary 3"
+                                }
+                              ],
+                              "ContainerType": "Base.Group",
+                              "Description": "Rotary turn"
+                            },
+                            {
+                              "LedContainers": [
+                                {
+                                  "TriggerFormula": {
+                                    "Expression": "return false; // V21: legacy thumb animation disabled, final clustered overlay handles it"
+                                  },
+                                  "LedContainers": [
+                                    {
+                                      "Animation": {
+                                        "Columns": 4,
+                                        "Rows": 1,
+                                        "Frames": [
+                                          {
+                                            "Colors": "0,0,Black",
+                                            "FrameDuration": 100
+                                          },
+                                          {
+                                            "Colors": "0,1,Black",
+                                            "FrameDuration": 100
+                                          },
+                                          {
+                                            "Colors": "0,2,Black",
+                                            "FrameDuration": 100
+                                          },
+                                          {
+                                            "Colors": "0,3,Black",
+                                            "FrameDuration": 100
+                                          }
+                                        ],
+                                        "PenColor": "Black"
+                                      },
+                                      "ContainerType": "Animation",
+                                      "Description": ""
+                                    }
+                                  ],
+                                  "ContainerType": "Groups.CustomConditionalGroup",
+                                  "Description": "TE Left down"
+                                },
+                                {
+                                  "TriggerFormula": {
+                                    "Expression": "return false; // V21: legacy thumb animation disabled, final clustered overlay handles it"
+                                  },
+                                  "LedContainers": [
+                                    {
+                                      "Animation": {
+                                        "Columns": 4,
+                                        "Rows": 1,
+                                        "Frames": [
+                                          {
+                                            "Colors": "0,3,Black",
+                                            "FrameDuration": 100
+                                          },
+                                          {
+                                            "Colors": "0,2,Black",
+                                            "FrameDuration": 100
+                                          },
+                                          {
+                                            "Colors": "0,1,Black",
+                                            "FrameDuration": 100
+                                          },
+                                          {
+                                            "Colors": "0,0,Black",
+                                            "FrameDuration": 100
+                                          }
+                                        ],
+                                        "PenColor": "Black"
+                                      },
+                                      "ContainerType": "Animation",
+                                      "Description": ""
+                                    }
+                                  ],
+                                  "ContainerType": "Groups.CustomConditionalGroup",
+                                  "Description": "TE Left up"
+                                },
+                                {
+                                  "TriggerFormula": {
+                                    "Expression": "return false; // V21: legacy thumb animation disabled, final clustered overlay handles it"
+                                  },
+                                  "LedContainers": [
+                                    {
+                                      "Animation": {
+                                        "Columns": 4,
+                                        "Rows": 1,
+                                        "Frames": [
+                                          {
+                                            "Colors": "0,0,Black",
+                                            "FrameDuration": 100
+                                          },
+                                          {
+                                            "Colors": "0,1,Black",
+                                            "FrameDuration": 100
+                                          },
+                                          {
+                                            "Colors": "0,2,Black",
+                                            "FrameDuration": 100
+                                          },
+                                          {
+                                            "Colors": "0,3,Black",
+                                            "FrameDuration": 100
+                                          }
+                                        ],
+                                        "PenColor": "Black"
+                                      },
+                                      "ContainerType": "Animation",
+                                      "Description": ""
+                                    }
+                                  ],
+                                  "StartPosition": 5,
+                                  "ContainerType": "Groups.CustomConditionalGroup",
+                                  "Description": "TE Right down "
+                                },
+                                {
+                                  "TriggerFormula": {
+                                    "Expression": "return false; // V21: legacy thumb animation disabled, final clustered overlay handles it"
+                                  },
+                                  "LedContainers": [
+                                    {
+                                      "Animation": {
+                                        "Columns": 4,
+                                        "Rows": 1,
+                                        "Frames": [
+                                          {
+                                            "Colors": "0,3,Black",
+                                            "FrameDuration": 100
+                                          },
+                                          {
+                                            "Colors": "0,2,Black",
+                                            "FrameDuration": 100
+                                          },
+                                          {
+                                            "Colors": "0,1,Black",
+                                            "FrameDuration": 100
+                                          },
+                                          {
+                                            "Colors": "0,0,Black",
+                                            "FrameDuration": 100
+                                          }
+                                        ],
+                                        "PenColor": "Black"
+                                      },
+                                      "ContainerType": "Animation",
+                                      "Description": ""
+                                    }
+                                  ],
+                                  "StartPosition": 5,
+                                  "ContainerType": "Groups.CustomConditionalGroup",
+                                  "Description": "TE Right up"
+                                }
+                              ],
+                              "ContainerType": "Base.Group",
+                              "Description": "Thumb Encoder up/down turn"
+                            }
+                          ],
+                          "ContainerType": "Groups.CustomConditionalGroup",
+                          "Description": "Input Effects"
+                        },
+                        {
+                          "LedContainers": [
+                            {
+                              "ContentFormula": {
+                                "JSExt": 4,
+                                "Interpreter": 1,
+                                "Expression": "return cp300v3SpotterWheel();",
+                                "PreExpression": "const csp300_totalLeds = 8;\r\nconst leftPattern = [0, 1, 2, 3];\r\nconst rightPattern = [4, 5, 6, 7];"
+                              },
+                              "LedCount": 44,
+                              "ContainerType": "ScriptedContent",
+                              "Description": "Spotter L&R (Default Off)"
+                            },
+                            {
+                              "ContentFormula": {
+                                "JSExt": 4,
+                                "Interpreter": 1,
+                                "Expression": "return cp300v3PitWheel();",
+                                "PreExpression": "const animationCycleTime = 150;"
+                              },
+                              "LedCount": 44,
+                              "ContainerType": "ScriptedContent",
+                              "Description": "Pit Limiter"
+                            }
+                          ],
+                          "ContainerType": "Base.Group",
+                          "Description": "General Game effects"
+                        },
+                        {
+                          "ContentFormula": {
+                            "JSExt": 4,
+                            "Interpreter": 1,
+                            "Expression": "return cp300v3FlagsWheel();",
+                            "PreExpression": "const csp300_ledLength = 44;\r\nconst excludedIndices = [];\r\nconst patternTemplate = ['colourA', 'colourB'];"
+                          },
+                          "LedCount": 44,
+                          "ContainerType": "ScriptedContent",
+                          "Description": "Flags (Default Off)"
+                        }
+                      ],
+                      "ContainerType": "Groups.CustomConditionalGroup",
+                      "Description": "Ignition On"
+                    },
+                    {
+                      "ContentFormula": {
+                        "JSExt": 4,
+                        "Interpreter": 1,
+                        "Expression": "return cp300v3EngineStartupWheel();",
+                        "PreExpression": "const csp300_totalLeds = 44;\r\nconst excludedIndices = []; // Add any LED indices that should NOT animate here"
+                      },
+                      "LedCount": 44,
+                      "ContainerType": "ScriptedContent",
+                      "Description": "Engine Start"
+                    }
+                  ],
+                  "ContainerType": "Groups.BrightnessFormulaGroup",
+                  "Description": "Device specific brightness and NightMode"
+                }
+              ],
+              "ContainerType": "Groups.CustomConditionalGroup",
+              "Description": "Conspit 300 GT Conspit Signature - Buttons, Rings & Telemetry"
+            }
+          ],
+          "ContainerType": "Groups.GameRunningGroup",
+          "Description": "Conspit 300 GT Conspit Signature - Live Wheel Output"
+        }
+      ],
+      "StartPosition": 13,
+      "ContainerType": "Base.Group",
+      "Description": "Conspit 300 GT Conspit Signature - Buttons, Rings & Race Functions"
+    },
+    {
+      "LedContainers": [
+        {
+          "ContentFormula": {
+            "JSExt": 4,
+            "Interpreter": 1,
+            "Expression": "return cp300v1WheelOverlay();"
+          },
+          "LedCount": 44,
+          "ContainerType": "ScriptedContent",
+          "Description": "Conspit 300 GT Conspit Signature - Buttons, Encoders & Multifunction Switches"
+        }
+      ],
+      "StartPosition": 13,
+      "ContainerType": "Base.Group",
+      "Description": "Conspit 300 GT Conspit Signature - Wheel & Input Feedback"
+    },
+    {
+      "LedContainers": [
+        {
+          "ContentFormula": {
+            "JSExt": 4,
+            "Interpreter": 1,
+            "Expression": "return c300v110inputs();"
+          },
+          "LedCount": 44,
+          "ContainerType": "ScriptedContent",
+          "Description": "Conspit 300 GT Conspit Signature - Dedicated Input Animation Overlay"
+        }
+      ],
+      "StartPosition": 13,
+      "ContainerType": "Base.Group",
+      "Description": "Conspit 300 GT Conspit Signature - Input Animations (Final Priority)"
+    }
+  ],
+  "TestLedsGameData": {
+    "CarModel": "BMW M2 Racing (G87)",
+    "CarId": "bmwm2g87",
+    "CarChoice": {
+      "CarId": "bmwm2g87",
+      "CarModel": "BMW M2 Racing (G87)",
+      "GameCode": "IRacing",
+      "IsSet": true
+    },
+    "GearEx": 0,
+    "FuelMax": 100,
+    "RPMSMax": 10000,
+    "TurboMax": 3.5,
+    "TurnIndicatorLeftEnabled": false,
+    "TurnIndicatorRightEnabled": false,
+    "SessionBestDeltaEx": 0,
+    "AllTimeBestDeltaEx": 0,
+    "DRSEnabled": false,
+    "DRSAvailable": false,
+    "MaxRpm": 10000,
+    "GameRunning": true,
+    "Brake": 0,
+    "GameName": "IRacing",
+    "Fuel": 0,
+    "RPMPercent": 0,
+    "RPMRedlineReached": false,
+    "SpeedKmh": 0,
+    "SpeedMph": 0,
+    "Turbo": 0,
+    "TurboPercent": 0,
+    "Gear": "N",
+    "IsInPitLane": false,
+    "PitLimiterOn": false,
+    "AbsEnabled": false,
+    "AbsActive": false,
+    "TCEnabled": false,
+    "TCActive": false,
+    "LowFuelAlert": false,
+    "SpotterCarLeft": false,
+    "SpotterCarRight": false,
+    "BlackFlag": false,
+    "YellowFlag": false,
+    "WhiteFlag": false,
+    "BlueFlag": false,
+    "GreenFlag": false,
+    "CarStartedTime": "2024-04-08T10:28:28.7905633+01:00",
+    "SessionBestDelta": 0,
+    "AllTimeBestDelta": 0
+  },
+  "UseProfileBrightness": false,
+  "Author": "Heracles; based on Conspit 300 GT Themes Pack V1.2",
+  "LastLoaded": "2026-07-15T23:08:13.225568+01:00",
+  "Description": "iRacing non-RPM lights: buttons, encoders, flags, spotter, pit and startup effects. RPM lights are not included.",
+  "Name": "amazing-leds-300gt",
+  "ProfileId": null,
+  "GameCode": "IRacing",
+  "CarChoice": null
+}
